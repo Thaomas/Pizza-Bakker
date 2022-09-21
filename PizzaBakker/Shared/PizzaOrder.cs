@@ -7,7 +7,7 @@ namespace Shared
     internal class PizzaOrder
     {
         public string Name { get; set; }
-        public int OrderID { get; set; }
+        public Guid OrderID { get; set; }
         public Tuple<Ingredient, int>[] Toppings{ get; set; }
 
         public decimal Price { get

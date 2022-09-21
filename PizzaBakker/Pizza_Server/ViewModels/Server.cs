@@ -2,6 +2,7 @@
 using REI_Server.Logic.Connections;
 using REI_Server.Models;
 using Shared;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -11,8 +12,8 @@ namespace REI_Server.ViewModels
 {
     public class Server
     {
-        public Dictionary<uint, Client> IdToClient { get; } = new();
-        public Dictionary<uint, Employee> IdToEmployee { get; } = new();
+        public Dictionary<Guid, Logic.Connections.Employee> IdToClient { get; } = new();
+        public Dictionary<uint, Shared.Employee> IdToEmployee { get; } = new();
 
         public Dictionary<string, Note> Notes { get; } = new();
 
@@ -41,13 +42,13 @@ namespace REI_Server.ViewModels
             IdToEmployee = IO.LoadEmployees();
             Notes = JsonConvert.DeserializeObject<Dictionary<string, Note>>(IO.ReadFile("SaveData\\Notes.json"));
 
-            ConnectionHandler connectionHandler = ConnectionHandler.GetInstance(this);
-            new Thread(connectionHandler.Run).Start();
+            ConnectionHandler bakerConnectionHandler = new ConnectionHandler(this, 6000);
+            new Thread(bakerConnectionHandler.Run).Start();
 
             new Thread(SavingLoop).Start();
         }
 
-        public void AddClient(uint id, Client client)
+        public void AddClient(Guid id, Logic.Connections.Employee client)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {

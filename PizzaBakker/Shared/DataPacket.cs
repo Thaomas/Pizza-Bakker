@@ -18,32 +18,53 @@ namespace Shared
 
     public class DataPacket<T> : DAbstract where T : DAbstract
     {
-        public uint senderID;
+        public Guid senderID;
         public PacketType type;
         public T data;
     }
 
     public class DataPacket : DAbstract
     {
-        public uint senderID;
+        public Guid senderID;
         public PacketType type;
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         private JObject data;
 
-        public DataPacket<T> GetData<T>() where T : DAbstract
+        public T GetData<T>() where T : DAbstract
         {
-            return new DataPacket<T>
-            {
-                senderID = this.senderID,
-                type = this.type,
-                data = this.data.ToObject<T>()
-            };
+            return this.data.ToObject<T>();
         }
     }
 
     public class LoginPacket : DAbstract
     {
-        public string username;
+        public uint username;
         public string password;
     }
+
+    public class LoginResponsePacket : DAbstract
+    {
+        public StatusCode statusCode;
+    }
+
+    public class ChangeStatusPacket : DAbstract
+    {
+        public OrderStatus newOrderStatus;
+        public Guid orderID;
+    }
+
+    public class StatusPacket : DAbstract
+    {
+        public OrderStatus orderStatus;
+        public Guid orderID;
+    }
+
+    public class AutenticationPacket : DAbstract
+    {
+        public Guid autenticationID;
+    }
+
+
 }
+
+

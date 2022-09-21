@@ -9,10 +9,13 @@ namespace Shared
     public enum PacketType
     {
         LOGIN,
-        CHANGE_STATUS
+        LOGIN_RESPONSE,
+        CHANGE_STATUS,
+        STATUS,
+        AUTHENTICATION
     }
 
-    public enum StatusCodes
+    public enum StatusCode
     {
         OK = 200,                   // Standard OK response.
         CREATED = 201,              // Indicates that the requested file has been created.
@@ -35,10 +38,17 @@ namespace Shared
         THREE
     };
 
-    public enum EmployeeStatus
+    public enum OperationCodes
     {
-        AT_CLIENT,
-        BREAK,
-        EN_ROUTE
+        CHANGE_STATUS
+    }
+
+    public enum OrderStatus
+    {
+        ORDERED,
+        IN_PROGRESS,
+        BAKING,
+        DELIVERING,
+        DELIVERED
     }
 }

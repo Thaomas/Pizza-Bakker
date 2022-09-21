@@ -27,8 +27,8 @@ namespace REI.ViewModels
             }
         }
 
-        private EmployeeStatus _status;
-        public EmployeeStatus Status
+        private OrderStatus _status;
+        public OrderStatus Status
         {
             get => _status;
             set
@@ -68,12 +68,13 @@ namespace REI.ViewModels
         public HomepageViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
-            AllStatus = Enum.GetValues(typeof(EmployeeStatus));
+            AllStatus = Enum.GetValues(typeof(OrderStatus));
 
             ChangeStatusCommand = new ChangeStatusCommand(_navigationStore);
-            AddFileCommand = new AddFileCommand(_navigationStore);
-            ReadFileCommand = new ReadFileCommand(_navigationStore);
-            DeleteNoteCommand = new DeleteNote(_navigationStore);
+            //TODO
+            //AddFileCommand = new AddFileCommand(_navigationStore);
+            //ReadFileCommand = new ReadFileCommand(_navigationStore);
+            //DeleteNoteCommand = new DeleteNote(_navigationStore);
         }
     }
 }

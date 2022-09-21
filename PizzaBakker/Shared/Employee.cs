@@ -11,7 +11,6 @@ namespace Shared
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FullName { get { return $"{this.FirstName} {this.LastName}"; } }
-        public EmployeeStatus Status { get; set; }
         public uint WorkId { get; set; }
         public DateTime? Birthday { get; set; }
         public string Department { get; set; }

@@ -13,14 +13,14 @@ namespace REI.Util
 
         private TcpClient tcpClient;
         private NetworkStream stream;
-        private Action<JObject> callback;
+        private Action<DataPacket> callback;
 
         private byte[] dataBuffer;
         private readonly byte[] lengthBytes = new byte[4];
 
         public bool IsConnected { get => tcpClient.Connected; }
 
-        public uint? ID { get; set; } = null;
+        public Guid? ID { get; set; } = null;
 
         private ConnectionHandler()
         {
@@ -47,9 +47,14 @@ namespace REI.Util
             tcpClient.BeginConnect("localhost", 6000, OnConnectionMade, null);
         }
 
-        private void OnServerConnectionMade(JObject obj)
+        private void OnServerConnectionMade(DataPacket packet)
         {
-            ID = obj["Data"]["AutenticationID"].ToObject<uint>();
+            if (packet.type == PacketType.AUTHENTICATION)
+            {
+                AutenticationPacket authPacket = packet.GetData<AutenticationPacket>();
+                ID = authPacket.autenticationID;
+            }
+
         }
 
         private void OnConnectionMade(IAsyncResult ar)
@@ -69,19 +74,17 @@ namespace REI.Util
         private void OnDataReceived(IAsyncResult ar)
         {
             stream.EndRead(ar);
-            JObject data = JObject.Parse(Encoding.UTF8.GetString(dataBuffer));
-            callback(data);
+            string data = Encoding.UTF8.GetString(dataBuffer);
+            DataPacket dataPacket = JsonConvert.DeserializeObject<DataPacket>(data);
+            callback(dataPacket);
             stream.BeginRead(lengthBytes, 0, lengthBytes.Length, OnLengthBytesReceived, null);
         }
 
-        public void SendData(Action<JObject> callback, JsonFile jsonFile)
+        public void SendData(Action<DataPacket> callback, DAbstract packet)
         {
             this.callback = callback;
 
-            byte[] dataBytes = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(
-                jsonFile,
-                Formatting.Indented,
-                new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore }));
+            byte[] dataBytes = Encoding.ASCII.GetBytes(packet.ToJson());
 
             stream.Write(BitConverter.GetBytes(dataBytes.Length));
             stream.Write(dataBytes);

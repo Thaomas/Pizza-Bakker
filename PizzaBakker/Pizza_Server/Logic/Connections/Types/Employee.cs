@@ -5,7 +5,7 @@ using System;
 using System.Net.Sockets;
 using System.Text;
 
-namespace REI_Server.Logic.Connections
+namespace Pizza_Server.Logic.Connections.Types
 {
     public class Client : IDisposable
     {
@@ -42,12 +42,9 @@ namespace REI_Server.Logic.Connections
             stream.BeginRead(lengthBytes, 0, lengthBytes.Length, OnLengthBytesReceived, null);
         }
 
-        public void SendData(JsonFile jsonFile)
+        public void SendData(DAbstract packet)
         {
-            byte[] dataBytes = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(
-                jsonFile,
-                Formatting.Indented,
-                new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore }));
+            byte[] dataBytes = Encoding.ASCII.GetBytes(packet.ToJson());
 
             stream.Write(BitConverter.GetBytes(dataBytes.Length));
             stream.Write(dataBytes);

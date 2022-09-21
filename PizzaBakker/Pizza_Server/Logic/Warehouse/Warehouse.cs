@@ -18,7 +18,6 @@ namespace REI_Server.Logic.Warehouse
         public Warehouse()
         {
             LoadFromFile();
-
         }
 
         public void AddIngredient(WarehouseItem item)

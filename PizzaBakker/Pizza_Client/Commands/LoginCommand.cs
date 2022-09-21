@@ -3,6 +3,7 @@ using REI.Stores;
 using REI.Util;
 using REI.ViewModels;
 using Shared;
+using System;
 using System.Diagnostics;
 using System.Windows;
 
@@ -34,25 +35,38 @@ namespace REI.Commands
                 return;
             }
 
-            connectionHandler.SendData(LoginCallback, new JsonFile()
+            if (uint.TryParse(((LoginViewModel)_navigationStore.CurrentViewModel).Username, out _))
+                return;
+
+            connectionHandler.SendData(LoginCallback, new DataPacket<LoginPacket>()
             {
-                StatusCode = (int)StatusCodes.OK,
-                OppCode = (int)OperationCodes.AUTHENTICATE,
-                ID = uint.Parse(((LoginViewModel)_navigationStore.CurrentViewModel).Username),
-                Data = new JsonData
+                type = PacketType.AUTHENTICATION,
+                senderID = (Guid)connectionHandler.ID,
+                data = new LoginPacket()
                 {
-                    Password = ((LoginViewModel)_navigationStore.CurrentViewModel).Password,
-                    AutenticationID = connectionHandler.ID.Value
+                    username = uint.Parse(((LoginViewModel)_navigationStore.CurrentViewModel).Username),
+                    password = ((LoginViewModel)_navigationStore.CurrentViewModel).Password
                 }
             });
+            
+            // new JsonFile()
+            // {
+            //     StatusCode = (int)StatusCodes.OK,
+            //     OppCode = (int)OperationCodes.AUTHENTICATE,
+            //     ID = uint.Parse(((LoginViewModel)_navigationStore.CurrentViewModel).Username),
+            //     Data = new JsonData
+            //     {
+            //         Password = ((LoginViewModel)_navigationStore.CurrentViewModel).Password,
+            //         AutenticationID = connectionHandler.ID.Value
+            //     }
+            // });
         }
 
-        public void LoginCallback(JObject jsonFile)
+        public void LoginCallback(DataPacket packet)
         {
-            if (jsonFile["StatusCode"].ToObject<StatusCodes>() == StatusCodes.ACCEPTED)
+            if (packet.GetData<LoginResponsePacket>().statusCode == StatusCode.ACCEPTED)
             {
-                ConnectionHandler.GetInstance().ID = jsonFile.Value<uint>("ID");
-
+                ConnectionHandler.GetInstance().ID = packet.senderID;
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     _navigationStore.CurrentViewModel = new HomepageViewModel(_navigationStore);
