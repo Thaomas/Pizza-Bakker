@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pizza_Client", "REI\Pizza_Client.csproj", "{678F3B32-5ED9-43DE-9F7A-533E5007E7B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pizza_Client", "Pizza_Client\Pizza_Client.csproj", "{678F3B32-5ED9-43DE-9F7A-533E5007E7B8}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "Shared\Shared.shproj", "{96141A0A-991C-491C-AB34-5B8891372309}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pizza_Server", "REI_Server\Pizza_Server.csproj", "{38E516F4-4941-4D54-A152-13EAE2422743}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pizza_Server", "Pizza_Server\Pizza_Server.csproj", "{38E516F4-4941-4D54-A152-13EAE2422743}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{DAA1B069-E90A-4B45-A9D3-3D825D3182CE}"
 EndProject
