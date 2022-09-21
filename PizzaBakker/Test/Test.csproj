@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\REI\Pizza_Client.csproj" />
-    <ProjectReference Include="..\REI_Server\Pizza_Server.csproj" />
+    <ProjectReference Include="..\Pizza_Client\Pizza_Client.csproj" />
+    <ProjectReference Include="..\Pizza_Server\Pizza_Server.csproj" />
   </ItemGroup>
 
   <Import Project="..\Shared\Shared.projitems" Label="Shared" />

@@ -7,12 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <Compile Remove="Models\**" />
+    <Compile Remove="Util\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <EmbeddedResource Remove="Util\**" />
+    <None Remove="Models\**" />
+    <None Remove="Util\**" />
+    <Page Remove="Models\**" />
+    <Page Remove="Util\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Util\" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <Import Project="..\Shared\Shared.projitems" Label="Shared" />

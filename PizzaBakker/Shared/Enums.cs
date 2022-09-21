@@ -6,18 +6,10 @@ using System.Threading.Tasks;
 
 namespace Shared
 {
-    public enum OperationCodes
+    public enum PacketType
     {
-        ADD_EMPLOYEE,
-        DELETE_EMPLOYEE,
-        ADD_NOTE,
-        SAVE_NOTE,
-        GET_NOTE,
-        DELETE_NOTE,
-        AUTHENTICATE,
-        CHANGE_STATUS,
-        ADD_EMPLOYEE_TO_FAV,
-        GET_STATUS_FROM_EMPLOYEE
+        LOGIN,
+        CHANGE_STATUS
     }
 
     public enum StatusCodes

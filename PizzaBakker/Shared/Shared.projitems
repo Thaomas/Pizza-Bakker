@@ -10,10 +10,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BaseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DataPacket.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Employee.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Ingredient.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Json.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PizzaOrder.cs" />
   </ItemGroup>
 </Project>
