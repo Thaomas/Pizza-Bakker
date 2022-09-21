@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pizza_Client", "REI\Pizza_Client.csproj", "{678F3B32-5ED9-43DE-9F7A-533E5007E7B8}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shared", "Shared\Shared.shproj", "{96141A0A-991C-491C-AB34-5B8891372309}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pizza_Server", "REI_Server\Pizza_Server.csproj", "{38E516F4-4941-4D54-A152-13EAE2422743}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{DAA1B069-E90A-4B45-A9D3-3D825D3182CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{678F3B32-5ED9-43DE-9F7A-533E5007E7B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{678F3B32-5ED9-43DE-9F7A-533E5007E7B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{678F3B32-5ED9-43DE-9F7A-533E5007E7B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{678F3B32-5ED9-43DE-9F7A-533E5007E7B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38E516F4-4941-4D54-A152-13EAE2422743}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38E516F4-4941-4D54-A152-13EAE2422743}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38E516F4-4941-4D54-A152-13EAE2422743}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38E516F4-4941-4D54-A152-13EAE2422743}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAA1B069-E90A-4B45-A9D3-3D825D3182CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAA1B069-E90A-4B45-A9D3-3D825D3182CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAA1B069-E90A-4B45-A9D3-3D825D3182CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAA1B069-E90A-4B45-A9D3-3D825D3182CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E01059A0-064C-4E1A-84A7-43E9D49F55DF}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Shared\Shared.projitems*{38e516f4-4941-4d54-a152-13eae2422743}*SharedItemsImports = 5
+		Shared\Shared.projitems*{678f3b32-5ed9-43de-9f7a-533e5007e7b8}*SharedItemsImports = 5
+		Shared\Shared.projitems*{96141a0a-991c-491c-ab34-5b8891372309}*SharedItemsImports = 13
+		Shared\Shared.projitems*{daa1b069-e90a-4b45-a9d3-3d825d3182ce}*SharedItemsImports = 5
+	EndGlobalSection
+EndGlobal
