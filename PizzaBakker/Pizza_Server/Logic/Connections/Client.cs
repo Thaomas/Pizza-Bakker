@@ -13,11 +13,14 @@ namespace Pizza_Server.Logic.Connections.Types
         public Action<DataPacket, Client> Callback { get; set; }
         private byte[] dataBuffer;
         private readonly byte[] lengthBytes = new byte[4];
+        public ClientType ClientType { get; set; }
+        public uint? EmployeeID { get; set; } 
 
         public Client(TcpClient client, Action<DataPacket, Client> callback)
         {
             stream = client.GetStream();
-            this.callback = callback;
+            this.Callback = callback;
+            this.EmployeeID = null;
         }
 
         public void BeginRead()
@@ -37,7 +40,7 @@ namespace Pizza_Server.Logic.Connections.Types
             stream.EndRead(ar);
             string data = Encoding.UTF8.GetString(dataBuffer);
             DataPacket packet = JsonConvert.DeserializeObject<DataPacket>(data);
-            callback(packet, this);
+            Callback(packet, this);
             stream.BeginRead(lengthBytes, 0, lengthBytes.Length, OnLengthBytesReceived, null);
         }
 

@@ -9,24 +9,17 @@ using System.Text;
 using System.Threading;
 using System.Windows;
 
-namespace REI_Server.ViewModels
+namespace Pizza_Server.Main
 {
     public class Server
     {
-        public Dictionary<Guid, Employee> IdToClient { get; } = new();
+        public Dictionary<Guid, Client> IdToClient { get; } = new();
         public Dictionary<uint, Employee> IdToEmployee { get; } = new();
 
         public Dictionary<string, Note> Notes { get; } = new();
 
         private readonly StringBuilder _clientsStringBuilder = new StringBuilder();
-        public string Clients
-        {
-            get => _clientsStringBuilder.ToString();
-            set
-            {
-                _ = _clientsStringBuilder.Append(value + "\n");
-            }
-        }
+
 
         private readonly StringBuilder _logStringBuilder = new StringBuilder();
         public string Log
@@ -40,22 +33,24 @@ namespace REI_Server.ViewModels
 
         public Server()
         {
+            Console.WriteLine("Starting Server...");
+            IdToClient = new();
             IdToEmployee = IO.LoadEmployees();
             Notes = JsonConvert.DeserializeObject<Dictionary<string, Note>>(IO.ReadFile("SaveData\\Notes.json"));
 
-            ConnectionHandler bakerConnectionHandler = new ConnectionHandler(this, 6000);
-            new Thread(bakerConnectionHandler.Run).Start();
+            ConnectionHandler connectionHandler = new ConnectionHandler(this, 6000);
+            new Thread(connectionHandler.Run).Start();
 
-            new Thread(SavingLoop).Start();
+            //new Thread(SavingLoop).Start();
+
+            Console.WriteLine("Server Started");
         }
 
         public void AddClient(Guid id, Client client)
         {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                IdToClient.Add(id, client);
-                Clients = client.ToString();
-            });
+            Console.WriteLine(id);
+            Console.WriteLine(client);
+            IdToClient.Add(id, client);
         }
 
         private void SavingLoop()

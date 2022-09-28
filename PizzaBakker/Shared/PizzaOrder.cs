@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Shared
 {
-    internal class PizzaOrder
+    public class PizzaOrder
     {
         public string Name { get; set; }
         public Guid OrderID { get; set; }

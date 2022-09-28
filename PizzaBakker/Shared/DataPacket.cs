@@ -35,6 +35,12 @@ namespace Shared
             return this.data.ToObject<T>();
         }
     }
+    
+    public class ErrorPacket : DAbstract
+    {
+        public StatusCode statusCode;
+    }
+
 
     public class LoginPacket : DAbstract
     {
@@ -47,9 +53,14 @@ namespace Shared
         public StatusCode statusCode;
     }
 
+    public class GetOrdersPacket : DAbstract
+    {
+        public Dictionary<Guid, PizzaOrder> orders;
+    }
+
     public class ChangeStatusPacket : DAbstract
     {
-        public OrderStatus newOrderStatus;
+        public OrderStatus orderStatus;
         public Guid orderID;
     }
 

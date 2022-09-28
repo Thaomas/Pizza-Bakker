@@ -29,7 +29,7 @@ namespace REI.Commands
                 senderID = connectionHandler.ID.Value,
                 data = new ChangeStatusPacket()
                 {
-                    status = ((HomepageViewModel)_navigationStore.CurrentViewModel).Status
+                    orderStatus = ((HomepageViewModel)_navigationStore.CurrentViewModel).Status
                 }
             }) ;
         }

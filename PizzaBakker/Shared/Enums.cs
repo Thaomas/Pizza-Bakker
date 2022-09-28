@@ -13,7 +13,8 @@ namespace Shared
         CHANGE_STATUS,
         STATUS,
         AUTHENTICATION,
-        AUTHENTICATION_RESPONSE
+        AUTHENTICATION_RESPONSE,
+        ERROR
     }
 
     public enum StatusCode

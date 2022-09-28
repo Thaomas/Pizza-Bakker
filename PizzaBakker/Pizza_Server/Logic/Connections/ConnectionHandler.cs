@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Pizza_Server.Logic.Connections.Types;
-using REI_Server.ViewModels;
+using Pizza_Server.Main;
 using Shared;
 using System;
 using System.Collections.Generic;
@@ -37,7 +37,7 @@ namespace REI_Server.Logic.Connections
                 Trace.WriteLine(print);
                 Console.WriteLine(print);
 
-                Client client = new(tcpClient, _operationHandler.HandleDataCallback);
+                Client client = new Client(tcpClient, _operationHandler.HandleDataCallback);
                 client.BeginRead();
 
                 Guid authenticationID = Guid.NewGuid();
