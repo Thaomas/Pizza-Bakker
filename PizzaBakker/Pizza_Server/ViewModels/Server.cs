@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Pizza_Server.Logic.Connections.Types;
 using REI_Server.Logic.Connections;
 using REI_Server.Models;
 using Shared;
@@ -12,8 +13,8 @@ namespace REI_Server.ViewModels
 {
     public class Server
     {
-        public Dictionary<Guid, Logic.Connections.Employee> IdToClient { get; } = new();
-        public Dictionary<uint, Shared.Employee> IdToEmployee { get; } = new();
+        public Dictionary<Guid, Employee> IdToClient { get; } = new();
+        public Dictionary<uint, Employee> IdToEmployee { get; } = new();
 
         public Dictionary<string, Note> Notes { get; } = new();
 
@@ -48,7 +49,7 @@ namespace REI_Server.ViewModels
             new Thread(SavingLoop).Start();
         }
 
-        public void AddClient(Guid id, Logic.Connections.Employee client)
+        public void AddClient(Guid id, Client client)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {

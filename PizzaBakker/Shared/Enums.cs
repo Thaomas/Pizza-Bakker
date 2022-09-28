@@ -12,7 +12,8 @@ namespace Shared
         LOGIN_RESPONSE,
         CHANGE_STATUS,
         STATUS,
-        AUTHENTICATION
+        AUTHENTICATION,
+        AUTHENTICATION_RESPONSE
     }
 
     public enum StatusCode
@@ -37,6 +38,13 @@ namespace Shared
         TWO,
         THREE
     };
+
+    public enum ClientType
+    {
+        CUSTOMER,
+        BAKER,
+        WAREHOUSE
+    }
 
     public enum OperationCodes
     {

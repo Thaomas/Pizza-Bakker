@@ -64,6 +64,12 @@ namespace Shared
         public Guid autenticationID;
     }
 
+    public class AuthenticationResponsePacket : DAbstract
+    {
+        public Guid autenticationID;
+        public ClientType clientType;
+    }
+
 
 }
 

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Pizza_Server.Logic.Connections.Types;
 using REI_Server.Models;
 using REI_Server.ViewModels;
 using Shared;
@@ -10,20 +11,47 @@ namespace REI_Server.Logic.Connections
     class OperationHandler
     {
         private readonly Server _server;
-        private readonly Dictionary<PacketType, Action<DataPacket>> _operationHandlers;
+        private readonly Dictionary<PacketType, Action<DataPacket>> _customerOperationHandlers;
+        private readonly Dictionary<PacketType, Action<DataPacket>> _bakerOperationHandlers;
+        private readonly Dictionary<PacketType, Action<DataPacket>> _warehouseOperationHandlers;
 
         public OperationHandler(Server viewModel)
         {
             _server = viewModel;
-            _operationHandlers = new Dictionary<PacketType, Action<DataPacket>>
+            _bakerOperationHandlers = new Dictionary<PacketType, Action<DataPacket>>
             {
                 { PacketType.CHANGE_STATUS, ChangeStatus}
             };
+            _customerOperationHandlers = new();
+            _warehouseOperationHandlers = new();
         }
-        public void HandleDataCallback(DataPacket packet)
+        public void HandleDataCallback(DataPacket packet, Client client)
         {
-            _operationHandlers[packet.type](packet);
+            if(packet.type == PacketType.AUTHENTICATION_RESPONSE)
+            {
+                AuthenticationResponsePacket authResponsePacket = packet.GetData<AuthenticationResponsePacket>();
+                Action<DataPacket, Client> callback;
+                switch (authResponsePacket.clientType)
+                {
+                    case ClientType.CUSTOMER:
+                        callback = (DataPacket p, Client c) => {_customerOperationHandlers[p.type](packet)};
+                        break;
+                    case ClientType.BAKER:
+                        callback = (DataPacket p, Client c) => {_bakerOperationHandlers[p.type](packet)};
+                        break;
+                    case ClientType.WAREHOUSE:
+                        callback = (DataPacket p, Client c) => {_warehouseOperationHandlers[p.type](packet)};
+                        break;
+                    default:
+                        callback = (DataPacket p, Client c) => { }; 
+                        break;
+                }
+                client.Callback = callback;
+            }
         }
+
+
+
 
         public void Authenticate(DataPacket packet)
         {

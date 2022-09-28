@@ -10,16 +10,14 @@ namespace Pizza_Server.Logic.Connections.Types
     public class Client : IDisposable
     {
         private readonly NetworkStream stream;
-
-        private readonly Action<JObject> callback;
+        public Action<DataPacket, Client> Callback { get; set; }
         private byte[] dataBuffer;
         private readonly byte[] lengthBytes = new byte[4];
 
-        public Client(TcpClient client, Action<JObject> callback)
+        public Client(TcpClient client, Action<DataPacket, Client> callback)
         {
             stream = client.GetStream();
             this.callback = callback;
-
         }
 
         public void BeginRead()
@@ -37,8 +35,9 @@ namespace Pizza_Server.Logic.Connections.Types
         private void OnDataReceived(IAsyncResult ar)
         {
             stream.EndRead(ar);
-            JObject data = JObject.Parse(Encoding.UTF8.GetString(dataBuffer));
-            callback(data);
+            string data = Encoding.UTF8.GetString(dataBuffer);
+            DataPacket packet = JsonConvert.DeserializeObject<DataPacket>(data);
+            callback(packet, this);
             stream.BeginRead(lengthBytes, 0, lengthBytes.Length, OnLengthBytesReceived, null);
         }
 

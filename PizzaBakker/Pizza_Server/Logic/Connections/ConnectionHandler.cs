@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Pizza_Server.Logic.Connections.Types;
 using REI_Server.ViewModels;
 using Shared;
 using System;
@@ -36,11 +37,11 @@ namespace REI_Server.Logic.Connections
                 Trace.WriteLine(print);
                 Console.WriteLine(print);
 
-                Employee employee = new(tcpClient, _operationHandler.HandleDataCallback);
-                employee.BeginRead();
+                Client client = new(tcpClient, _operationHandler.HandleDataCallback);
+                client.BeginRead();
 
                 Guid authenticationID = Guid.NewGuid();
-                employee.SendData(new DataPacket<AutenticationPacket>()
+                client.SendData(new DataPacket<AutenticationPacket>()
                 {
                     type = PacketType.AUTHENTICATION,
                     data = new AutenticationPacket()
@@ -49,7 +50,7 @@ namespace REI_Server.Logic.Connections
                     }
                 });
 
-                _server.AddClient(authenticationID, employee);
+                _server.AddClient(authenticationID, client);
             }
         }
     }
