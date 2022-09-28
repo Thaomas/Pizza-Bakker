@@ -57,10 +57,10 @@
         <Button
             Grid.Row="3"
             Grid.Column="0"
-            Margin="10,54,710,25"
+            Margin="5,54,5,25"
             Height="50"
             Content="deletete"
-            Command="{Binding DeleteNoteCommand}" Grid.ColumnSpan="2"/>
+            Command="{Binding DeleteNoteCommand}"/>
 
         <TextBox
             Grid.Row="0"

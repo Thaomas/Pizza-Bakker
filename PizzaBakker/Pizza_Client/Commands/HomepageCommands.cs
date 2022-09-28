@@ -1,13 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
-using REI.Stores;
+﻿using REI.Stores;
 using REI.Util;
 using REI.ViewModels;
 using Shared;
+using Shared.Order;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace REI.Commands
 {
@@ -26,7 +22,7 @@ namespace REI.Commands
             connectionHandler.SendData(Callback, new DataPacket<ChangeStatusPacket>()
             {
                 type = PacketType.CHANGE_STATUS,
-                senderID = connectionHandler.ID.Value,
+                senderID = connectionHandler.ID,
                 data = new ChangeStatusPacket()
                 {
                     orderStatus = ((HomepageViewModel)_navigationStore.CurrentViewModel).Status

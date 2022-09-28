@@ -40,46 +40,50 @@ namespace Shared
     {
         public StatusCode statusCode;
     }
-
-
-    public class LoginPacket : DAbstract
+    namespace Login
     {
-        public uint username;
-        public string password;
-    }
+        public class AutenticationPacket : DAbstract
+        {
+            public Guid autenticationID;
+        }
 
-    public class LoginResponsePacket : DAbstract
-    {
-        public StatusCode statusCode;
-    }
+        public class AuthenticationResponsePacket : DAbstract
+        {
+            public Guid autenticationID;
+            public ClientType clientType;
+        }
 
-    public class GetOrdersPacket : DAbstract
-    {
-        public Dictionary<Guid, PizzaOrder> orders;
+        public class LoginPacket : DAbstract
+        {
+            public uint username;
+            public string password;
+            public ClientType clientType;
+        }
+        public class LoginResponsePacket : DAbstract
+        {
+            public StatusCode statusCode;
+        }
     }
+    namespace Order
+    {
+        public class GetOrdersPacket : DAbstract
+        {
+            public Dictionary<Guid, PizzaOrder> orders;
+        }
 
-    public class ChangeStatusPacket : DAbstract
-    {
-        public OrderStatus orderStatus;
-        public Guid orderID;
-    }
+        public class ChangeStatusPacket : DAbstract
+        {
+            public OrderStatus orderStatus;
+            public Guid orderID;
+        }
 
-    public class StatusPacket : DAbstract
-    {
-        public OrderStatus orderStatus;
-        public Guid orderID;
+        public class StatusPacket : DAbstract
+        {
+            public OrderStatus orderStatus;
+            public Guid orderID;
+        }
     }
-
-    public class AutenticationPacket : DAbstract
-    {
-        public Guid autenticationID;
-    }
-
-    public class AuthenticationResponsePacket : DAbstract
-    {
-        public Guid autenticationID;
-        public ClientType clientType;
-    }
+    
 
 
 }

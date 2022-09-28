@@ -18,9 +18,6 @@ namespace Pizza_Server.Main
 
         public Dictionary<string, Note> Notes { get; } = new();
 
-        private readonly StringBuilder _clientsStringBuilder = new StringBuilder();
-
-
         private readonly StringBuilder _logStringBuilder = new StringBuilder();
         public string Log
         {
@@ -41,7 +38,7 @@ namespace Pizza_Server.Main
             ConnectionHandler connectionHandler = new ConnectionHandler(this, 6000);
             new Thread(connectionHandler.Run).Start();
 
-            //new Thread(SavingLoop).Start();
+            new Thread(SavingLoop).Start();
 
             Console.WriteLine("Server Started");
         }

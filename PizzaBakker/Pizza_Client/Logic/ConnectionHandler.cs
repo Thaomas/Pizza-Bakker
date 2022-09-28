@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Shared;
+using Shared.Login;
 using System;
 using System.Net.Sockets;
 using System.Text;
@@ -13,14 +14,14 @@ namespace REI.Util
 
         private TcpClient tcpClient;
         private NetworkStream stream;
-        private Action<DataPacket> callback;
+        public Action<DataPacket> callback;
 
         private byte[] dataBuffer;
         private readonly byte[] lengthBytes = new byte[4];
 
         public bool IsConnected { get => tcpClient.Connected; }
 
-        public Guid? ID { get; set; } = null;
+        public Guid ID { get; set; } = Guid.Empty;
 
         private ConnectionHandler()
         {
@@ -53,6 +54,16 @@ namespace REI.Util
             {
                 AutenticationPacket authPacket = packet.GetData<AutenticationPacket>();
                 ID = authPacket.autenticationID;
+                SendData(new DataPacket<AuthenticationResponsePacket>
+                {
+                    senderID = ID,
+                    data = new AuthenticationResponsePacket
+                    {
+                        autenticationID = ID,
+                        clientType = ClientType.EMPLOYEE
+                    }
+                });
+
             }
 
         }
@@ -78,6 +89,15 @@ namespace REI.Util
             DataPacket dataPacket = JsonConvert.DeserializeObject<DataPacket>(data);
             callback(dataPacket);
             stream.BeginRead(lengthBytes, 0, lengthBytes.Length, OnLengthBytesReceived, null);
+        }
+
+        public void SendData(DAbstract packet)
+        {
+            byte[] dataBytes = Encoding.ASCII.GetBytes(packet.ToJson());
+
+            stream.Write(BitConverter.GetBytes(dataBytes.Length));
+            stream.Write(dataBytes);
+            stream.Flush();
         }
 
         public void SendData(Action<DataPacket> callback, DAbstract packet)

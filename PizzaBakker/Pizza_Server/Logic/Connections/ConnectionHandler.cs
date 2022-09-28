@@ -2,6 +2,7 @@
 using Pizza_Server.Logic.Connections.Types;
 using Pizza_Server.Main;
 using Shared;
+using Shared.Login;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

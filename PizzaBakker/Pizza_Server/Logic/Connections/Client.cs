@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Shared;
+using Shared.Login;
 using System;
 using System.Net.Sockets;
 using System.Text;
@@ -44,9 +45,9 @@ namespace Pizza_Server.Logic.Connections.Types
             stream.BeginRead(lengthBytes, 0, lengthBytes.Length, OnLengthBytesReceived, null);
         }
 
-        public void SendData(DAbstract packet)
+        public void SendData(DAbstract abstractPacket)
         {
-            byte[] dataBytes = Encoding.ASCII.GetBytes(packet.ToJson());
+            byte[] dataBytes = Encoding.ASCII.GetBytes(abstractPacket.ToJson());
 
             stream.Write(BitConverter.GetBytes(dataBytes.Length));
             stream.Write(dataBytes);

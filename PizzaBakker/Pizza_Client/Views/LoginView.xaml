@@ -57,6 +57,14 @@
             Width="220" 
             Margin="15"/>
 
+        <ComboBox
+            Grid.Row="2"
+            Grid.Column="1"
+            Height="50"
+            Margin="5"
+            ItemsSource="{Binding AllClientTypes}"
+            SelectedItem="{Binding ClientType}"/>
+
 
         <Button 
                 Grid.Column="0"

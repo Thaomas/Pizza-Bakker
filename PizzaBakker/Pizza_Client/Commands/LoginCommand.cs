@@ -3,6 +3,7 @@ using REI.Stores;
 using REI.Util;
 using REI.ViewModels;
 using Shared;
+using Shared.Login;
 using System;
 using System.Diagnostics;
 using System.Windows;
@@ -22,7 +23,7 @@ namespace REI.Commands
         {
             ConnectionHandler connectionHandler = ConnectionHandler.GetInstance();
 
-            if (!connectionHandler.IsConnected || connectionHandler.ID is null)
+            if (!connectionHandler.IsConnected || connectionHandler.ID == Guid.Empty)
             {
                 Trace.WriteLine("No Connection to server.");
                 return;
@@ -48,18 +49,6 @@ namespace REI.Commands
                     password = ((LoginViewModel)_navigationStore.CurrentViewModel).Password
                 }
             });
-            
-            // new JsonFile()
-            // {
-            //     StatusCode = (int)StatusCodes.OK,
-            //     OppCode = (int)OperationCodes.AUTHENTICATE,
-            //     ID = uint.Parse(((LoginViewModel)_navigationStore.CurrentViewModel).Username),
-            //     Data = new JsonData
-            //     {
-            //         Password = ((LoginViewModel)_navigationStore.CurrentViewModel).Password,
-            //         AutenticationID = connectionHandler.ID.Value
-            //     }
-            // });
         }
 
         public void LoginCallback(DataPacket packet)

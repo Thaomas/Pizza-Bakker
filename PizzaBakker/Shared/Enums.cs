@@ -43,6 +43,7 @@ namespace Shared
     public enum ClientType
     {
         CUSTOMER,
+        EMPLOYEE,
         BAKER,
         WAREHOUSE
     }

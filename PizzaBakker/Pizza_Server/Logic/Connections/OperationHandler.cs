@@ -3,6 +3,8 @@ using Pizza_Server.Logic.Connections.Types;
 using Pizza_Server.Main;
 using REI_Server.Models;
 using Shared;
+using Shared.Login;
+using Shared.Order;
 using System;
 using System.Collections.Generic;
 
@@ -36,8 +38,7 @@ namespace REI_Server.Logic.Connections
                     case ClientType.CUSTOMER:
                         callback = (DataPacket p, Client c) => _customerOperationHandlers[p.type](packet);
                         break;
-                    case ClientType.BAKER:
-                    case ClientType.WAREHOUSE:
+                    case ClientType.EMPLOYEE:
                         callback = Authenticate;
                         break;
                     default:
