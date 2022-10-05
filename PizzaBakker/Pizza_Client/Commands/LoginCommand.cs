@@ -35,13 +35,14 @@ namespace REI.Commands
                 Trace.WriteLine("No password or username entered.");
                 return;
             }
-
-            if (uint.TryParse(((LoginViewModel)_navigationStore.CurrentViewModel).Username, out _))
+            if (!uint.TryParse(((LoginViewModel)_navigationStore.CurrentViewModel).Username, out _))
+            {
                 return;
+            }
 
             connectionHandler.SendData(LoginCallback, new DataPacket<LoginPacket>()
             {
-                type = PacketType.AUTHENTICATION,
+                type = PacketType.LOGIN,
                 senderID = (Guid)connectionHandler.ID,
                 data = new LoginPacket()
                 {

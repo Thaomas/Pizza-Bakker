@@ -1,1 +1,32 @@
-null
+{
+  "12": {
+    "FirstName": "Jon",
+    "LastName": "Jonsen",
+    "FullName": "Jon Jonsen",
+    "WorkId": 12,
+    "Birthday": "2021-11-10T17:09:09",
+    "Department": "Kitchen",
+    "Password": "password1",
+    "PrivacyLevel": 3
+  },
+  "31": {
+    "FirstName": "redje",
+    "LastName": "cadetje",
+    "FullName": "redje cadetje",
+    "WorkId": 31,
+    "Birthday": "2021-11-10T17:09:09.7099616+01:00",
+    "Department": "Front desk",
+    "Password": "password2",
+    "PrivacyLevel": 6
+  },
+  "69": {
+    "FirstName": "test",
+    "LastName": "12345",
+    "FullName": "test 12345",
+    "WorkId": 69,
+    "Birthday": "2021-11-10T17:09:09.7099643+01:00",
+    "Department": "Front desk",
+    "Password": "password3",
+    "PrivacyLevel": 6
+  }
+}

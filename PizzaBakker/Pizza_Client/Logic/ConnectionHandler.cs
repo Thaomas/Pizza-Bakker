@@ -57,6 +57,7 @@ namespace REI.Util
                 SendData(new DataPacket<AuthenticationResponsePacket>
                 {
                     senderID = ID,
+                    type = PacketType.AUTHENTICATION_RESPONSE,
                     data = new AuthenticationResponsePacket
                     {
                         autenticationID = ID,

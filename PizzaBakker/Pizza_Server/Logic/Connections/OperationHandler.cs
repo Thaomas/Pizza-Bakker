@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using Pizza_Server.Logic.Connections.Types;
 using Pizza_Server.Main;
 using REI_Server.Models;
@@ -53,6 +53,7 @@ namespace REI_Server.Logic.Connections
         public void Authenticate(DataPacket packet, Client client)
         {
             if (packet.type != PacketType.LOGIN || client.ClientType == ClientType.CUSTOMER)
+            {
                 client.SendData(new DataPacket<ErrorPacket>
                 {
                     type = PacketType.ERROR,
@@ -61,7 +62,8 @@ namespace REI_Server.Logic.Connections
                     {
                         statusCode = (client.ClientType == ClientType.CUSTOMER) ? StatusCode.FORBIDDEN : StatusCode.BAD_REQUEST
                     }
-                }); ;
+                });
+            }
 
             LoginPacket loginPacket = packet.GetData<LoginPacket>();
             uint id = loginPacket.username;
