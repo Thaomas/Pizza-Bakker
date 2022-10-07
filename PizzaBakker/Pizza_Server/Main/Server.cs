@@ -32,7 +32,7 @@ namespace Pizza_Server.Main
         {
             Console.WriteLine("Starting Server...");
             IdToClient = new();
-            IdToEmployee = IO.LoadEmployees();
+            IdToEmployee = LoadEmployees();
             Notes = JsonConvert.DeserializeObject<Dictionary<string, Note>>(IO.ReadFile("SaveData\\Notes.json"));
 
             ConnectionHandler connectionHandler = new ConnectionHandler(this, 6000);
@@ -50,12 +50,29 @@ namespace Pizza_Server.Main
             IdToClient.Add(id, client);
         }
 
+        public static void SaveEmployees(Dictionary<uint, Employee> dic)
+        {
+            IO.WriteFile("SaveData\\Employees.json", JsonConvert.SerializeObject(dic, Formatting.Indented));
+        }
+
+        public static Dictionary<uint, Employee> LoadEmployees()
+        {
+            string jsonString = IO.ReadFile("SaveData\\Employees.json");
+
+            if (jsonString == null)
+            {
+                return new Dictionary<uint, Employee>();
+            }
+
+            return JsonConvert.DeserializeObject<Dictionary<uint, Employee>>(jsonString);
+        }
+
         private void SavingLoop()
         {
             while (true)
             {
-                IO.SaveEmployees(IdToEmployee);
-                IO.WriteFile("SaveData\\Notes", ".json", JsonConvert.SerializeObject(Notes, Formatting.Indented));
+                SaveEmployees(IdToEmployee);
+                IO.WriteFile("SaveData\\Notes.json", JsonConvert.SerializeObject(Notes, Formatting.Indented));
                 Thread.Sleep(10000);
             }
         }
