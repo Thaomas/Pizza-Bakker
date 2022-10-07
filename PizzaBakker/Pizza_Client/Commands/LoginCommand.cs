@@ -59,7 +59,7 @@ namespace REI.Commands
                 ConnectionHandler.GetInstance().ID = packet.senderID;
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    _navigationStore.CurrentViewModel = new HomepageViewModel(_navigationStore);
+                    _navigationStore.CurrentViewModel = new WarehouseViewModel(_navigationStore);
                 });
 
                 return;

@@ -14,7 +14,10 @@ namespace Shared
         STATUS,
         AUTHENTICATION,
         AUTHENTICATION_RESPONSE,
-        ERROR
+        ERROR,
+        ADD_INGREDIENT,
+        GET_LIST,
+        GET_LIST_RESPONSE
     }
 
     public enum StatusCode

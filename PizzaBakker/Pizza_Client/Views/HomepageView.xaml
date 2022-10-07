@@ -27,6 +27,7 @@
             Grid.Column="0"
             Height="50"
             Margin="5"
+            Text="Choose Status"
             ItemsSource="{Binding AllStatus}"
             SelectedItem="{Binding Status}"/>
 
@@ -43,15 +44,15 @@
             Grid.Column="0"
             Margin="5"
             Height="50"
-            Content="Add File"
-            Command="{Binding AddFileCommand}"/>
+            Content="Add Ingredient"
+            Command="{Binding AddIngredientCommand}"/>
 
         <Button
             Grid.Row="2"
             Grid.Column="0"
             Margin="5,113,5,94"
             Height="50"
-            Content="Read File"
+            Content="Read Ingredient"
             Command="{Binding ReadFileCommand}" Grid.RowSpan="2"/>
 
         <Button
@@ -59,7 +60,7 @@
             Grid.Column="0"
             Margin="5,54,5,25"
             Height="50"
-            Content="deletete"
+            Content="Delete Ingredient"
             Command="{Binding DeleteNoteCommand}"/>
 
         <TextBox
@@ -71,8 +72,8 @@
 
         <TextBox 
             Grid.Row="1"
-            Grid.Column="1"
-            Grid.RowSpan="3"
+            Grid.Column="10"
+            Grid.RowSpan="2"
             Margin="25"
             TextWrapping="Wrap"
             AcceptsReturn="True"

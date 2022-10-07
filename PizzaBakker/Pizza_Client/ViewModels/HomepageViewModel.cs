@@ -61,7 +61,7 @@ namespace REI.ViewModels
         }
 
         public ICommand ChangeStatusCommand { get; }
-        public ICommand AddFileCommand { get; }
+        public ICommand AddIngredientCommand { get; }
         public ICommand ReadFileCommand { get; }
         public ICommand DeleteNoteCommand { get; }
 
@@ -71,8 +71,9 @@ namespace REI.ViewModels
             AllStatus = Enum.GetValues(typeof(OrderStatus));
 
             ChangeStatusCommand = new ChangeStatusCommand(_navigationStore);
+            AddIngredientCommand = new AddIngredientCommand(_navigationStore);
+            
             //TODO
-            //AddFileCommand = new AddFileCommand(_navigationStore);
             //ReadFileCommand = new ReadFileCommand(_navigationStore);
             //DeleteNoteCommand = new DeleteNote(_navigationStore);
         }

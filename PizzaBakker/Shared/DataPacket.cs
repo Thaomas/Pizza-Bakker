@@ -13,7 +13,6 @@ namespace Shared
         {
             return JsonConvert.SerializeObject(this);
         }
-
     }
 
     public class DataPacket<T> : DAbstract where T : DAbstract
@@ -40,6 +39,7 @@ namespace Shared
     {
         public StatusCode statusCode;
     }
+    
     namespace Login
     {
         public class AutenticationPacket : DAbstract
@@ -64,6 +64,7 @@ namespace Shared
             public StatusCode statusCode;
         }
     }
+    
     namespace Order
     {
         public class GetOrdersPacket : DAbstract
@@ -83,9 +84,24 @@ namespace Shared
             public Guid orderID;
         }
     }
-    
 
-
+    namespace Warehouse
+    {
+        public class AddIngredientPacket : DAbstract
+        {
+            public string message;
+        }
+        
+        public class GetListRequestPacket : DAbstract
+        {
+            
+        }
+        
+        public class GetListResponsePacket : DAbstract
+        {
+            public List<WarehouseItem> allItems;
+        }
+    }
 }
 
 

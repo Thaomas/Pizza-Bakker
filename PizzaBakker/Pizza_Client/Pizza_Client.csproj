@@ -21,6 +21,16 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="Views\WarehouseView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pizza_Server\Pizza_Server.csproj" />
+  </ItemGroup>
+
   <Import Project="..\Shared\Shared.projitems" Label="Shared" />
 
 </Project>

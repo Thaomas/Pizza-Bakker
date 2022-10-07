@@ -10,10 +10,9 @@ using System.Threading.Tasks;
 
 namespace REI_Server.Logic.Warehouse
 {
-    internal class Warehouse
+    public class Warehouse
     {
-    private Dictionary<uint, WarehouseItem> _ingredientsx;
-        private List<WarehouseItem> _ingredients = new();
+        public List<WarehouseItem> _ingredients = new();
 
         private readonly string _fileName = $"ingredients";
 
@@ -23,7 +22,7 @@ namespace REI_Server.Logic.Warehouse
             LoadFromFile();
         }
 
-        public void startSavingThread()
+        /*public void startSavingThread()
         {
             new Thread(SavingLoop).Start();
         }
@@ -39,7 +38,7 @@ namespace REI_Server.Logic.Warehouse
 
                 Console.WriteLine("saving loop !");
             }
-        }
+        }*/
 
         public void orderPizza(List<string> orderPizza)
         {
@@ -140,7 +139,7 @@ namespace REI_Server.Logic.Warehouse
 
         public void LoadFromFile() {          
 
-            _ingredients = JsonConvert.DeserializeObject<List<WarehouseItem>>(IO.ReadFile("Warehouse.json"));
+            _ingredients = JsonConvert.DeserializeObject<List<WarehouseItem>>(IO.ReadFile("SaveData\\Warehouse.json"));
 
             if (_ingredients == null) {
                 Console.WriteLine("Geen ingredienten beschikbaar!");

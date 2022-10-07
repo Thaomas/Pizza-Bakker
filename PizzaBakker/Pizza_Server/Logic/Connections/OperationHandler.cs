@@ -3,10 +3,11 @@ using Pizza_Server.Logic.Connections.Types;
 using Pizza_Server.Main;
 using REI_Server.Models;
 using Shared;
-using Shared.Login;
+using Shared.Warehouse;
 using Shared.Order;
 using System;
 using System.Collections.Generic;
+using Shared.Login;
 
 namespace REI_Server.Logic.Connections
 {
@@ -24,8 +25,15 @@ namespace REI_Server.Logic.Connections
             {
                 { PacketType.CHANGE_STATUS, ChangeStatus}
             };
+            
+            _warehouseOperationHandlers = new Dictionary<PacketType, Action<DataPacket>>
+            {
+                { PacketType.ADD_INGREDIENT, AddIngredient},
+                { PacketType.GET_LIST, GetList}
+            };
+            
+            
             _customerOperationHandlers = new();
-            _warehouseOperationHandlers = new();
         }
         public void HandleDataCallback(DataPacket packet, Client client)
         {
@@ -50,6 +58,7 @@ namespace REI_Server.Logic.Connections
             }
         }
 
+        
         public void Authenticate(DataPacket packet, Client client)
         {
             if (packet.type != PacketType.LOGIN || client.ClientType == ClientType.CUSTOMER)
@@ -91,7 +100,8 @@ namespace REI_Server.Logic.Connections
 
             Employee employee = _server.IdToEmployee[id];
             Dictionary < PacketType, Action < DataPacket >> oppHandler = (client.ClientType == ClientType.BAKER) ? _bakerOperationHandlers : _warehouseOperationHandlers;
-
+            
+            
             client.Callback = (DataPacket p, Client c) => oppHandler[p.type](packet);
             // Let the client know that it can log in. 
             client.SendData(new DataPacket<LoginResponsePacket>
@@ -112,7 +122,33 @@ namespace REI_Server.Logic.Connections
             ChangeStatusPacket statusPacket = packet.GetData<ChangeStatusPacket>();
             Client client = _server.IdToClient[packet.senderID];
         }
+        
+        public void AddIngredient(DataPacket packet)
+        {
+            Console.WriteLine("server-side response");
+            Client client = _server.IdToClient[packet.senderID];
+            client.SendData(new DataPacket<AddIngredientPacket>
+            {
+                type = PacketType.ADD_INGREDIENT,
+                data = new AddIngredientPacket()
+                {
+                    message = "kip boulion is toegevoegdddd"
+                }
+            });
+        }
 
-
+        //TODO Warahouse singleton maken HET WERKT WEL MAAR HET KAN BETER 
+        public void GetList(DataPacket packet)
+        {
+            Client client = _server.IdToClient[packet.senderID];
+            client.SendData(new DataPacket<GetListResponsePacket>
+            {
+                type = PacketType.ADD_INGREDIENT,
+                data = new GetListResponsePacket()
+                {
+                    allItems = new Warehouse.Warehouse()._ingredients
+                }
+            });
+        }
     }
 }

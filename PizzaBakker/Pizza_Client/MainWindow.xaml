@@ -16,6 +16,9 @@
             <DataTemplate DataType="{x:Type viewModels:HomepageViewModel}">
                 <views:HomepageView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:WarehouseViewModel}">
+                <views:WarehouseView/>
+            </DataTemplate>
         </Grid.Resources>
 
         <ContentControl Content="{Binding Path=CurrentViewModel}"/>
