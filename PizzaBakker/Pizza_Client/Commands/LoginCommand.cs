@@ -1,19 +1,18 @@
-﻿using Newtonsoft.Json.Linq;
-using REI.Stores;
-using REI.Util;
-using REI.ViewModels;
+﻿using Pizza_Client.Stores;
+using Pizza_Client.Util;
+using Pizza_Client.ViewModels;
 using Shared;
 using Shared.Login;
 using System;
 using System.Diagnostics;
 using System.Windows;
 
-namespace REI.Commands
+namespace Pizza_Client.Commands
 {
     public class LoginCommand : CommandBase
     {
         private readonly NavigationStore _navigationStore;
-
+        private LoginViewModel _loginViewModel => (LoginViewModel)_navigationStore.CurrentViewModel;
         public LoginCommand(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
@@ -22,34 +21,33 @@ namespace REI.Commands
         public override void Execute(object parameter)
         {
             ConnectionHandler connectionHandler = ConnectionHandler.GetInstance();
-
             if (!connectionHandler.IsConnected || connectionHandler.ID == Guid.Empty)
             {
                 Trace.WriteLine("No Connection to server.");
                 return;
             }
 
-            if (((LoginViewModel)_navigationStore.CurrentViewModel).Username is null ||
-                ((LoginViewModel)_navigationStore.CurrentViewModel).Password is null)
+            if (_loginViewModel.Username is null ||
+                _loginViewModel.Password is null)
             {
                 Trace.WriteLine("No password or username entered.");
                 return;
             }
-            if (!uint.TryParse(((LoginViewModel)_navigationStore.CurrentViewModel).Username, out _))
+            if (!uint.TryParse(_loginViewModel.Username, out _))
             {
                 return;
             }
 
-            connectionHandler.SendData(LoginCallback, new DataPacket<LoginPacket>()
+            connectionHandler.SendData(new DataPacket<LoginPacket>()
             {
                 type = PacketType.LOGIN,
                 senderID = (Guid)connectionHandler.ID,
                 data = new LoginPacket()
                 {
-                    username = uint.Parse(((LoginViewModel)_navigationStore.CurrentViewModel).Username),
-                    password = ((LoginViewModel)_navigationStore.CurrentViewModel).Password
+                    username = uint.Parse(_loginViewModel.Username),
+                    password = _loginViewModel.Password
                 }
-            });
+            }, LoginCallback);
         }
 
         public void LoginCallback(DataPacket packet)

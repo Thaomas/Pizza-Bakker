@@ -1,14 +1,11 @@
-﻿using Newtonsoft.Json;
-using REI_Server.Logic.Connections;
+﻿using Pizza_Server.Logic.Connections;
 using Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace REI_Server.Logic.Warehouse
+//Hij kon de klasse niet vinden omdat de namespace dezelde naam had
+namespace Pizza_Server.Logic.WarehouseNS
 {
     public class Warehouse
     {
@@ -16,10 +13,18 @@ namespace REI_Server.Logic.Warehouse
 
         private readonly string _fileName = $"ingredients";
 
+        private static Warehouse _singleton;
 
-        public Warehouse()
+        private Warehouse()
         {
             LoadFromFile();
+        }
+
+        public static Warehouse GetInstance()
+        {
+            if (_singleton == null)
+                _singleton = new Warehouse();
+            return _singleton;
         }
 
         /*public void startSavingThread()
@@ -54,8 +59,8 @@ namespace REI_Server.Logic.Warehouse
                     {
                         _outOfStockIngredients.Add(singleIngedient);
                     }
-                    
-                }                              
+
+                }
             }
 
             if (_orderComplete)
@@ -76,7 +81,7 @@ namespace REI_Server.Logic.Warehouse
         //WERKT!!
         public bool decrementIngredient(string singleIngredient)
         {
-            
+
             WarehouseItem retrievedIngredient = _ingredients.First(name => name.Ingredient.Name.Equals(singleIngredient));
 
             if (retrievedIngredient.Count > 0)
@@ -85,15 +90,15 @@ namespace REI_Server.Logic.Warehouse
 
                 _ingredients.Remove(retrievedIngredient);
                 _ingredients.Add(retrievedIngredient);
-                 return true;
+                return true;
             }
             else
             {
                 Console.WriteLine("Het product: " + retrievedIngredient.Ingredient.Name + " is uitverkocht!");
                 return false;
-            }                
+            }
         }
-                    
+
 
         //Werkt!
         public void AddIngredient(WarehouseItem item)
@@ -115,7 +120,8 @@ namespace REI_Server.Logic.Warehouse
             {
                 WarehouseItem deletedItem = _ingredients.First(name => name.Ingredient.Name.Equals(item));
                 _ingredients.Remove(deletedItem);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e + "Naam bestaat niet, dus hebben wij het niet kunnen verwijderen!!");
             }
@@ -127,9 +133,12 @@ namespace REI_Server.Logic.Warehouse
 
             WarehouseItem foundIngredient = null;
 
-            try {
+            try
+            {
                 foundIngredient = _ingredients.First(name => name.Ingredient.Name.Equals(item));
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Console.WriteLine(e + "Naam bestaat niet, dus hebben wij het niet kunnen verwijderen!!");
             }
 
@@ -137,14 +146,18 @@ namespace REI_Server.Logic.Warehouse
         }
 
 
-        public void LoadFromFile() {          
+        public void LoadFromFile()
+        {
 
-            _ingredients = JsonConvert.DeserializeObject<List<WarehouseItem>>(IO.ReadFile("SaveData\\Warehouse.json"));
+            _ingredients = IO.ReadObjectFromFile<List<WarehouseItem>>("SaveData\\Warehouse.json");
 
-            if (_ingredients == null) {
+            if (_ingredients == null)
+            {
                 Console.WriteLine("Geen ingredienten beschikbaar!");
             }
-                        
+
         }
+
+        //TODO Save Ingredients
     }
 }

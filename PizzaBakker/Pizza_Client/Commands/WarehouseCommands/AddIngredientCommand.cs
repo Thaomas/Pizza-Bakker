@@ -1,17 +1,13 @@
-using System;
-using System.Diagnostics;
-using REI.Stores;
-using REI.Util;
-using REI.ViewModels;
+using Pizza_Client.Stores;
+using Pizza_Client.ViewModels;
 using Shared;
-using Shared.Login;
-using Shared.Order;
 
-namespace REI.Commands
+namespace Pizza_Client.Commands.WarehouseCommands
 {
     public class AddIngredientCommand : CommandBase
     {
         private readonly NavigationStore _navigationStore;
+        private WarehouseViewModel WarehouseViewModel => (WarehouseViewModel)_navigationStore.CurrentViewModel;
 
         public AddIngredientCommand(NavigationStore navigationStore)
         {
@@ -20,8 +16,8 @@ namespace REI.Commands
 
         public override void Execute(object parameter)
         {
-            ((WarehouseViewModel)_navigationStore.CurrentViewModel).Debug = "miauwww";
-            
+            WarehouseViewModel.Debug = "miauwww";
+
             /*ConnectionHandler connectionHandler = ConnectionHandler.GetInstance();
             connectionHandler.SendData(Callback, new DataPacket<AddIngredientPacket>()
             {
@@ -33,7 +29,7 @@ namespace REI.Commands
 
         private void Callback(DataPacket packet)
         {
-            ((WarehouseViewModel)_navigationStore.CurrentViewModel).Debug = "miauwww";
+            WarehouseViewModel.Debug = "miauwww";
         }
     }
 }

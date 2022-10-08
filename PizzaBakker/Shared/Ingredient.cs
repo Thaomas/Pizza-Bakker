@@ -6,10 +6,9 @@ namespace Shared
         public uint Id { get; set; }
         public decimal Price { get; set; }
 
-
-        public string ToString()
+        public override string ToString()
         {
-            return "ID: "+Id + ", Name: " + Name + " , Price:" + Price;
+            return $"ID: {Id} Name: {Name} Price: {Price}";
         }
     }
 }

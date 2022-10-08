@@ -1,13 +1,12 @@
 ﻿using Newtonsoft.Json;
+using Pizza_Server.Logic.Connections;
 using Pizza_Server.Logic.Connections.Types;
-using REI_Server.Logic.Connections;
-using REI_Server.Models;
+using Pizza_Server.Logic.WarehouseNS;
 using Shared;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using System.Windows;
 
 namespace Pizza_Server.Main
 {
@@ -16,7 +15,6 @@ namespace Pizza_Server.Main
         public Dictionary<Guid, Client> IdToClient { get; } = new();
         public Dictionary<uint, Employee> IdToEmployee { get; } = new();
 
-        public Dictionary<string, Note> Notes { get; } = new();
 
         private readonly StringBuilder _logStringBuilder = new StringBuilder();
         public string Log
@@ -24,6 +22,7 @@ namespace Pizza_Server.Main
             get => _logStringBuilder.ToString();
             set
             {
+                Console.WriteLine(value);
                 _ = _logStringBuilder.Append(value + "\n");
             }
         }
@@ -33,8 +32,8 @@ namespace Pizza_Server.Main
             Console.WriteLine("Starting Server...");
             IdToClient = new();
             IdToEmployee = LoadEmployees();
-            Notes = JsonConvert.DeserializeObject<Dictionary<string, Note>>(IO.ReadFile("SaveData\\Notes.json"));
 
+            Warehouse.GetInstance();
             ConnectionHandler connectionHandler = new ConnectionHandler(this, 6000);
             new Thread(connectionHandler.Run).Start();
 
@@ -72,7 +71,7 @@ namespace Pizza_Server.Main
             while (true)
             {
                 SaveEmployees(IdToEmployee);
-                IO.WriteFile("SaveData\\Notes.json", JsonConvert.SerializeObject(Notes, Formatting.Indented));
+
                 Thread.Sleep(10000);
             }
         }

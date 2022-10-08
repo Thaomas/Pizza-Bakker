@@ -1,15 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
-using Pizza_Server.Logic.Connections.Types;
+﻿using Pizza_Server.Logic.Connections.Types;
 using Pizza_Server.Main;
 using Shared;
 using Shared.Login;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 
-namespace REI_Server.Logic.Connections
+namespace Pizza_Server.Logic.Connections
 {
     public class ConnectionHandler
     {

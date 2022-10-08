@@ -1,14 +1,11 @@
-﻿using REI.Commands;
-using REI.Stores;
+﻿using Pizza_Client.Commands;
+using Pizza_Client.Commands.WarehouseCommands;
+using Pizza_Client.Stores;
 using Shared;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace REI.ViewModels
+namespace Pizza_Client.ViewModels
 {
     class HomepageViewModel : BaseViewModel
     {
@@ -72,7 +69,7 @@ namespace REI.ViewModels
 
             ChangeStatusCommand = new ChangeStatusCommand(_navigationStore);
             AddIngredientCommand = new AddIngredientCommand(_navigationStore);
-            
+
             //TODO
             //ReadFileCommand = new ReadFileCommand(_navigationStore);
             //DeleteNoteCommand = new DeleteNote(_navigationStore);

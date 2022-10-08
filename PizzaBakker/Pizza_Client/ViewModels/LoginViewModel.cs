@@ -1,9 +1,9 @@
-﻿using REI.Commands;
-using REI.Stores;
+﻿using Pizza_Client.Commands;
+using Pizza_Client.Stores;
 using Shared;
 using System.Windows.Input;
 
-namespace REI.ViewModels
+namespace Pizza_Client.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {

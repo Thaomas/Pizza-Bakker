@@ -1,25 +1,18 @@
-﻿using REI.Commands;
-using REI.Stores;
+﻿using Pizza_Client.Commands.WarehouseCommands;
+using Pizza_Client.Stores;
 using Shared;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using Newtonsoft.Json;
-using REI.Util;
-using Shared.Login;
-using Shared.Warehouse;
 
-namespace REI.ViewModels
+namespace Pizza_Client.ViewModels
 {
     class WarehouseViewModel : BaseViewModel
     {
         private readonly NavigationStore _navigationStore;
 
         public BaseViewModel CurrentViewModel => _navigationStore.CurrentViewModel;
-        
+
 
         private string _debug;
         public string Debug
@@ -42,7 +35,8 @@ namespace REI.ViewModels
                 OnPropertyChanged(nameof(IngredientName));
             }
         }
-        
+
+
         private string _ingredientPrice;
         public string IngredientPrice
         {
@@ -53,7 +47,8 @@ namespace REI.ViewModels
                 OnPropertyChanged(nameof(IngredientPrice));
             }
         }
-        
+
+
         private string _ingredientAmount;
         public string IngredientAmount
         {
@@ -64,27 +59,43 @@ namespace REI.ViewModels
                 OnPropertyChanged(nameof(IngredientAmount));
             }
         }
-        
-        private List<WarehouseItem> _allIngredients;
-        public List<WarehouseItem> AllIngredients
+
+        private Dictionary<string, WarehouseItem> _allIngredients;
+        public Dictionary<string, WarehouseItem> AllIngredients
         {
             get => _allIngredients;
             set
             {
                 _allIngredients = value;
-                OnPropertyChanged(nameof(AllIngredients));
+                AllIngredientKeys = _allIngredients.Keys.ToList();
             }
         }
-        
+
+        private List<string> _allIngredientKeys;
+        public List<string> AllIngredientKeys
+        {
+            get => _allIngredients.Keys.ToList();
+            set
+            {
+                _allIngredientKeys = value;
+                OnPropertyChanged(nameof(AllIngredientKeys));
+            }
+        }
+
         private string _selectedIngredient;
         public string SelectedIngredient
         {
             get => _selectedIngredient;
             set
             {
-
-                Debug = value;
                 _selectedIngredient = value;
+
+                WarehouseItem item = _allIngredients[value];
+
+                IngredientName = item.Ingredient.Name;
+                IngredientPrice = item.Ingredient.Price.ToString();
+                IngredientAmount = item.Count.ToString();
+
                 OnPropertyChanged(nameof(SelectedIngredient));
             }
         }
@@ -96,22 +107,15 @@ namespace REI.ViewModels
         public WarehouseViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
-
-            Task.Run(() =>
-            {
-                ConnectionHandler ch = ConnectionHandler.GetInstance();
-
-                ch.SendData(packet => { AllIngredients = packet.GetData<GetListResponsePacket>().allItems; },
-                    new DataPacket<GetListRequestPacket>
-                    {
-                        type = PacketType.GET_LIST,
-                        data = new GetListRequestPacket() { }
-                    });
-            });
+            AllIngredients = new Dictionary<string, WarehouseItem>();
 
             AddIngredientCommand = new AddIngredientCommand(_navigationStore);
             ReloadListCommand = new ReloadListCommand(_navigationStore);
             DeleteIngredientCommand = new DeleteIngredientCommand(_navigationStore);
+
+            //Load Ingredients
+            ReloadListCommand.Execute(null);
+
         }
     }
 }
