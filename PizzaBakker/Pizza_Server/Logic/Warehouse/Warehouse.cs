@@ -34,6 +34,19 @@ namespace Pizza_Server.Logic.WarehouseNS
             string serializeData = JsonConvert.SerializeObject(_ingredients.Values.ToList(), Formatting.Indented);
             IO.WriteFile("SaveData\\Warehouse.json", serializeData);
         }
+        
+        public void LoadFromFile()
+        {
+            List<WarehouseItem> list = IO.ReadObjectFromFile<List<WarehouseItem>>("SaveData\\Warehouse.json");
+
+            _ingredients = new Dictionary<uint, WarehouseItem>();
+
+            list.ForEach(i => _ingredients.Add(i.Ingredient.Id, i));
+
+            if (_ingredients == null) {
+                Console.WriteLine("Geen ingredienten beschikbaar!");
+            }
+        }
 
         /*public void orderPizza(List<string> orderPizza)
         {
@@ -88,78 +101,5 @@ namespace Pizza_Server.Logic.WarehouseNS
                 return false;
             }
         }*/
-
-
-        //Werkt!
-        /*public void AddIngredient(WarehouseItem item)
-        {
-            bool isExist = _ingredients.Exists(ti => ti.Ingredient.Name.Equals(item.Ingredient.Name));
-
-            if (isExist)
-            {
-                Console.WriteLine("bestaat al sorry");
-                return;
-            }
-            _ingredients.Add(item);
-        }
-
-        //WERKT!
-        public void DeleteIngredient(string item)
-        {
-            try
-            {
-                WarehouseItem deletedItem = _ingredients.First(name => name.Ingredient.Name.Equals(item));
-                _ingredients.Remove(deletedItem);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e + "Naam bestaat niet, dus hebben wij het niet kunnen verwijderen!!");
-            }
-        }
-
-        //WERKT!
-        public WarehouseItem RetrieveIngredient(string item)
-        {
-
-            WarehouseItem foundIngredient = null;
-
-            try
-            {
-                foundIngredient = _ingredients.First(name => name.Ingredient.Name.Equals(item));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e + "Naam bestaat niet, dus hebben wij het niet kunnen verwijderen!!");
-            }
-
-            return foundIngredient;
-        }
-        */
-
-
-
-        public void LoadFromFile()
-        {
-
-            List<WarehouseItem> list = IO.ReadObjectFromFile<List<WarehouseItem>>("SaveData\\Warehouse.json");
-
-            _ingredients = new Dictionary<uint, WarehouseItem>();
-
-            /*foreach (WarehouseItem it in list)
-            {
-                _ingredients.Add(it.Ingredient.Id, it);
-            }*/
-
-            list.ForEach(i => _ingredients.Add(i.Ingredient.Id, i));
-
-
-            if (_ingredients == null)
-            {
-                Console.WriteLine("Geen ingredienten beschikbaar!");
-            }
-
-        }
-
-        //TODO Save Ingredients
     }
 }

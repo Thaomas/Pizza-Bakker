@@ -32,10 +32,10 @@ namespace Pizza_Server.Logic.Connections
                 { PacketType.GET_LIST, GetList},
                 { PacketType.DELETE_INGREDIENT, DeleteIngredient},
             };
-
-
+            
             _customerOperationHandlers = new();
         }
+        
         public void HandleDataCallback(DataPacket packet, Client client)
         {
             if (packet.type == PacketType.AUTHENTICATION)
@@ -93,11 +93,6 @@ namespace Pizza_Server.Logic.Connections
                 return;
             }
 
-            // Correct login info => change authentication id to the real id.
-            //Client client = _server.IdToClient[authId];
-            //_server.IdToClient.Remove(authId);
-            //?  _server.IdToClient[id] = client;
-
             Employee employee = _server.IdToEmployee[id];
             Dictionary<PacketType, Action<DataPacket>> oppHandler = (client.ClientType == ClientType.BAKER) ? _bakerOperationHandlers : _warehouseOperationHandlers;
 
@@ -130,8 +125,7 @@ namespace Pizza_Server.Logic.Connections
             uint id = Warehouse.GetInstance()._ingredients.Keys.Max();
             string name = addPacket.ingredient.Ingredient.Name;
 
-            try
-            {
+            try {
                 if (Warehouse.GetInstance()._ingredients.Values.All(v => v.Ingredient.Name != name))
                 {
                     if (Warehouse.GetInstance()._ingredients.TryGetValue(id, out WarehouseItem dd))
@@ -139,16 +133,12 @@ namespace Pizza_Server.Logic.Connections
                         uint total = id + 1;
                         addPacket.ingredient.Ingredient.Id = total;
                         Warehouse.GetInstance()._ingredients.Add(total, addPacket.ingredient);
-                    }
-                    else
-                    {
+                    } else {
                         addPacket.ingredient.Ingredient.Id = 1;
                         Warehouse.GetInstance()._ingredients.Add(1, addPacket.ingredient);
                     }
                 }
-
-            }catch (Exception e)
-            {
+            }catch (Exception e) {
                 Console.WriteLine(e);
             }
             

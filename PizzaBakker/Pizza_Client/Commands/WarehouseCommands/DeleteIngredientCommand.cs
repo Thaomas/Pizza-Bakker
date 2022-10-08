@@ -35,7 +35,6 @@ namespace Pizza_Client.Commands.WarehouseCommands
         {
             DeleteIngredientResponsePacket data = obj.GetData<DeleteIngredientResponsePacket>();
             _warehouseViewModel.AllIngredients = data.warehouseList;
-                //Warehouse.GetInstance()._ingredients.Values.ToList();
         }
     }
 }

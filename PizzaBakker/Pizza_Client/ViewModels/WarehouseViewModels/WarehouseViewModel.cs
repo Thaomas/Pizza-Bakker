@@ -126,7 +126,7 @@ namespace Pizza_Client.ViewModels
             ReloadListCommand = new ReloadListCommand(_navigationStore);
             DeleteIngredientCommand = new DeleteIngredientCommand(_navigationStore);
 
-            //Load Ingredients
+            //Load Ingredients for all the connected clients every 3-Seconds
             Task.Run(() => {
                 while (true)
                 {
