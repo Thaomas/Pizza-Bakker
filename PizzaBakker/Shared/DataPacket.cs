@@ -7,7 +7,6 @@ namespace Shared
 {
     public abstract class DAbstract
     {
-        public PacketType type;
 
         public string ToJson()
         {
@@ -17,16 +16,17 @@ namespace Shared
 
     public class DataPacket<T> : DAbstract where T : DAbstract
     {
-        public Guid senderID;
         public T data;
+        public PacketType type;
+        public Guid senderID;
     }
 
     public class DataPacket : DAbstract
     {
-        public Guid senderID;
-        public PacketType type;
         [JsonProperty(DefaultValueHandling = DefaultValueHandling.Ignore)]
         private JObject data;
+        public PacketType type;
+        public Guid senderID;
 
         public T GetData<T>() where T : DAbstract
         {
@@ -100,6 +100,13 @@ namespace Shared
         {
             public List<WarehouseItem> allItems;
         }
+
+        public class DeleteIngredientRequestPacket : DAbstract
+        {
+            public string message;
+        }
+        
+        
     }
 }
 

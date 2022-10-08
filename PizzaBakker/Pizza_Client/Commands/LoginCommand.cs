@@ -41,7 +41,6 @@ namespace Pizza_Client.Commands
             connectionHandler.SendData(new DataPacket<LoginPacket>()
             {
                 type = PacketType.LOGIN,
-                senderID = (Guid)connectionHandler.ID,
                 data = new LoginPacket()
                 {
                     username = uint.Parse(_loginViewModel.Username),
@@ -54,7 +53,7 @@ namespace Pizza_Client.Commands
         {
             if (packet.GetData<LoginResponsePacket>().statusCode == StatusCode.ACCEPTED)
             {
-                ConnectionHandler.GetInstance().ID = packet.senderID;
+
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     _navigationStore.CurrentViewModel = new WarehouseViewModel(_navigationStore);

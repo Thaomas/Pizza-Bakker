@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Shared;
 using Shared.Login;
 using System;
@@ -96,23 +96,21 @@ namespace Pizza_Client.Util
             stream.BeginRead(lengthBytes, 0, lengthBytes.Length, OnLengthBytesReceived, null);
         }
 
-        public void SendData(DAbstract packet)
+        public void SendData<T>(DataPacket<T> packet) where T : DAbstract
         {
-            byte[] dataBytes = Encoding.ASCII.GetBytes(packet.ToJson());
+            if (packet.senderID == Guid.Empty)
+                packet.senderID = ID;
 
+            byte[] dataBytes = Encoding.ASCII.GetBytes(packet.ToJson());
             stream.Write(BitConverter.GetBytes(dataBytes.Length));
             stream.Write(dataBytes);
             stream.Flush();
         }
 
-        public void SendData(DAbstract packet, Action<DataPacket> callback)
+        public void SendData<T>(DataPacket<T> packet, Action<DataPacket> callback) where T : DAbstract
         {
             this.callbacks.Add(packet.type, callback);
-            byte[] dataBytes = Encoding.ASCII.GetBytes(packet.ToJson());
-
-            stream.Write(BitConverter.GetBytes(dataBytes.Length));
-            stream.Write(dataBytes);
-            stream.Flush();
+            this.SendData(packet);
         }
     }
 }

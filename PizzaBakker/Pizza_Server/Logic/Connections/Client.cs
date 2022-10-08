@@ -14,12 +14,14 @@ namespace Pizza_Server.Logic.Connections.Types
         private readonly byte[] lengthBytes = new byte[4];
         public ClientType ClientType { get; set; }
         public uint? EmployeeID { get; set; }
+        private readonly Guid _guid;
 
-        public Client(TcpClient client, Action<DataPacket, Client> callback)
+        public Client(TcpClient client, Action<DataPacket, Client> callback, Guid id)
         {
             stream = client.GetStream();
             this.Callback = callback;
             this.EmployeeID = null;
+            this._guid = id;
         }
 
         public void BeginRead()
@@ -46,11 +48,13 @@ namespace Pizza_Server.Logic.Connections.Types
             stream.BeginRead(lengthBytes, 0, lengthBytes.Length, OnLengthBytesReceived, null);
         }
 
-        public void SendData(DAbstract abstractPacket)
+        public void SendData<T>(DataPacket<T> packet) where T : DAbstract
         {
-            byte[] dataBytes = Encoding.ASCII.GetBytes(abstractPacket.ToJson());
+            if (packet.senderID == Guid.Empty)
+                packet.senderID = _guid;
+            byte[] dataBytes = Encoding.ASCII.GetBytes(packet.ToJson());
 
-            Console.WriteLine($"Out: {abstractPacket.ToJson()}");
+            Console.WriteLine($"Out: {packet.ToJson()}");
             stream.Write(BitConverter.GetBytes(dataBytes.Length));
             stream.Write(dataBytes);
         }

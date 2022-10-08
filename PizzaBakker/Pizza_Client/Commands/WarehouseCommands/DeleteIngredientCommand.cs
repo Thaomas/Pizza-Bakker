@@ -4,13 +4,15 @@ using Pizza_Client.ViewModels;
 using Shared;
 using Shared.Order;
 using System;
+using System.Diagnostics;
+using Shared.Warehouse;
 
 namespace Pizza_Client.Commands.WarehouseCommands
 {
     public class DeleteIngredientCommand : CommandBase
     {
         private readonly NavigationStore _navigationStore;
-        private HomepageViewModel _homepageViewModel => (HomepageViewModel)_navigationStore.CurrentViewModel;
+        private WarehouseViewModel _warehouseViewModel => (WarehouseViewModel)_navigationStore.CurrentViewModel;
 
         public DeleteIngredientCommand(NavigationStore navigationStore)
         {
@@ -19,14 +21,14 @@ namespace Pizza_Client.Commands.WarehouseCommands
 
         public override void Execute(object parameter)
         {
+            Trace.WriteLine("d");
             ConnectionHandler connectionHandler = ConnectionHandler.GetInstance();
-            connectionHandler.SendData(new DataPacket<ChangeStatusPacket>()
+            connectionHandler.SendData(new DataPacket<DeleteIngredientRequestPacket>()
             {
                 type = PacketType.DELETE_INGREDIENT,
-                senderID = connectionHandler.ID,
-                data = new ChangeStatusPacket()
+                data = new DeleteIngredientRequestPacket()
                 {
-                    orderStatus = _homepageViewModel.Status
+                    message = "hoiii"
                 }
             }, DeleteIngredientCallback);
         }

@@ -22,7 +22,6 @@ namespace Pizza_Client.Commands
             connectionHandler.SendData(new DataPacket<ChangeStatusPacket>()
             {
                 type = PacketType.CHANGE_STATUS,
-                senderID = connectionHandler.ID,
                 data = new ChangeStatusPacket()
                 {
                     orderStatus = _homepageViewModel.Status
