@@ -3,13 +3,14 @@ using Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
 //Hij kon de klasse niet vinden omdat de namespace dezelde naam had
 namespace Pizza_Server.Logic.WarehouseNS
 {
     public class Warehouse
     {
-        public List<WarehouseItem> _ingredients = new();
+        public Dictionary<uint, WarehouseItem> _ingredients = new();
 
         private readonly string _fileName = $"ingredients";
 
@@ -26,26 +27,14 @@ namespace Pizza_Server.Logic.WarehouseNS
                 _singleton = new Warehouse();
             return _singleton;
         }
-
-        /*public void startSavingThread()
+        
+        public void SaveIngredients()
         {
-            new Thread(SavingLoop).Start();
+            string serializeData = JsonConvert.SerializeObject(_ingredients, Formatting.Indented);
+            IO.WriteFile("SaveData\\Warehouse.json", serializeData);
         }
-
-        private void SavingLoop()
-        {
-            while (true)
-            {
-                Thread.Sleep(3000);
-
-                string serializeData = JsonConvert.SerializeObject(_ingredients, Formatting.Indented);
-                IO.WriteFile("Warehouse.json", serializeData);
-
-                Console.WriteLine("saving loop !");
-            }
-        }*/
-
-        public void orderPizza(List<string> orderPizza)
+        
+        /*public void orderPizza(List<string> orderPizza)
         {
             bool _orderComplete = true;
             List<string> _outOfStockIngredients = new();
@@ -76,10 +65,10 @@ namespace Pizza_Server.Logic.WarehouseNS
                     Console.WriteLine(singleIngedient);
                 }
             }
-        }
+        }*/
 
         //WERKT!!
-        public bool decrementIngredient(string singleIngredient)
+        /*public bool decrementIngredient(string singleIngredient)
         {
 
             WarehouseItem retrievedIngredient = _ingredients.First(name => name.Ingredient.Name.Equals(singleIngredient));
@@ -97,11 +86,11 @@ namespace Pizza_Server.Logic.WarehouseNS
                 Console.WriteLine("Het product: " + retrievedIngredient.Ingredient.Name + " is uitverkocht!");
                 return false;
             }
-        }
+        }*/
 
 
         //Werkt!
-        public void AddIngredient(WarehouseItem item)
+        /*public void AddIngredient(WarehouseItem item)
         {
             bool isExist = _ingredients.Exists(ti => ti.Ingredient.Name.Equals(item.Ingredient.Name));
 
@@ -144,13 +133,20 @@ namespace Pizza_Server.Logic.WarehouseNS
 
             return foundIngredient;
         }
+        */
+        
 
 
         public void LoadFromFile()
         {
-
-            _ingredients = IO.ReadObjectFromFile<List<WarehouseItem>>("SaveData\\Warehouse.json");
-
+            
+            List<WarehouseItem> list = IO.ReadObjectFromFile<List<WarehouseItem>>("SaveData\\Warehouse.json");
+            
+            _ingredients = new Dictionary<uint, WarehouseItem>();
+            
+            list.ForEach(i =>_ingredients.Add(i.Ingredient.Id, i));
+            
+            
             if (_ingredients == null)
             {
                 Console.WriteLine("Geen ingredienten beschikbaar!");

@@ -19,46 +19,22 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        
-        <!-- Buttons Grid -->
-        <Grid 
-            Grid.Column="0"
-            Grid.Row="0"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-            
-            <Grid.Children>
-                <Button
-                Grid.Column="0"
-                Grid.Row="0"
-                Content="Add Ingredient"
-                Command="{Binding AddIngredientCommand}" 
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                Margin="10"
-                Padding="10,0,10,0"
-                MinHeight="40"/>
-            
-            <Button
-                Grid.Column="0"
-                Grid.Row="1"
+
+
+        <Button
                 Width="auto"
                 Height="auto"
-                Content="Delete Ingredient"
+                Content="Delete The Ingredient"
                 Command="{Binding DeleteIngredientCommand}"
-                HorizontalAlignment="Center"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Margin="10"
+                Margin="15,81,0,0"
                 Padding="10,0,10,0"
-                MinHeight="40"/>
-            </Grid.Children>
-        </Grid>
-        
+                MinHeight="40" Grid.ColumnSpan="2"/>
+
+        <Separator Margin="0,176,5,175" Grid.ColumnSpan="2"/>
+
         <!-- DEBUG LABEL TODO: REMOVE -->
         <Label 
             Content="{Binding Debug, Mode=TwoWay }" 
@@ -89,85 +65,204 @@
             Command="{Binding ReloadListCommand}" 
             MinHeight="40" 
             />
-        
-        
+
+
         <!-- Ingredient Info Grid -->
         <Grid 
             Grid.Row="0"
             Grid.Column="1"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Margin="0,20,0,0">
+            Margin="34,57,0,0" RenderTransformOrigin="0.5,0.5" Height="86">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.206"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+
+
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="175.335"/>
+                <ColumnDefinition Width="30.398"/>
+                <ColumnDefinition Width="5.375"/>
+                <ColumnDefinition Width="154.625"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="13.894"/>
+                <RowDefinition Height="12.066"/>
             </Grid.RowDefinitions>
-            
+
             <Grid.Children>
+                <TextBlock Text="Retreived Ingredient"
+               Background="Red"
+               Foreground="White"
+               FontSize="20"
+               FontWeight="SemiBold"
+               TextAlignment="Center" Grid.ColumnSpan="4" Margin="82,-31,78,31" />
                 <Label
                     Content="Ingredient Name:"
-                    Grid.Row="0"
-                    Grid.Column="0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Height="auto" Width="auto"/>
 
                 <TextBox
-                    Grid.Row="0"
-                    Grid.Column="1"
+                    Grid.Column="2"
                     Text="{Binding IngredientName}"
                     TextWrapping="Wrap"
                     TextAlignment="Center"
-                    HorizontalAlignment="Center"
+                    HorizontalAlignment="Left"
                     VerticalAlignment="Center"
-                    Height="auto" Width="160"/>
+                    Height="auto" Width="160" Grid.ColumnSpan="2"/>
 
 
                 <Label Content="Price: "
                     Grid.Row="1"
-                    Grid.Column="0"
-                    HorizontalAlignment="Center"
+                    HorizontalAlignment="Left"
                     VerticalAlignment="Center"
-                    Height="auto" Width="auto"/>
+                    Height="auto" Width="auto" Margin="62,0,0,0"/>
 
                 <TextBox 
                     Grid.Row="1"
-                    Grid.Column="1"
+                    Grid.Column="2"
                     Text="{Binding IngredientPrice}"
                     PreviewTextInput="IngredientPriceTextBox_PreviewTextInput"
                     TextWrapping="Wrap"
                     TextAlignment="Center"
-                    HorizontalAlignment="Center"
+                    HorizontalAlignment="Left"
                     VerticalAlignment="Center"
-                    Height="auto" Width="160"/>
+                    Height="auto" Width="160" Grid.ColumnSpan="2"/>
 
 
                 <Label
                     Content="Ingredient Amount:"
                     Grid.Row="2"
-                    Grid.Column="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Height="26" Width="auto"/>
+
+                <TextBox
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Text="{Binding IngredientAmount}"
+                    PreviewTextInput="IngredientAmountTextBox_PreviewTextInput"
+                    TextWrapping="Wrap"
+                    TextAlignment="Center"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Height="auto" Width="160" Margin="0,4,0,0" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+            </Grid.Children>
+        </Grid>
+        <Button
+                Grid.Column="0"
+                Width="auto"
+                Height="auto"
+                Content="Add The Ingredient"
+                Command="{Binding AddIngredientCommand}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="22,301,0,0"
+                Padding="10,0,10,0"
+                MinHeight="40"/>
+        <Grid 
+            Grid.Row="0"
+            Grid.Column="1"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Margin="10,278,0,0" RenderTransformOrigin="0.5,0.5" Height="86">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.206"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+
+
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="175.335"/>
+                <ColumnDefinition Width="30.398"/>
+                <ColumnDefinition Width="5.375"/>
+                <ColumnDefinition Width="154.625"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="13.894"/>
+                <RowDefinition Height="12.066"/>
+            </Grid.RowDefinitions>
+
+
+
+            <Grid.Children>
+                <TextBlock Text="Add New Ingredient"
+               Background="Red"
+               Foreground="White"
+               FontSize="20"
+               FontWeight="SemiBold"
+               TextAlignment="Center" Grid.ColumnSpan="4" Margin="82,-31,78,31" />
+                <Label
+                    Content="Ingredient Name:"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Height="auto" Width="auto"/>
 
                 <TextBox
+                    Grid.Column="2"
+                    Text="{Binding NewIngredientName}"
+                    TextWrapping="Wrap"
+                    TextAlignment="Center"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Height="auto" Width="160" Grid.ColumnSpan="2"/>
+
+
+                <Label Content="Price: "
+                    Grid.Row="1"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Height="auto" Width="auto" Margin="62,0,0,0"/>
+
+                <TextBox 
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Text="{Binding NewIngredientPrice}"
+                    PreviewTextInput="IngredientPriceTextBox_PreviewTextInput"
+                    TextWrapping="Wrap"
+                    TextAlignment="Center"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Height="auto" Width="160" Grid.ColumnSpan="2"/>
+
+
+                <Label
+                    Content="Ingredient Amount:"
                     Grid.Row="2"
-                    Grid.Column="1"
-                    Text="{Binding IngredientAmount}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Height="26" Width="auto"/>
+
+                <TextBox
+                    Grid.Row="2"
+                    Grid.Column="2"
+                    Text="{Binding NewIngredientAmount}"
                     PreviewTextInput="IngredientAmountTextBox_PreviewTextInput"
                     TextWrapping="Wrap"
                     TextAlignment="Center"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Height="auto" Width="160"/>
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Height="auto" Width="160" Margin="0,4,0,0" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
             </Grid.Children>
         </Grid>
+
     </Grid>
 </UserControl>

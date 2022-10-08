@@ -1,5 +1,5 @@
-[
-  {
+{
+  "1": {
     "Ingredient": {
       "Name": "shoamra",
       "Id": 1,
@@ -7,7 +7,7 @@
     },
     "Count": 10
   },
-  {
+  "2": {
     "Ingredient": {
       "Name": "deeg",
       "Id": 2,
@@ -15,15 +15,7 @@
     },
     "Count": 60
   },
-  {
-    "Ingredient": {
-      "Name": "tomatensaus",
-      "Id": 3,
-      "Price": 0.5
-    },
-    "Count": 0
-  },
-  {
+  "4": {
     "Ingredient": {
       "Name": "kip",
       "Id": 4,
@@ -31,23 +23,7 @@
     },
     "Count": 0
   },
-  {
-    "Ingredient": {
-      "Name": "kaas",
-      "Id": 5,
-      "Price": 1.5
-    },
-    "Count": 0
-  },
-  {
-    "Ingredient": {
-      "Name": "champignon",
-      "Id": 7,
-      "Price": 1.0
-    },
-    "Count": 0
-  },
-  {
+  "6": {
     "Ingredient": {
       "Name": "uien",
       "Id": 6,
@@ -55,4 +31,4 @@
     },
     "Count": 0
   }
-]
+}

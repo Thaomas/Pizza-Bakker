@@ -7,6 +7,7 @@ using Shared.Order;
 using Shared.Warehouse;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Pizza_Server.Logic.Connections
 {
@@ -144,28 +145,29 @@ namespace Pizza_Server.Logic.Connections
                 type = PacketType.GET_LIST,
                 data = new GetListResponsePacket()
                 {
-
-                    allItems = Warehouse.GetInstance()._ingredients
+                    allItems = Warehouse.GetInstance()._ingredients.Values.ToList()
                 }
             });
         }
         
         public void DeleteIngredient(DataPacket packet)
         {
-            Console.WriteLine("in de delte ingreeint");
-            Console.WriteLine(packet.ToJson());
-            Console.WriteLine("Einde output");
-            /*Client client = _server.IdToClient[packet.senderID];
-            client.SendData(new DataPacket<GetListResponsePacket>
-            {
-                senderID = packet.senderID,
-                type = PacketType.GET_LIST,
-                data = new GetListResponsePacket()
-                {
+            DeleteIngredientRequestPacket deletePacket = packet.GetData<DeleteIngredientRequestPacket>();
+            //uint id = deletePacket.singleIngredient.Ingredient.Id;
+            
+            Warehouse.GetInstance()._ingredients.Remove(deletePacket.ID);
 
-                    allItems = Warehouse.GetInstance()._ingredients
+            Client client = _server.IdToClient[packet.senderID];
+            client.SendData(new DataPacket<DeleteIngredientResponsePacket>
+            {
+                
+                type = PacketType.DELETE_INGREDIENT,
+                data = new DeleteIngredientResponsePacket()
+                {
+                    StatusCode = StatusCode.OK,
+                    WarehouseList = Warehouse.GetInstance()._ingredients.Values.ToList()
                 }
-            });*/
+            });
         }
     }
 }

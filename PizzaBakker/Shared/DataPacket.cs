@@ -103,10 +103,18 @@ namespace Shared
 
         public class DeleteIngredientRequestPacket : DAbstract
         {
-            public string message;
+            public WarehouseItem singleIngredient;
+            public uint ID
+            {
+                get => singleIngredient.Ingredient.Id;
+            }
         }
         
-        
+        public class DeleteIngredientResponsePacket : DAbstract
+        {
+            public List<WarehouseItem> WarehouseList;
+            public StatusCode StatusCode;
+        }
     }
 }
 

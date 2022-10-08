@@ -21,21 +21,21 @@ namespace Pizza_Client.Commands.WarehouseCommands
 
         public override void Execute(object parameter)
         {
-            Trace.WriteLine("d");
             ConnectionHandler connectionHandler = ConnectionHandler.GetInstance();
             connectionHandler.SendData(new DataPacket<DeleteIngredientRequestPacket>()
             {
                 type = PacketType.DELETE_INGREDIENT,
                 data = new DeleteIngredientRequestPacket()
                 {
-                    message = "hoiii"
+                    singleIngredient = _warehouseViewModel.SelectedIngredient
                 }
             }, DeleteIngredientCallback);
         }
 
         private void DeleteIngredientCallback(DataPacket obj)
         {
-            throw new NotImplementedException();
+            DeleteIngredientResponsePacket data = obj.GetData<DeleteIngredientResponsePacket>();
+            _warehouseViewModel.AllIngredients = data.WarehouseList;        
         }
     }
 }
