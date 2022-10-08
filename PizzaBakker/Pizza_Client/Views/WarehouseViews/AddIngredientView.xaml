@@ -93,10 +93,12 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Content="Cancel" />
+            
             <Button Grid.Row="3"
                     Grid.Column="1"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
+                    Command="{Binding AddIngredientCommand}"
                     Content="OK" />
 
         </Grid.Children>

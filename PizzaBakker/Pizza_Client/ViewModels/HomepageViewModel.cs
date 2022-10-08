@@ -58,7 +58,6 @@ namespace Pizza_Client.ViewModels
         }
 
         public ICommand ChangeStatusCommand { get; }
-        public ICommand AddIngredientCommand { get; }
         public ICommand ReadFileCommand { get; }
         public ICommand DeleteNoteCommand { get; }
 
@@ -68,7 +67,6 @@ namespace Pizza_Client.ViewModels
             AllStatus = Enum.GetValues(typeof(OrderStatus));
 
             ChangeStatusCommand = new ChangeStatusCommand(_navigationStore);
-            AddIngredientCommand = new AddIngredientCommand(_navigationStore);
 
             //TODO
             //ReadFileCommand = new ReadFileCommand(_navigationStore);

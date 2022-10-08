@@ -1,5 +1,7 @@
-﻿using Pizza_Client.Stores;
+﻿using Pizza_Client.Commands.WarehouseCommands;
+using Pizza_Client.Stores;
 using Shared;
+using System.Windows.Input;
 
 namespace Pizza_Client.ViewModels
 {
@@ -42,10 +44,12 @@ namespace Pizza_Client.ViewModels
             }
         }
 
+        public ICommand AddIngredientCommand { get; }
 
         public AddIngredientViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
+            AddIngredientCommand = new AddIngredientCommand(_navigationStore);
         }
     }
 }
