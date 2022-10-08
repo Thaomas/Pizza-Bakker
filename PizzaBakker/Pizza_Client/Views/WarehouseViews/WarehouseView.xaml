@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Pizza_Client.Views.WarehouseView"
+<UserControl x:Class="Pizza_Client.Views.WarehouseView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -71,7 +71,7 @@
         <ListBox
             Grid.Row="0"
             Grid.Column="2"
-            ItemsSource="{Binding AllIngredientKeys}"
+            ItemsSource="{Binding AllIngredients}"
             SelectedItem="{Binding SelectedIngredient}"
             Name="AllIngredient"
             VerticalContentAlignment="Stretch"

@@ -30,7 +30,7 @@ namespace Pizza_Client.Commands.WarehouseCommands
         private void ReloadListCallBack(DataPacket packet)
         {
             GetListResponsePacket data = packet.GetData<GetListResponsePacket>();
-            _warehouseViewModel.AllIngredients = data.allItems.ToDictionary(keySelector: m => m.ToString());
+            _warehouseViewModel.AllIngredients = data.allItems;
         }
     }
 }

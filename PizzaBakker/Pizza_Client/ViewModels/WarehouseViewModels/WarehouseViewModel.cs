@@ -60,41 +60,28 @@ namespace Pizza_Client.ViewModels
             }
         }
 
-        private Dictionary<string, WarehouseItem> _allIngredients;
-        public Dictionary<string, WarehouseItem> AllIngredients
+        private List<WarehouseItem> _allIngredients;
+        public List<WarehouseItem> AllIngredients
         {
             get => _allIngredients;
             set
             {
                 _allIngredients = value;
-                AllIngredientKeys = _allIngredients.Keys.ToList();
+                OnPropertyChanged(nameof(AllIngredients));
             }
         }
 
-        private List<string> _allIngredientKeys;
-        public List<string> AllIngredientKeys
-        {
-            get => _allIngredients.Keys.ToList();
-            set
-            {
-                _allIngredientKeys = value;
-                OnPropertyChanged(nameof(AllIngredientKeys));
-            }
-        }
-
-        private string _selectedIngredient;
-        public string SelectedIngredient
+        private WarehouseItem _selectedIngredient;
+        public WarehouseItem SelectedIngredient
         {
             get => _selectedIngredient;
             set
             {
                 _selectedIngredient = value;
 
-                WarehouseItem item = _allIngredients[value];
-
-                IngredientName = item.Ingredient.Name;
-                IngredientPrice = item.Ingredient.Price.ToString();
-                IngredientAmount = item.Count.ToString();
+                IngredientName = value.Ingredient.Name;
+                IngredientPrice = value.Ingredient.Price.ToString();
+                IngredientAmount = value.Count.ToString();
 
                 OnPropertyChanged(nameof(SelectedIngredient));
             }
@@ -107,7 +94,7 @@ namespace Pizza_Client.ViewModels
         public WarehouseViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
-            AllIngredients = new Dictionary<string, WarehouseItem>();
+            AllIngredients = new List<WarehouseItem>();
 
             AddIngredientCommand = new AddIngredientCommand(_navigationStore);
             ReloadListCommand = new ReloadListCommand(_navigationStore);

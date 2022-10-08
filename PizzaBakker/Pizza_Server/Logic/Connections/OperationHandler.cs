@@ -66,7 +66,6 @@ namespace Pizza_Server.Logic.Connections
                 client.SendData(new DataPacket<ErrorPacket>
                 {
                     type = PacketType.ERROR,
-                    senderID = packet.senderID,
                     data = new ErrorPacket
                     {
                         statusCode = (client.ClientType == ClientType.CUSTOMER) ? StatusCode.FORBIDDEN : StatusCode.BAD_REQUEST
@@ -107,7 +106,6 @@ namespace Pizza_Server.Logic.Connections
             client.SendData(new DataPacket<LoginResponsePacket>
             {
                 type = PacketType.LOGIN,
-                senderID = authId,
                 data = new LoginResponsePacket()
                 {
                     statusCode = StatusCode.ACCEPTED
@@ -143,7 +141,6 @@ namespace Pizza_Server.Logic.Connections
             Client client = _server.IdToClient[packet.senderID];
             client.SendData(new DataPacket<GetListResponsePacket>
             {
-                senderID = packet.senderID,
                 type = PacketType.GET_LIST,
                 data = new GetListResponsePacket()
                 {
