@@ -2,7 +2,6 @@
 using Pizza_Client.Stores;
 using Shared;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Input;
 
 namespace Pizza_Client.ViewModels

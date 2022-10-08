@@ -149,18 +149,18 @@ namespace Pizza_Server.Logic.Connections
                 }
             });
         }
-        
+
         public void DeleteIngredient(DataPacket packet)
         {
             DeleteIngredientRequestPacket deletePacket = packet.GetData<DeleteIngredientRequestPacket>();
             //uint id = deletePacket.singleIngredient.Ingredient.Id;
-            
+
             Warehouse.GetInstance()._ingredients.Remove(deletePacket.ID);
 
             Client client = _server.IdToClient[packet.senderID];
             client.SendData(new DataPacket<DeleteIngredientResponsePacket>
             {
-                
+
                 type = PacketType.DELETE_INGREDIENT,
                 data = new DeleteIngredientResponsePacket()
                 {

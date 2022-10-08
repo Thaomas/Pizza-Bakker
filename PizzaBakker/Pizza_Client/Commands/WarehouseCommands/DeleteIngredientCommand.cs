@@ -2,9 +2,6 @@ using Pizza_Client.Stores;
 using Pizza_Client.Util;
 using Pizza_Client.ViewModels;
 using Shared;
-using Shared.Order;
-using System;
-using System.Diagnostics;
 using Shared.Warehouse;
 
 namespace Pizza_Client.Commands.WarehouseCommands
@@ -35,7 +32,7 @@ namespace Pizza_Client.Commands.WarehouseCommands
         private void DeleteIngredientCallback(DataPacket obj)
         {
             DeleteIngredientResponsePacket data = obj.GetData<DeleteIngredientResponsePacket>();
-            _warehouseViewModel.AllIngredients = data.WarehouseList;        
+            _warehouseViewModel.AllIngredients = data.WarehouseList;
         }
     }
 }

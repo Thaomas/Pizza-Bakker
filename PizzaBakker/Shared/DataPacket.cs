@@ -109,7 +109,7 @@ namespace Shared
                 get => singleIngredient.Ingredient.Id;
             }
         }
-        
+
         public class DeleteIngredientResponsePacket : DAbstract
         {
             public List<WarehouseItem> WarehouseList;

@@ -3,7 +3,6 @@ using Pizza_Client.Util;
 using Pizza_Client.ViewModels;
 using Shared;
 using Shared.Warehouse;
-using System.Linq;
 
 namespace Pizza_Client.Commands.WarehouseCommands
 {

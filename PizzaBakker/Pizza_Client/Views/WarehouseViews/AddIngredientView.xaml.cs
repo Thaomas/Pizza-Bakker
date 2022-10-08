@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using System.Windows;
+﻿using System.Windows;
 
 namespace Pizza_Client.Views
 {
@@ -15,7 +14,7 @@ namespace Pizza_Client.Views
 
         private void IngredientAmountTextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
-            e.Handled = !uint.TryParse(e.Text+"0", out _);
+            e.Handled = !uint.TryParse(e.Text + "0", out _);
         }
 
         private void IngredientValueTextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
