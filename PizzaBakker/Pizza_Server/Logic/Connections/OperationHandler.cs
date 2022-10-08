@@ -28,7 +28,8 @@ namespace Pizza_Server.Logic.Connections
             _warehouseOperationHandlers = new Dictionary<PacketType, Action<DataPacket>>
             {
                 { PacketType.ADD_INGREDIENT, AddIngredient},
-                { PacketType.GET_LIST, GetList}
+                { PacketType.GET_LIST, GetList},
+                { PacketType.DELETE_INGREDIENT, DeleteIngredient}
             };
 
 
@@ -149,6 +150,24 @@ namespace Pizza_Server.Logic.Connections
                     allItems = Warehouse.GetInstance()._ingredients
                 }
             });
+        }
+        
+        public void DeleteIngredient(DataPacket packet)
+        {
+            Console.WriteLine("in de delte ingreeint");
+            Console.WriteLine(packet.ToJson());
+            Console.WriteLine("Einde output");
+            /*Client client = _server.IdToClient[packet.senderID];
+            client.SendData(new DataPacket<GetListResponsePacket>
+            {
+                senderID = packet.senderID,
+                type = PacketType.GET_LIST,
+                data = new GetListResponsePacket()
+                {
+
+                    allItems = Warehouse.GetInstance()._ingredients
+                }
+            });*/
         }
     }
 }

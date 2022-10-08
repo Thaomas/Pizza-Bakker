@@ -71,6 +71,8 @@ namespace Pizza_Server.Main
             while (true)
             {
                 SaveEmployees(IdToEmployee);
+                string serializeData = JsonConvert.SerializeObject(Warehouse.GetInstance()._ingredients, Formatting.Indented);
+                IO.WriteFile("SaveDAta\\Warehouse.json", serializeData);
 
                 Thread.Sleep(10000);
             }

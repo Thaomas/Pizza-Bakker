@@ -50,7 +50,7 @@
                 Width="auto"
                 Height="auto"
                 Content="Delete Ingredient"
-                Command="{Binding DeleteNoteCommand}"
+                Command="{Binding DeleteIngredientCommand}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 Margin="10"

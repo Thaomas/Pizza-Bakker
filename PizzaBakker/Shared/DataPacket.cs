@@ -100,6 +100,13 @@ namespace Shared
         {
             public List<WarehouseItem> allItems;
         }
+
+        public class DeleteIngredientRequestPacket : DAbstract
+        {
+            public string message;
+        }
+        
+        
     }
 }
 
