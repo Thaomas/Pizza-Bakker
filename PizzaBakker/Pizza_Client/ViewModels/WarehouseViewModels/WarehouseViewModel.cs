@@ -2,6 +2,8 @@
 using Pizza_Client.Stores;
 using Shared;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Pizza_Client.ViewModels
@@ -109,13 +111,14 @@ namespace Pizza_Client.ViewModels
                 OnPropertyChanged(nameof(SelectedIngredient));
             }
         }
-
+       
         public ICommand AddIngredientCommand { get; }
         public ICommand ReloadListCommand { get; }
         public ICommand DeleteIngredientCommand { get; }
 
         public WarehouseViewModel(NavigationStore navigationStore)
         {
+
             _navigationStore = navigationStore;
             AllIngredients = new List<WarehouseItem>();
 
@@ -124,7 +127,14 @@ namespace Pizza_Client.ViewModels
             DeleteIngredientCommand = new DeleteIngredientCommand(_navigationStore);
 
             //Load Ingredients
-            ReloadListCommand.Execute(null);
+            Task.Run(() => {
+                while (true)
+                {
+                    ReloadListCommand.Execute(null);
+                    Thread.Sleep(3000);
+                }
+            });
+            
 
         }
     }

@@ -129,7 +129,7 @@ namespace Pizza_Server.Logic.Connections
 
             uint id = Warehouse.GetInstance()._ingredients.Keys.Max();
             string name = addPacket.ingredient.Ingredient.Name;
-            Console.WriteLine("id: " + name);
+
             try
             {
                 if (Warehouse.GetInstance()._ingredients.Values.All(v => v.Ingredient.Name != name))
@@ -163,7 +163,7 @@ namespace Pizza_Server.Logic.Connections
                 }
             });
         }
-
+ 
         public void GetList(DataPacket packet)
         {
             Client client = _server.IdToClient[packet.senderID];

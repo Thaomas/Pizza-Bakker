@@ -1,6 +1,8 @@
+using System.Linq;
 using Pizza_Client.Stores;
 using Pizza_Client.Util;
 using Pizza_Client.ViewModels;
+using Pizza_Server.Logic.WarehouseNS;
 using Shared;
 using Shared.Warehouse;
 
@@ -33,6 +35,7 @@ namespace Pizza_Client.Commands.WarehouseCommands
         {
             DeleteIngredientResponsePacket data = obj.GetData<DeleteIngredientResponsePacket>();
             _warehouseViewModel.AllIngredients = data.warehouseList;
+                //Warehouse.GetInstance()._ingredients.Values.ToList();
         }
     }
 }

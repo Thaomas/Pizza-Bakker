@@ -3,6 +3,7 @@ using Pizza_Server.Logic.Connections;
 using Shared;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 //Hij kon de klasse niet vinden omdat de namespace dezelde naam had
@@ -143,6 +144,11 @@ namespace Pizza_Server.Logic.WarehouseNS
             List<WarehouseItem> list = IO.ReadObjectFromFile<List<WarehouseItem>>("SaveData\\Warehouse.json");
 
             _ingredients = new Dictionary<uint, WarehouseItem>();
+
+            /*foreach (WarehouseItem it in list)
+            {
+                _ingredients.Add(it.Ingredient.Id, it);
+            }*/
 
             list.ForEach(i => _ingredients.Add(i.Ingredient.Id, i));
 

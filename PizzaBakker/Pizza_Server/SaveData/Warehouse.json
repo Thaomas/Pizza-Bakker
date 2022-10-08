@@ -17,11 +17,11 @@
   },
   {
     "Ingredient": {
-      "Name": "champignon",
-      "Id": 3,
+      "Name": "deeg",
+      "Id": 5,
       "Price": 1.0
     },
-    "Count": 0
+    "Count": 60
   },
   {
     "Ingredient": {
@@ -33,26 +33,26 @@
   },
   {
     "Ingredient": {
-      "Name": "frutti di mar",
-      "Id": 7,
-      "Price": 375.0
-    },
-    "Count": 6
-  },
-  {
-    "Ingredient": {
-      "Name": "paprika",
+      "Name": "kip",
       "Id": 6,
-      "Price": 2.0
+      "Price": 3.0
     },
-    "Count": 13
+    "Count": 23
   },
   {
     "Ingredient": {
       "Name": "salami",
-      "Id": 9,
-      "Price": 1.0
+      "Id": 7,
+      "Price": 2.0
     },
-    "Count": 18
+    "Count": 30
+  },
+  {
+    "Ingredient": {
+      "Name": "paprika",
+      "Id": 8,
+      "Price": 3.0
+    },
+    "Count": 23
   }
 ]
