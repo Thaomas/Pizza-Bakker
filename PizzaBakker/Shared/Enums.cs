@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Shared
+﻿namespace Shared
 {
     public enum PacketType
     {
         LOGIN,
-        LOGIN_RESPONSE,
         CHANGE_STATUS,
         STATUS,
         AUTHENTICATION,
-        AUTHENTICATION_RESPONSE,
         ERROR,
         ADD_INGREDIENT,
-        GET_LIST,
-        GET_LIST_RESPONSE
+        DELETE_INGREDIENT,
+        GET_LIST
     }
 
     public enum StatusCode

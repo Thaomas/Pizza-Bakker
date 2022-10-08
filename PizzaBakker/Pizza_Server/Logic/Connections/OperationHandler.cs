@@ -1,15 +1,14 @@
-using Newtonsoft.Json.Linq;
 using Pizza_Server.Logic.Connections.Types;
+using Pizza_Server.Logic.WarehouseNS;
 using Pizza_Server.Main;
-using REI_Server.Models;
 using Shared;
-using Shared.Warehouse;
+using Shared.Login;
 using Shared.Order;
+using Shared.Warehouse;
 using System;
 using System.Collections.Generic;
-using Shared.Login;
 
-namespace REI_Server.Logic.Connections
+namespace Pizza_Server.Logic.Connections
 {
     class OperationHandler
     {
@@ -25,19 +24,19 @@ namespace REI_Server.Logic.Connections
             {
                 { PacketType.CHANGE_STATUS, ChangeStatus}
             };
-            
+
             _warehouseOperationHandlers = new Dictionary<PacketType, Action<DataPacket>>
             {
                 { PacketType.ADD_INGREDIENT, AddIngredient},
                 { PacketType.GET_LIST, GetList}
             };
-            
-            
+
+
             _customerOperationHandlers = new();
         }
         public void HandleDataCallback(DataPacket packet, Client client)
         {
-            if(packet.type == PacketType.AUTHENTICATION_RESPONSE)
+            if (packet.type == PacketType.AUTHENTICATION)
             {
                 AuthenticationResponsePacket authResponsePacket = packet.GetData<AuthenticationResponsePacket>();
                 Action<DataPacket, Client> callback;
@@ -50,7 +49,7 @@ namespace REI_Server.Logic.Connections
                         callback = Authenticate;
                         break;
                     default:
-                        callback = (DataPacket p, Client c) => { }; 
+                        callback = (DataPacket p, Client c) => { };
                         break;
                 }
                 client.Callback = callback;
@@ -58,7 +57,7 @@ namespace REI_Server.Logic.Connections
             }
         }
 
-        
+
         public void Authenticate(DataPacket packet, Client client)
         {
             if (packet.type != PacketType.LOGIN || client.ClientType == ClientType.CUSTOMER)
@@ -84,7 +83,7 @@ namespace REI_Server.Logic.Connections
             {
                 _server.IdToClient[authId].SendData(new DataPacket<LoginResponsePacket>
                 {
-                    type = PacketType.LOGIN_RESPONSE,
+                    type = PacketType.LOGIN,
                     data = new LoginResponsePacket()
                     {
                         statusCode = StatusCode.NOT_FOUND
@@ -99,14 +98,14 @@ namespace REI_Server.Logic.Connections
             //?  _server.IdToClient[id] = client;
 
             Employee employee = _server.IdToEmployee[id];
-            Dictionary < PacketType, Action < DataPacket >> oppHandler = (client.ClientType == ClientType.BAKER) ? _bakerOperationHandlers : _warehouseOperationHandlers;
-            
-            
+            Dictionary<PacketType, Action<DataPacket>> oppHandler = (client.ClientType == ClientType.BAKER) ? _bakerOperationHandlers : _warehouseOperationHandlers;
+
+
             client.Callback = (DataPacket p, Client c) => oppHandler[p.type](packet);
             // Let the client know that it can log in. 
             client.SendData(new DataPacket<LoginResponsePacket>
             {
-                type = PacketType.LOGIN_RESPONSE,
+                type = PacketType.LOGIN,
                 data = new LoginResponsePacket()
                 {
                     statusCode = StatusCode.ACCEPTED
@@ -122,7 +121,7 @@ namespace REI_Server.Logic.Connections
             ChangeStatusPacket statusPacket = packet.GetData<ChangeStatusPacket>();
             Client client = _server.IdToClient[packet.senderID];
         }
-        
+
         public void AddIngredient(DataPacket packet)
         {
             Console.WriteLine("server-side response");
@@ -137,16 +136,17 @@ namespace REI_Server.Logic.Connections
             });
         }
 
-        //TODO Warahouse singleton maken HET WERKT WEL MAAR HET KAN BETER 
         public void GetList(DataPacket packet)
         {
             Client client = _server.IdToClient[packet.senderID];
             client.SendData(new DataPacket<GetListResponsePacket>
             {
-                type = PacketType.ADD_INGREDIENT,
+                senderID = packet.senderID,
+                type = PacketType.GET_LIST,
                 data = new GetListResponsePacket()
                 {
-                    allItems = new Warehouse.Warehouse()._ingredients
+
+                    allItems = Warehouse.GetInstance()._ingredients
                 }
             });
         }

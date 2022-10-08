@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Shared
 {
@@ -8,12 +6,14 @@ namespace Shared
     {
         public string Name { get; set; }
         public Guid OrderID { get; set; }
-        public Tuple<Ingredient, int>[] Toppings{ get; set; }
+        public Tuple<Ingredient, int>[] Toppings { get; set; }
 
-        public decimal Price { get
+        public decimal Price
+        {
+            get
             {
                 decimal total = 0m;
-                foreach (var (ingredient, amount)in Toppings)
+                foreach (var (ingredient, amount) in Toppings)
                 {
                     total += ingredient.Price * amount;
                 }

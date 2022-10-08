@@ -2,12 +2,12 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Shared
 {
     public abstract class DAbstract
     {
+        public PacketType type;
 
         public string ToJson()
         {
@@ -18,7 +18,6 @@ namespace Shared
     public class DataPacket<T> : DAbstract where T : DAbstract
     {
         public Guid senderID;
-        public PacketType type;
         public T data;
     }
 
@@ -34,12 +33,12 @@ namespace Shared
             return this.data.ToObject<T>();
         }
     }
-    
+
     public class ErrorPacket : DAbstract
     {
         public StatusCode statusCode;
     }
-    
+
     namespace Login
     {
         public class AutenticationPacket : DAbstract
@@ -64,7 +63,7 @@ namespace Shared
             public StatusCode statusCode;
         }
     }
-    
+
     namespace Order
     {
         public class GetOrdersPacket : DAbstract
@@ -91,12 +90,12 @@ namespace Shared
         {
             public string message;
         }
-        
+
         public class GetListRequestPacket : DAbstract
         {
-            
+
         }
-        
+
         public class GetListResponsePacket : DAbstract
         {
             public List<WarehouseItem> allItems;

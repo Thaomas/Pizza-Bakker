@@ -1,12 +1,8 @@
 ﻿using Newtonsoft.Json;
 using NUnit.Framework;
-using REI_Server.Logic.Connections;
-using REI_Server.Models;
-using System;
+using Pizza_Server.Logic.Connections;
+using Pizza_Server.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Test
 {

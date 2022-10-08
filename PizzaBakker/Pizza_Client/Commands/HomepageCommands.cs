@@ -1,16 +1,16 @@
-﻿using REI.Stores;
-using REI.Util;
-using REI.ViewModels;
+﻿using Pizza_Client.Stores;
+using Pizza_Client.Util;
+using Pizza_Client.ViewModels;
 using Shared;
 using Shared.Order;
 using System;
 
-namespace REI.Commands
+namespace Pizza_Client.Commands
 {
     public class ChangeStatusCommand : CommandBase
     {
         private readonly NavigationStore _navigationStore;
-
+        private HomepageViewModel _homepageViewModel => (HomepageViewModel)_navigationStore.CurrentViewModel;
         public ChangeStatusCommand(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
@@ -19,18 +19,18 @@ namespace REI.Commands
         public override void Execute(object parameter)
         {
             ConnectionHandler connectionHandler = ConnectionHandler.GetInstance();
-            connectionHandler.SendData(Callback, new DataPacket<ChangeStatusPacket>()
+            connectionHandler.SendData(new DataPacket<ChangeStatusPacket>()
             {
                 type = PacketType.CHANGE_STATUS,
                 senderID = connectionHandler.ID,
                 data = new ChangeStatusPacket()
                 {
-                    orderStatus = ((HomepageViewModel)_navigationStore.CurrentViewModel).Status
+                    orderStatus = _homepageViewModel.Status
                 }
-            }) ;
+            }, HomepageCallback);
         }
 
-        private void Callback(DataPacket obj)
+        private void HomepageCallback(DataPacket obj)
         {
             throw new NotImplementedException();
         }

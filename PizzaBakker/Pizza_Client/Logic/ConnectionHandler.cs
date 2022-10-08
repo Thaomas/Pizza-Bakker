@@ -1,20 +1,20 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Shared;
 using Shared.Login;
 using System;
+using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 
-namespace REI.Util
+namespace Pizza_Client.Util
 {
     public class ConnectionHandler
     {
-        private static ConnectionHandler instance;
+        private static ConnectionHandler _instance;
 
         private TcpClient tcpClient;
         private NetworkStream stream;
-        public Action<DataPacket> callback;
+        public Dictionary<PacketType, Action<DataPacket>> callbacks;
 
         private byte[] dataBuffer;
         private readonly byte[] lengthBytes = new byte[4];
@@ -29,12 +29,10 @@ namespace REI.Util
 
         public static ConnectionHandler GetInstance()
         {
-            if (instance is null)
-            {
-                instance = new ConnectionHandler();
-            }
+            if (_instance is null)
+                _instance = new ConnectionHandler();
 
-            return instance;
+            return _instance;
         }
 
         /// <summary>
@@ -43,30 +41,29 @@ namespace REI.Util
         /// </summary>
         public void ConnectToServer()
         {
-            callback = OnServerConnectionMade;
+
+            callbacks = new Dictionary<PacketType, Action<DataPacket>>();
+
+            callbacks.Add(PacketType.AUTHENTICATION, OnServerConnectionMade);
+
             tcpClient = new TcpClient();
             tcpClient.BeginConnect("localhost", 6000, OnConnectionMade, null);
         }
 
         private void OnServerConnectionMade(DataPacket packet)
         {
-            if (packet.type == PacketType.AUTHENTICATION)
+            AutenticationPacket authPacket = packet.GetData<AutenticationPacket>();
+            ID = authPacket.autenticationID;
+            SendData(new DataPacket<AuthenticationResponsePacket>
             {
-                AutenticationPacket authPacket = packet.GetData<AutenticationPacket>();
-                ID = authPacket.autenticationID;
-                SendData(new DataPacket<AuthenticationResponsePacket>
+                senderID = ID,
+                type = PacketType.AUTHENTICATION,
+                data = new AuthenticationResponsePacket
                 {
-                    senderID = ID,
-                    type = PacketType.AUTHENTICATION_RESPONSE,
-                    data = new AuthenticationResponsePacket
-                    {
-                        autenticationID = ID,
-                        clientType = ClientType.EMPLOYEE
-                    }
-                });
-
-            }
-
+                    autenticationID = ID,
+                    clientType = ClientType.EMPLOYEE
+                }
+            });
         }
 
         private void OnConnectionMade(IAsyncResult ar)
@@ -86,9 +83,16 @@ namespace REI.Util
         private void OnDataReceived(IAsyncResult ar)
         {
             stream.EndRead(ar);
+
             string data = Encoding.UTF8.GetString(dataBuffer);
             DataPacket dataPacket = JsonConvert.DeserializeObject<DataPacket>(data);
-            callback(dataPacket);
+
+            if (callbacks.ContainsKey(dataPacket.type))
+            {
+                callbacks[dataPacket.type](dataPacket);
+                callbacks.Remove(dataPacket.type);
+            }
+
             stream.BeginRead(lengthBytes, 0, lengthBytes.Length, OnLengthBytesReceived, null);
         }
 
@@ -101,10 +105,9 @@ namespace REI.Util
             stream.Flush();
         }
 
-        public void SendData(Action<DataPacket> callback, DAbstract packet)
+        public void SendData(DAbstract packet, Action<DataPacket> callback)
         {
-            this.callback = callback;
-
+            this.callbacks.Add(packet.type, callback);
             byte[] dataBytes = Encoding.ASCII.GetBytes(packet.ToJson());
 
             stream.Write(BitConverter.GetBytes(dataBytes.Length));
