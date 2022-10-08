@@ -26,12 +26,11 @@ namespace Pizza_Client.Commands.WarehouseCommands
             connectionHandler.SendData(new DataPacket<DeleteIngredientRequestPacket>()
             {
                 type = PacketType.DELETE_INGREDIENT,
-                senderID = connectionHandler.ID,
                 data = new DeleteIngredientRequestPacket()
                 {
                     message = "hoiii"
                 }
-            },PacketType.DELETE_INGREDIENT, DeleteIngredientCallback);
+            }, DeleteIngredientCallback);
         }
 
         private void DeleteIngredientCallback(DataPacket obj)

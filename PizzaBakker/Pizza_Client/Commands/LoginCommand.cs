@@ -41,13 +41,12 @@ namespace Pizza_Client.Commands
             connectionHandler.SendData(new DataPacket<LoginPacket>()
             {
                 type = PacketType.LOGIN,
-                senderID = (Guid)connectionHandler.ID,
                 data = new LoginPacket()
                 {
                     username = uint.Parse(_loginViewModel.Username),
                     password = _loginViewModel.Password
                 }
-            },PacketType.LOGIN, LoginCallback);
+            }, LoginCallback);
         }
 
         public void LoginCallback(DataPacket packet)

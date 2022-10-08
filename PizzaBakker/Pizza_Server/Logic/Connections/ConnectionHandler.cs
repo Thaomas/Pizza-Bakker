@@ -36,10 +36,11 @@ namespace Pizza_Server.Logic.Connections
                 Trace.WriteLine(print);
                 Console.WriteLine(print);
 
-                Client client = new Client(tcpClient, _operationHandler.HandleDataCallback);
+                Guid authenticationID = Guid.NewGuid();
+
+                Client client = new Client(tcpClient, _operationHandler.HandleDataCallback, authenticationID);
                 client.BeginRead();
 
-                Guid authenticationID = Guid.NewGuid();
                 client.SendData(new DataPacket<AutenticationPacket>()
                 {
                     type = PacketType.AUTHENTICATION,
