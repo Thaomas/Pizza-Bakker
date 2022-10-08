@@ -102,11 +102,12 @@ namespace Pizza_Server.Logic.Connections
             Dictionary<PacketType, Action<DataPacket>> oppHandler = (client.ClientType == ClientType.BAKER) ? _bakerOperationHandlers : _warehouseOperationHandlers;
 
 
-            client.Callback = (DataPacket p, Client c) => oppHandler[p.type](packet);
+            client.Callback = (DataPacket p, Client c) => oppHandler[p.type](p);
             // Let the client know that it can log in. 
             client.SendData(new DataPacket<LoginResponsePacket>
             {
                 type = PacketType.LOGIN,
+                senderID = authId,
                 data = new LoginResponsePacket()
                 {
                     statusCode = StatusCode.ACCEPTED

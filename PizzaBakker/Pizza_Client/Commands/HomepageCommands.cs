@@ -27,7 +27,7 @@ namespace Pizza_Client.Commands
                 {
                     orderStatus = _homepageViewModel.Status
                 }
-            }, HomepageCallback);
+            },PacketType.CHANGE_STATUS, HomepageCallback);
         }
 
         private void HomepageCallback(DataPacket obj)

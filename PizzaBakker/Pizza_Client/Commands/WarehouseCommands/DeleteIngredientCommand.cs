@@ -31,7 +31,7 @@ namespace Pizza_Client.Commands.WarehouseCommands
                 {
                     message = "hoiii"
                 }
-            }, DeleteIngredientCallback);
+            },PacketType.DELETE_INGREDIENT, DeleteIngredientCallback);
         }
 
         private void DeleteIngredientCallback(DataPacket obj)

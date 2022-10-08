@@ -23,8 +23,9 @@ namespace Pizza_Client.Commands.WarehouseCommands
             connectionHandler.SendData(new DataPacket<GetListRequestPacket>
             {
                 type = PacketType.GET_LIST,
+                senderID = connectionHandler.ID,
                 data = new GetListRequestPacket() { }
-            }, ReloadListCallBack);
+            },PacketType.GET_LIST , ReloadListCallBack);
         }
 
         private void ReloadListCallBack(DataPacket packet)

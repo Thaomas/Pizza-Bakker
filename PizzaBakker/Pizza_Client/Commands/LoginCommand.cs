@@ -47,14 +47,14 @@ namespace Pizza_Client.Commands
                     username = uint.Parse(_loginViewModel.Username),
                     password = _loginViewModel.Password
                 }
-            }, LoginCallback);
+            },PacketType.LOGIN, LoginCallback);
         }
 
         public void LoginCallback(DataPacket packet)
         {
             if (packet.GetData<LoginResponsePacket>().statusCode == StatusCode.ACCEPTED)
             {
-                ConnectionHandler.GetInstance().ID = packet.senderID;
+
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     _navigationStore.CurrentViewModel = new WarehouseViewModel(_navigationStore);

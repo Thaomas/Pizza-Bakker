@@ -43,6 +43,7 @@ namespace Pizza_Server.Logic.Connections
                 client.SendData(new DataPacket<AutenticationPacket>()
                 {
                     type = PacketType.AUTHENTICATION,
+                    senderID = authenticationID,
                     data = new AutenticationPacket()
                     {
                         autenticationID = authenticationID

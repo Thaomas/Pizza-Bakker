@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Shared;
 using Shared.Login;
 using System;
@@ -105,14 +105,10 @@ namespace Pizza_Client.Util
             stream.Flush();
         }
 
-        public void SendData(DAbstract packet, Action<DataPacket> callback)
+        public void SendData(DAbstract packet,PacketType type, Action<DataPacket> callback)
         {
-            this.callbacks.Add(packet.type, callback);
-            byte[] dataBytes = Encoding.ASCII.GetBytes(packet.ToJson());
-
-            stream.Write(BitConverter.GetBytes(dataBytes.Length));
-            stream.Write(dataBytes);
-            stream.Flush();
+            this.callbacks.Add(type, callback);
+            this.SendData(packet);
         }
     }
 }
