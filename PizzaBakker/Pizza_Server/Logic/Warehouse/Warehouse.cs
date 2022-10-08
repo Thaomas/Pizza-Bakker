@@ -30,7 +30,7 @@ namespace Pizza_Server.Logic.WarehouseNS
         
         public void SaveIngredients()
         {
-            string serializeData = JsonConvert.SerializeObject(_ingredients, Formatting.Indented);
+            string serializeData = JsonConvert.SerializeObject(_ingredients.Values.ToList(), Formatting.Indented);
             IO.WriteFile("SaveData\\Warehouse.json", serializeData);
         }
         
