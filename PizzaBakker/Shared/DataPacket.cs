@@ -86,15 +86,18 @@ namespace Shared
 
     namespace Warehouse
     {
-        public class AddIngredientPacket : DAbstract
+        public class AddIngredientRequestPacket : DAbstract
         {
-            public string message;
+            public WarehouseItem ingredient;
         }
 
-        public class GetListRequestPacket : DAbstract
+        public class AddIngredientResponsePacket : DAbstract
         {
-
+            public List<WarehouseItem> warehouseList;
+            public StatusCode statusCode;
         }
+        
+        public class GetListRequestPacket : DAbstract { }
 
         public class GetListResponsePacket : DAbstract
         {
@@ -112,8 +115,8 @@ namespace Shared
 
         public class DeleteIngredientResponsePacket : DAbstract
         {
-            public List<WarehouseItem> WarehouseList;
-            public StatusCode StatusCode;
+            public List<WarehouseItem> warehouseList;
+            public StatusCode statusCode;
         }
     }
 }

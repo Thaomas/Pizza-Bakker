@@ -30,7 +30,7 @@ namespace Pizza_Server.Logic.Connections
             {
                 { PacketType.ADD_INGREDIENT, AddIngredient},
                 { PacketType.GET_LIST, GetList},
-                { PacketType.DELETE_INGREDIENT, DeleteIngredient}
+                { PacketType.DELETE_INGREDIENT, DeleteIngredient},
             };
 
 
@@ -125,14 +125,41 @@ namespace Pizza_Server.Logic.Connections
 
         public void AddIngredient(DataPacket packet)
         {
-            Console.WriteLine("server-side response");
+            AddIngredientRequestPacket addPacket = packet.GetData<AddIngredientRequestPacket>();
+
+            uint id = Warehouse.GetInstance()._ingredients.Keys.Max();
+            string name = addPacket.ingredient.Ingredient.Name;
+            Console.WriteLine("id: " + name);
+            try
+            {
+                if (Warehouse.GetInstance()._ingredients.Values.All(v => v.Ingredient.Name != name))
+                {
+                    if (Warehouse.GetInstance()._ingredients.TryGetValue(id, out WarehouseItem dd))
+                    {
+                        uint total = id + 1;
+                        addPacket.ingredient.Ingredient.Id = total;
+                        Warehouse.GetInstance()._ingredients.Add(total, addPacket.ingredient);
+                    }
+                    else
+                    {
+                        addPacket.ingredient.Ingredient.Id = 1;
+                        Warehouse.GetInstance()._ingredients.Add(1, addPacket.ingredient);
+                    }
+                }
+
+            }catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            
             Client client = _server.IdToClient[packet.senderID];
-            client.SendData(new DataPacket<AddIngredientPacket>
+            client.SendData(new DataPacket<AddIngredientResponsePacket>
             {
                 type = PacketType.ADD_INGREDIENT,
-                data = new AddIngredientPacket()
+                data = new AddIngredientResponsePacket()
                 {
-                    message = "kip boulion is toegevoegdddd"
+                    warehouseList = Warehouse.GetInstance()._ingredients.Values.ToList(),
+                    statusCode = StatusCode.OK
                 }
             });
         }
@@ -153,7 +180,6 @@ namespace Pizza_Server.Logic.Connections
         public void DeleteIngredient(DataPacket packet)
         {
             DeleteIngredientRequestPacket deletePacket = packet.GetData<DeleteIngredientRequestPacket>();
-            //uint id = deletePacket.singleIngredient.Ingredient.Id;
 
             Warehouse.GetInstance()._ingredients.Remove(deletePacket.ID);
 
@@ -164,8 +190,8 @@ namespace Pizza_Server.Logic.Connections
                 type = PacketType.DELETE_INGREDIENT,
                 data = new DeleteIngredientResponsePacket()
                 {
-                    StatusCode = StatusCode.OK,
-                    WarehouseList = Warehouse.GetInstance()._ingredients.Values.ToList()
+                    statusCode = StatusCode.OK,
+                    warehouseList = Warehouse.GetInstance()._ingredients.Values.ToList()
                 }
             });
         }

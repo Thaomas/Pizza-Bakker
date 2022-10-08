@@ -2,7 +2,7 @@
   {
     "Ingredient": {
       "Name": "tomatensaus",
-      "Id": 3,
+      "Id": 1,
       "Price": 0.5
     },
     "Count": 0
@@ -10,15 +10,15 @@
   {
     "Ingredient": {
       "Name": "kaas",
-      "Id": 5,
-      "Price": 1.5
+      "Id": 2,
+      "Price": 2.0
     },
-    "Count": 0
+    "Count": 69
   },
   {
     "Ingredient": {
       "Name": "champignon",
-      "Id": 7,
+      "Id": 3,
       "Price": 1.0
     },
     "Count": 0
@@ -26,9 +26,33 @@
   {
     "Ingredient": {
       "Name": "uien",
+      "Id": 4,
+      "Price": 150.0
+    },
+    "Count": 23
+  },
+  {
+    "Ingredient": {
+      "Name": "frutti di mar",
+      "Id": 7,
+      "Price": 375.0
+    },
+    "Count": 6
+  },
+  {
+    "Ingredient": {
+      "Name": "paprika",
       "Id": 6,
+      "Price": 2.0
+    },
+    "Count": 13
+  },
+  {
+    "Ingredient": {
+      "Name": "salami",
+      "Id": 9,
       "Price": 1.0
     },
-    "Count": 0
+    "Count": 18
   }
 ]

@@ -11,18 +11,42 @@ namespace Pizza_Client.ViewModels
         private readonly NavigationStore _navigationStore;
 
         public BaseViewModel CurrentViewModel => _navigationStore.CurrentViewModel;
-
-
-        private string _debug;
-        public string Debug
+        
+        private string _NewIngredientName;
+        public string NewIngredientName
         {
-            get => _debug;
+            get => _NewIngredientName;
             set
             {
-                _debug = value;
-                OnPropertyChanged(nameof(Debug));
+                _NewIngredientName = value;
+                OnPropertyChanged(nameof(NewIngredientName));
             }
         }
+
+
+        private uint _newIngredientPrice;
+        public uint NewIngredientPrice
+        {
+            get => _newIngredientPrice;
+            set
+            {
+                _newIngredientPrice = value;
+                OnPropertyChanged(nameof(IngredientPrice));
+            }
+        }
+
+
+        private uint _NewIngredientAmount;
+        public uint NewIngredientAmount
+        {
+            get => _NewIngredientAmount;
+            set
+            {
+                _NewIngredientAmount = value;
+                OnPropertyChanged(nameof(NewIngredientAmount));
+            }
+        }
+
 
         private string _ingredientName;
         public string IngredientName

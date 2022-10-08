@@ -32,7 +32,7 @@ namespace Pizza_Client.Commands.WarehouseCommands
         private void DeleteIngredientCallback(DataPacket obj)
         {
             DeleteIngredientResponsePacket data = obj.GetData<DeleteIngredientResponsePacket>();
-            _warehouseViewModel.AllIngredients = data.WarehouseList;
+            _warehouseViewModel.AllIngredients = data.warehouseList;
         }
     }
 }
