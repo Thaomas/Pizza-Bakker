@@ -19,9 +19,6 @@
             <DataTemplate DataType="{x:Type viewModels:WarehouseViewModel}">
                 <views:WarehouseView/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModels:AddIngredientViewModel}">
-                <views:AddIngredientView/>
-            </DataTemplate>
             <DataTemplate DataType="{x:Type viewModels:KitchenViewModel}">
                 <views:KitchenView/>
             </DataTemplate>

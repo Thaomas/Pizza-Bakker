@@ -5,9 +5,7 @@
     <projectFile>Pizza_Server/Pizza_Server.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="30b1c637-7b05-45ee-9a78-fa50a634a910" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Pizza_Server/Pizza_Server.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Pizza_Server/Pizza_Server.csproj" afterDir="false" />
-    </list>
+    <list default="true" id="30b1c637-7b05-45ee-9a78-fa50a634a910" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -89,7 +87,7 @@
       <updated>1665141660384</updated>
       <workItem from="1665141715858" duration="12344000" />
       <workItem from="1665169018228" duration="2810000" />
-      <workItem from="1665311820913" duration="1549000" />
+      <workItem from="1665311820913" duration="1902000" />
     </task>
     <servers />
   </component>
@@ -103,7 +101,13 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="false" />
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
