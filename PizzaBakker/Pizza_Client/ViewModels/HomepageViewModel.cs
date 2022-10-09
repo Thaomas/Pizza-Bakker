@@ -1,14 +1,10 @@
-﻿using REI.Commands;
-using REI.Stores;
+﻿using Pizza_Client.Commands;
+using Pizza_Client.Stores;
 using Shared;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace REI.ViewModels
+namespace Pizza_Client.ViewModels
 {
     class HomepageViewModel : BaseViewModel
     {
@@ -27,8 +23,8 @@ namespace REI.ViewModels
             }
         }
 
-        private EmployeeStatus _status;
-        public EmployeeStatus Status
+        private OrderStatus _status;
+        public OrderStatus Status
         {
             get => _status;
             set
@@ -61,19 +57,19 @@ namespace REI.ViewModels
         }
 
         public ICommand ChangeStatusCommand { get; }
-        public ICommand AddFileCommand { get; }
         public ICommand ReadFileCommand { get; }
         public ICommand DeleteNoteCommand { get; }
 
         public HomepageViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
-            AllStatus = Enum.GetValues(typeof(EmployeeStatus));
+            AllStatus = Enum.GetValues(typeof(OrderStatus));
 
             ChangeStatusCommand = new ChangeStatusCommand(_navigationStore);
-            AddFileCommand = new AddFileCommand(_navigationStore);
-            ReadFileCommand = new ReadFileCommand(_navigationStore);
-            DeleteNoteCommand = new DeleteNote(_navigationStore);
+
+            //TODO
+            //ReadFileCommand = new ReadFileCommand(_navigationStore);
+            //DeleteNoteCommand = new DeleteNote(_navigationStore);
         }
     }
 }

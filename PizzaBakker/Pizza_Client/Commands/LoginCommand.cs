@@ -1,17 +1,18 @@
-﻿using Newtonsoft.Json.Linq;
-using REI.Stores;
-using REI.Util;
-using REI.ViewModels;
+﻿using Pizza_Client.Stores;
+using Pizza_Client.Util;
+using Pizza_Client.ViewModels;
 using Shared;
+using Shared.Login;
+using System;
 using System.Diagnostics;
 using System.Windows;
 
-namespace REI.Commands
+namespace Pizza_Client.Commands
 {
     public class LoginCommand : CommandBase
     {
         private readonly NavigationStore _navigationStore;
-
+        private LoginViewModel _loginViewModel => (LoginViewModel)_navigationStore.CurrentViewModel;
         public LoginCommand(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
@@ -20,42 +21,42 @@ namespace REI.Commands
         public override void Execute(object parameter)
         {
             ConnectionHandler connectionHandler = ConnectionHandler.GetInstance();
-
-            if (!connectionHandler.IsConnected || connectionHandler.ID is null)
+            if (!connectionHandler.IsConnected || connectionHandler.ID == Guid.Empty)
             {
                 Trace.WriteLine("No Connection to server.");
                 return;
             }
 
-            if (((LoginViewModel)_navigationStore.CurrentViewModel).Username is null ||
-                ((LoginViewModel)_navigationStore.CurrentViewModel).Password is null)
+            if (_loginViewModel.Username is null ||
+                _loginViewModel.Password is null)
             {
                 Trace.WriteLine("No password or username entered.");
                 return;
             }
-
-            connectionHandler.SendData(LoginCallback, new JsonFile()
+            if (!uint.TryParse(_loginViewModel.Username, out _))
             {
-                StatusCode = (int)StatusCodes.OK,
-                OppCode = (int)OperationCodes.AUTHENTICATE,
-                ID = uint.Parse(((LoginViewModel)_navigationStore.CurrentViewModel).Username),
-                Data = new JsonData
+                return;
+            }
+
+            connectionHandler.SendData(new DataPacket<LoginPacket>()
+            {
+                type = PacketType.LOGIN,
+                data = new LoginPacket()
                 {
-                    Password = ((LoginViewModel)_navigationStore.CurrentViewModel).Password,
-                    AutenticationID = connectionHandler.ID.Value
+                    username = uint.Parse(_loginViewModel.Username),
+                    password = _loginViewModel.Password
                 }
-            });
+            }, LoginCallback);
         }
 
-        public void LoginCallback(JObject jsonFile)
+        public void LoginCallback(DataPacket packet)
         {
-            if (jsonFile["StatusCode"].ToObject<StatusCodes>() == StatusCodes.ACCEPTED)
+            if (packet.GetData<LoginResponsePacket>().statusCode == StatusCode.ACCEPTED)
             {
-                ConnectionHandler.GetInstance().ID = jsonFile.Value<uint>("ID");
 
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    _navigationStore.CurrentViewModel = new HomepageViewModel(_navigationStore);
+                    _navigationStore.CurrentViewModel = new WarehouseViewModel(_navigationStore);
                 });
 
                 return;

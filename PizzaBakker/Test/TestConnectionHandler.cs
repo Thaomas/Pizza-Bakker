@@ -13,7 +13,7 @@ namespace Test
         {
             _tcpListener.Start();
 
-            REI.Util.ConnectionHandler connectionHandler = REI.Util.ConnectionHandler.GetInstance();
+            Pizza_Client.Util.ConnectionHandler connectionHandler = Pizza_Client.Util.ConnectionHandler.GetInstance();
 
             connectionHandler.ConnectToServer();
         }

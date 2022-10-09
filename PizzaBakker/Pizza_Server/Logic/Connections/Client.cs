@@ -1,25 +1,27 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Shared;
 using System;
 using System.Net.Sockets;
 using System.Text;
 
-namespace REI_Server.Logic.Connections
+namespace Pizza_Server.Logic.Connections.Types
 {
     public class Client : IDisposable
     {
         private readonly NetworkStream stream;
-
-        private readonly Action<JObject> callback;
+        public Action<DataPacket, Client> Callback { get; set; }
         private byte[] dataBuffer;
         private readonly byte[] lengthBytes = new byte[4];
+        public ClientType ClientType { get; set; }
+        public uint? EmployeeID { get; set; }
+        private readonly Guid _guid;
 
-        public Client(TcpClient client, Action<JObject> callback)
+        public Client(TcpClient client, Action<DataPacket, Client> callback, Guid id)
         {
             stream = client.GetStream();
-            this.callback = callback;
-
+            this.Callback = callback;
+            this.EmployeeID = null;
+            this._guid = id;
         }
 
         public void BeginRead()
@@ -37,18 +39,22 @@ namespace REI_Server.Logic.Connections
         private void OnDataReceived(IAsyncResult ar)
         {
             stream.EndRead(ar);
-            JObject data = JObject.Parse(Encoding.UTF8.GetString(dataBuffer));
-            callback(data);
+            string data = Encoding.UTF8.GetString(dataBuffer);
+            DataPacket packet = JsonConvert.DeserializeObject<DataPacket>(data);
+
+            Console.WriteLine($"In:{packet.ToJson()}");
+
+            Callback(packet, this);
             stream.BeginRead(lengthBytes, 0, lengthBytes.Length, OnLengthBytesReceived, null);
         }
 
-        public void SendData(JsonFile jsonFile)
+        public void SendData<T>(DataPacket<T> packet) where T : DAbstract
         {
-            byte[] dataBytes = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(
-                jsonFile,
-                Formatting.Indented,
-                new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore }));
+            if (packet.senderID == Guid.Empty)
+                packet.senderID = _guid;
+            byte[] dataBytes = Encoding.ASCII.GetBytes(packet.ToJson());
 
+            Console.WriteLine($"Out: {packet.ToJson()}");
             stream.Write(BitConverter.GetBytes(dataBytes.Length));
             stream.Write(dataBytes);
         }

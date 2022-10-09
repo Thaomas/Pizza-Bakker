@@ -1,8 +1,7 @@
-﻿using REI.ViewModels;
-using Shared;
+﻿using Shared;
 using System;
 
-namespace REI.Stores
+namespace Pizza_Client.Stores
 {
     public class NavigationStore
     {

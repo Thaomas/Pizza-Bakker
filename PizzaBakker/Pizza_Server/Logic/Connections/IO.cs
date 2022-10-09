@@ -1,13 +1,8 @@
 ﻿using Newtonsoft.Json;
-using Shared;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace REI_Server.Logic.Connections
+namespace Pizza_Server.Logic.Connections
 {
     public class IO
     {
@@ -65,23 +60,6 @@ namespace REI_Server.Logic.Connections
             }
 
             return File.ReadAllText(path);
-        }
-
-        public static void SaveEmployees(Dictionary<uint, Employee> dic)
-        {
-            WriteFile("SaveData\\Employees", ".json", JsonConvert.SerializeObject(dic, Formatting.Indented));
-        }
-
-        public static Dictionary<uint, Employee> LoadEmployees()
-        {
-            string jsonString = ReadFile("SaveData\\Employees.json");
-
-            if (jsonString == null)
-            {
-                return new Dictionary<uint, Employee>();
-            }
-
-            return JsonConvert.DeserializeObject<Dictionary<uint, Employee>>(jsonString);
         }
     }
 }

@@ -1,10 +1,10 @@
-﻿using REI.Stores;
-using REI.Util;
-using REI.ViewModels;
+﻿using Pizza_Client.Stores;
+using Pizza_Client.Util;
+using Pizza_Client.ViewModels;
 using System.Threading;
 using System.Windows;
 
-namespace REI
+namespace Pizza_Client
 {
     public partial class App : Application
     {

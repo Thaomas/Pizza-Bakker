@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Shared
+﻿namespace Shared
 {
     public enum PacketType
     {
         LOGIN,
-        CHANGE_STATUS
+        CHANGE_STATUS,
+        STATUS,
+        AUTHENTICATION,
+        ERROR,
+        ADD_INGREDIENT,
+        DELETE_INGREDIENT,
+        GET_LIST
     }
 
-    public enum StatusCodes
+    public enum StatusCode
     {
         OK = 200,                   // Standard OK response.
         CREATED = 201,              // Indicates that the requested file has been created.
@@ -35,10 +35,25 @@ namespace Shared
         THREE
     };
 
-    public enum EmployeeStatus
+    public enum ClientType
     {
-        AT_CLIENT,
-        BREAK,
-        EN_ROUTE
+        CUSTOMER,
+        EMPLOYEE,
+        BAKER,
+        WAREHOUSE
+    }
+
+    public enum OperationCodes
+    {
+        CHANGE_STATUS
+    }
+
+    public enum OrderStatus
+    {
+        ORDERED,
+        IN_PROGRESS,
+        BAKING,
+        DELIVERING,
+        DELIVERED
     }
 }

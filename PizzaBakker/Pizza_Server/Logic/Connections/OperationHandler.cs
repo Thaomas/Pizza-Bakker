@@ -1,118 +1,189 @@
-﻿using Newtonsoft.Json.Linq;
-using REI_Server.Models;
-using REI_Server.ViewModels;
+using Pizza_Server.Logic.Connections.Types;
+using Pizza_Server.Logic.WarehouseNS;
+using Pizza_Server.Main;
 using Shared;
+using Shared.Login;
+using Shared.Order;
+using Shared.Warehouse;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace REI_Server.Logic.Connections
+namespace Pizza_Server.Logic.Connections
 {
     class OperationHandler
     {
         private readonly Server _server;
+        private readonly Dictionary<PacketType, Action<DataPacket>> _customerOperationHandlers;
+        private readonly Dictionary<PacketType, Action<DataPacket>> _bakerOperationHandlers;
+        private readonly Dictionary<PacketType, Action<DataPacket>> _warehouseOperationHandlers;
 
         public OperationHandler(Server viewModel)
         {
             _server = viewModel;
-        }
-
-        public void SaveNote(JObject jObject)
-        {
-            if (jObject["Data"]["Content"] is null) { return; }
-
-            if (_server.Notes.ContainsKey(jObject["Data"]["Title"].ToObject<string>()))
-            { return; }
-
-
-            _server.Notes.Add
-                (
-                    jObject["Data"]["Title"].ToObject<string>(),
-                    new Note()
-                    {
-                        Title = jObject["Data"]["Title"].ToObject<string>(),
-                        Content = jObject["Data"]["Content"].ToObject<string>()
-                    }
-                );
-
-            _server.Log = $"Employee: {jObject["ID"]}, Saved a file";
-        }
-
-        public void GetNote(JObject jObject)
-        {
-            uint id = jObject["ID"].ToObject<uint>();
-            string title = jObject["Data"]["Title"].ToObject<string>();
-
-            if (!_server.Notes.ContainsKey(title)) { return; }
-
-            string content = _server.Notes[title].Content;
-
-            Client client = _server.IdToClient[id];
-
-            client.SendData(new JsonFile
+            _bakerOperationHandlers = new Dictionary<PacketType, Action<DataPacket>>
             {
-                StatusCode = (int)StatusCodes.OK,
-                OppCode = (int)OperationCodes.GET_NOTE,
-                ID = id,
-                Data = new JsonData
-                {
-                    Content = content
-                }
-            });
+                { PacketType.CHANGE_STATUS, ChangeStatus}
+            };
 
-            _server.Log = $"Employee: {id}, Requested a file";
+            _warehouseOperationHandlers = new Dictionary<PacketType, Action<DataPacket>>
+            {
+                { PacketType.ADD_INGREDIENT, AddIngredient},
+                { PacketType.GET_LIST, GetList},
+                { PacketType.DELETE_INGREDIENT, DeleteIngredient},
+            };
+            
+            _customerOperationHandlers = new();
+        }
+        
+        public void HandleDataCallback(DataPacket packet, Client client)
+        {
+            if (packet.type == PacketType.AUTHENTICATION)
+            {
+                AuthenticationResponsePacket authResponsePacket = packet.GetData<AuthenticationResponsePacket>();
+                Action<DataPacket, Client> callback;
+                switch (authResponsePacket.clientType)
+                {
+                    case ClientType.CUSTOMER:
+                        callback = (DataPacket p, Client c) => _customerOperationHandlers[p.type](packet);
+                        break;
+                    case ClientType.EMPLOYEE:
+                        callback = Authenticate;
+                        break;
+                    default:
+                        callback = (DataPacket p, Client c) => { };
+                        break;
+                }
+                client.Callback = callback;
+                client.ClientType = authResponsePacket.clientType;
+            }
         }
 
-        public void Authenticate(JObject jObject)
+
+        public void Authenticate(DataPacket packet, Client client)
         {
-            uint id = jObject["ID"].ToObject<uint>();
-            uint authId = jObject["Data"]["AutenticationID"].ToObject<uint>();
+            if (packet.type != PacketType.LOGIN || client.ClientType == ClientType.CUSTOMER)
+            {
+                client.SendData(new DataPacket<ErrorPacket>
+                {
+                    type = PacketType.ERROR,
+                    data = new ErrorPacket
+                    {
+                        statusCode = (client.ClientType == ClientType.CUSTOMER) ? StatusCode.FORBIDDEN : StatusCode.BAD_REQUEST
+                    }
+                });
+            }
+
+            LoginPacket loginPacket = packet.GetData<LoginPacket>();
+            uint id = loginPacket.username;
+            Guid authId = packet.senderID;
 
             // Wrong login info.
             if (!_server.IdToEmployee.ContainsKey(id) ||
-                _server.IdToEmployee[id].Password != jObject["Data"]["Password"].ToObject<string>())
+                _server.IdToEmployee[id].Password != loginPacket.password)
             {
-                _server.IdToClient[authId].SendData(new JsonFile
+                _server.IdToClient[authId].SendData(new DataPacket<LoginResponsePacket>
                 {
-                    StatusCode = (int)StatusCodes.NOT_FOUND,
-                    OppCode = (int)OperationCodes.AUTHENTICATE
+                    type = PacketType.LOGIN,
+                    data = new LoginResponsePacket()
+                    {
+                        statusCode = StatusCode.NOT_FOUND
+                    }
                 });
                 return;
             }
 
-            // Correct login info => change authentication id to the real id.
-            Client client = _server.IdToClient[authId];
-            _server.IdToClient.Remove(authId);
-            _server.IdToClient[id] = client;
-
             Employee employee = _server.IdToEmployee[id];
+            Dictionary<PacketType, Action<DataPacket>> oppHandler = (client.ClientType == ClientType.BAKER) ? _bakerOperationHandlers : _warehouseOperationHandlers;
 
+
+            client.Callback = (DataPacket p, Client c) => oppHandler[p.type](p);
             // Let the client know that it can log in. 
-            client.SendData(new JsonFile
+            client.SendData(new DataPacket<LoginResponsePacket>
             {
-                StatusCode = (int)StatusCodes.ACCEPTED,
-                OppCode = (int)OperationCodes.AUTHENTICATE,
-                ID = id,
-                Data = new JsonData
+                type = PacketType.LOGIN,
+                data = new LoginResponsePacket()
                 {
-                    Employee = employee,
+                    statusCode = StatusCode.ACCEPTED
                 }
             });
 
-            _server.Log = $"Employee: {employee.WorkId}, Logged in";
+            _server.Log = $"Employee: {employee.WorkId}, Logged in as a {client.ClientType}";
         }
 
-        public void ChangeStatus(JObject jObject)
+
+        public void ChangeStatus(DataPacket packet)
         {
-            _server.IdToEmployee[jObject.Value<uint>("ID")].Status = (EmployeeStatus)jObject["Data"].Value<int>("EmployeeStatus");
-            _server.Log = $"Employee: {jObject.Value<uint>("ID")}, changed their status to: {(EmployeeStatus)jObject["Data"].Value<int>("EmployeeStatus")}";
+            ChangeStatusPacket statusPacket = packet.GetData<ChangeStatusPacket>();
+            Client client = _server.IdToClient[packet.senderID];
         }
 
-
-        public void DeleteNote(JObject jObject)
+        public void AddIngredient(DataPacket packet)
         {
+            AddIngredientRequestPacket addPacket = packet.GetData<AddIngredientRequestPacket>();
 
+            uint id = Warehouse.GetInstance()._ingredients.Keys.Max();
+            string name = addPacket.ingredient.Ingredient.Name;
 
-            _server.Log = $"PRIVACYLEVEL IS NU : {jObject["Data"]["PrivacyLevel"]}";
+            try {
+                if (Warehouse.GetInstance()._ingredients.Values.All(v => v.Ingredient.Name != name))
+                {
+                    if (Warehouse.GetInstance()._ingredients.TryGetValue(id, out WarehouseItem dd))
+                    {
+                        uint total = id + 1;
+                        addPacket.ingredient.Ingredient.Id = total;
+                        Warehouse.GetInstance()._ingredients.Add(total, addPacket.ingredient);
+                    } else {
+                        addPacket.ingredient.Ingredient.Id = 1;
+                        Warehouse.GetInstance()._ingredients.Add(1, addPacket.ingredient);
+                    }
+                }
+            }catch (Exception e) {
+                Console.WriteLine(e);
+            }
+            
+            Client client = _server.IdToClient[packet.senderID];
+            client.SendData(new DataPacket<AddIngredientResponsePacket>
+            {
+                type = PacketType.ADD_INGREDIENT,
+                data = new AddIngredientResponsePacket()
+                {
+                    warehouseList = Warehouse.GetInstance()._ingredients.Values.ToList(),
+                    statusCode = StatusCode.OK
+                }
+            });
+        }
+ 
+        public void GetList(DataPacket packet)
+        {
+            Client client = _server.IdToClient[packet.senderID];
+            client.SendData(new DataPacket<GetListResponsePacket>
+            {
+                type = PacketType.GET_LIST,
+                data = new GetListResponsePacket()
+                {
+                    allItems = Warehouse.GetInstance()._ingredients.Values.ToList()
+                }
+            });
         }
 
+        public void DeleteIngredient(DataPacket packet)
+        {
+            DeleteIngredientRequestPacket deletePacket = packet.GetData<DeleteIngredientRequestPacket>();
+
+            Warehouse.GetInstance()._ingredients.Remove(deletePacket.ID);
+
+            Client client = _server.IdToClient[packet.senderID];
+            client.SendData(new DataPacket<DeleteIngredientResponsePacket>
+            {
+
+                type = PacketType.DELETE_INGREDIENT,
+                data = new DeleteIngredientResponsePacket()
+                {
+                    statusCode = StatusCode.OK,
+                    warehouseList = Warehouse.GetInstance()._ingredients.Values.ToList()
+                }
+            });
+        }
     }
 }

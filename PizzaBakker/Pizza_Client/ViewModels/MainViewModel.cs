@@ -1,12 +1,7 @@
-﻿using REI.Stores;
+﻿using Pizza_Client.Stores;
 using Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace REI.ViewModels
+namespace Pizza_Client.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
@@ -17,7 +12,7 @@ namespace REI.ViewModels
         public MainViewModel(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
-            _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;            
+            _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
         }
 
         private void OnCurrentViewModelChanged()

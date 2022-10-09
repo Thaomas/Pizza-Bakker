@@ -1,26 +1,27 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using Shared;
+using Shared.Login;
 using System;
+using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 
-namespace REI.Util
+namespace Pizza_Client.Util
 {
     public class ConnectionHandler
     {
-        private static ConnectionHandler instance;
+        private static ConnectionHandler _instance;
 
         private TcpClient tcpClient;
         private NetworkStream stream;
-        private Action<JObject> callback;
+        public Dictionary<PacketType, Action<DataPacket>> callbacks;
 
         private byte[] dataBuffer;
         private readonly byte[] lengthBytes = new byte[4];
 
         public bool IsConnected { get => tcpClient.Connected; }
 
-        public uint? ID { get; set; } = null;
+        public Guid ID { get; set; } = Guid.Empty;
 
         private ConnectionHandler()
         {
@@ -28,12 +29,10 @@ namespace REI.Util
 
         public static ConnectionHandler GetInstance()
         {
-            if (instance is null)
-            {
-                instance = new ConnectionHandler();
-            }
+            if (_instance is null)
+                _instance = new ConnectionHandler();
 
-            return instance;
+            return _instance;
         }
 
         /// <summary>
@@ -42,14 +41,29 @@ namespace REI.Util
         /// </summary>
         public void ConnectToServer()
         {
-            callback = OnServerConnectionMade;
+
+            callbacks = new Dictionary<PacketType, Action<DataPacket>>();
+
+            callbacks.Add(PacketType.AUTHENTICATION, OnServerConnectionMade);
+
             tcpClient = new TcpClient();
             tcpClient.BeginConnect("localhost", 6000, OnConnectionMade, null);
         }
 
-        private void OnServerConnectionMade(JObject obj)
+        private void OnServerConnectionMade(DataPacket packet)
         {
-            ID = obj["Data"]["AutenticationID"].ToObject<uint>();
+            AutenticationPacket authPacket = packet.GetData<AutenticationPacket>();
+            ID = authPacket.autenticationID;
+            SendData(new DataPacket<AuthenticationResponsePacket>
+            {
+                senderID = ID,
+                type = PacketType.AUTHENTICATION,
+                data = new AuthenticationResponsePacket
+                {
+                    autenticationID = ID,
+                    clientType = ClientType.EMPLOYEE
+                }
+            });
         }
 
         private void OnConnectionMade(IAsyncResult ar)
@@ -69,23 +83,34 @@ namespace REI.Util
         private void OnDataReceived(IAsyncResult ar)
         {
             stream.EndRead(ar);
-            JObject data = JObject.Parse(Encoding.UTF8.GetString(dataBuffer));
-            callback(data);
+
+            string data = Encoding.UTF8.GetString(dataBuffer);
+            DataPacket dataPacket = JsonConvert.DeserializeObject<DataPacket>(data);
+
+            if (callbacks.ContainsKey(dataPacket.type))
+            {
+                callbacks[dataPacket.type](dataPacket);
+                callbacks.Remove(dataPacket.type);
+            }
+
             stream.BeginRead(lengthBytes, 0, lengthBytes.Length, OnLengthBytesReceived, null);
         }
 
-        public void SendData(Action<JObject> callback, JsonFile jsonFile)
+        public void SendData<T>(DataPacket<T> packet) where T : DAbstract
         {
-            this.callback = callback;
+            if (packet.senderID == Guid.Empty)
+                packet.senderID = ID;
 
-            byte[] dataBytes = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(
-                jsonFile,
-                Formatting.Indented,
-                new JsonSerializerSettings { DefaultValueHandling = DefaultValueHandling.Ignore }));
-
+            byte[] dataBytes = Encoding.ASCII.GetBytes(packet.ToJson());
             stream.Write(BitConverter.GetBytes(dataBytes.Length));
             stream.Write(dataBytes);
             stream.Flush();
+        }
+
+        public void SendData<T>(DataPacket<T> packet, Action<DataPacket> callback) where T : DAbstract
+        {
+            this.callbacks.Add(packet.type, callback);
+            this.SendData(packet);
         }
     }
 }

@@ -1,0 +1,58 @@
+[
+  {
+    "Ingredient": {
+      "Name": "tomatensaus",
+      "Id": 1,
+      "Price": 0.5
+    },
+    "Count": 0
+  },
+  {
+    "Ingredient": {
+      "Name": "kaas",
+      "Id": 2,
+      "Price": 2.0
+    },
+    "Count": 69
+  },
+  {
+    "Ingredient": {
+      "Name": "deeg",
+      "Id": 5,
+      "Price": 1.0
+    },
+    "Count": 60
+  },
+  {
+    "Ingredient": {
+      "Name": "uien",
+      "Id": 4,
+      "Price": 150.0
+    },
+    "Count": 23
+  },
+  {
+    "Ingredient": {
+      "Name": "kip",
+      "Id": 6,
+      "Price": 3.0
+    },
+    "Count": 23
+  },
+  {
+    "Ingredient": {
+      "Name": "salami",
+      "Id": 7,
+      "Price": 2.0
+    },
+    "Count": 30
+  },
+  {
+    "Ingredient": {
+      "Name": "paprika",
+      "Id": 8,
+      "Price": 3.0
+    },
+    "Count": 23
+  }
+]

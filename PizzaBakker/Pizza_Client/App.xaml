@@ -1,7 +1,7 @@
-﻿<Application x:Class="REI.App"
+﻿<Application x:Class="Pizza_Client.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:REI">
+             xmlns:local="clr-namespace:Pizza_Client">
     <Application.Resources>
          
     </Application.Resources>
