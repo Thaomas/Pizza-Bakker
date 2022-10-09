@@ -57,8 +57,7 @@ namespace Pizza_Client.ViewModels
         }
 
         public ICommand ChangeStatusCommand { get; }
-        public ICommand ReadFileCommand { get; }
-        public ICommand DeleteNoteCommand { get; }
+
 
         public HomepageViewModel(NavigationStore navigationStore)
         {
@@ -66,10 +65,6 @@ namespace Pizza_Client.ViewModels
             AllStatus = Enum.GetValues(typeof(OrderStatus));
 
             ChangeStatusCommand = new ChangeStatusCommand(_navigationStore);
-
-            //TODO
-            //ReadFileCommand = new ReadFileCommand(_navigationStore);
-            //DeleteNoteCommand = new DeleteNote(_navigationStore);
         }
     }
 }

@@ -1,0 +1,234 @@
+<UserControl x:Class="Pizza_Client.Views.KitchenView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Pizza_Client.Views"
+             xmlns:viewModels="clr-namespace:Pizza_Client.ViewModels" 
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             MinHeight="255"
+             MinWidth="630"
+             >
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.Children>
+            <!-- DEBUG LABEL TODO: REMOVE -->
+            <Label Grid.Column="1"
+                   Grid.Row="0"
+                   Content="{Binding Debug, Mode=TwoWay }"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   MinHeight="50" />
+            
+            <Button
+                Grid.Column="0"
+                Grid.Row="0"
+                Width="auto"
+                Height="auto"
+                Content="Delete The Ingredient"
+                Command="{Binding DeleteIngredientCommand}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="10"
+                Padding="10,0,10,0"
+                MinHeight="40"/>
+
+            <!-- Ingredient Info Grid -->
+            <Grid Grid.Column="1"
+                  Grid.Row="0"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+                <Grid.Children>
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               Grid.ColumnSpan="2"
+                               Text="Kitchen "
+                               Background="Red"
+                               Foreground="White"
+                               FontSize="20"
+                               FontWeight="SemiBold"
+                               TextAlignment="Center"/>
+                    
+                    <Label Grid.Row="1"
+                           Grid.Column="0"
+                           Content="Ingredient Name:"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Height="auto" Width="auto"/>
+                    <TextBox Grid.Row="1"
+                             Grid.Column="1"
+                             Text="{Binding IngredientName}"
+                             TextWrapping="Wrap"
+                             TextAlignment="Center"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Center"
+                             Height="auto" Width="160"/>
+
+
+                    <Label Grid.Row="2"
+                           Grid.Column="0"
+                           Content="Price: "
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Height="auto" Width="auto"/>
+                    <TextBox Grid.Row="2"
+                             Grid.Column="1"
+                             Text="{Binding IngredientPrice}"
+                             TextWrapping="Wrap"
+                             TextAlignment="Center"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             Height="auto" Width="160"/>
+                    
+                    <Label Grid.Row="3"
+                           Grid.Column="0"
+                           Content="Ingredient Amount:"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Height="auto" Width="auto"/>
+                    <TextBox Grid.Row="3"
+                             Grid.Column="1"
+                             Text="{Binding IngredientAmount}"
+                             TextWrapping="Wrap"
+                             TextAlignment="Center"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             Height="auto" Width="160" />
+                </Grid.Children>
+            </Grid>
+            
+            <Button
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    Width="auto"
+                    Height="auto"
+                    Content="Add The Ingredient"
+                    Command="{Binding AddIngredientCommand}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Padding="10,0,10,0"
+                    MinHeight="40"/>
+
+            <Grid Grid.Row="1"
+                  Grid.Column="1"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+                <Grid.Children>
+                    <TextBlock Grid.Column="0"
+                               Grid.Row="0"
+                               Text="Kitchen"
+                               Background="Red"
+                               Foreground="White"
+                               FontSize="20"
+                               FontWeight="SemiBold"
+                               TextAlignment="Center"
+                               Grid.ColumnSpan="2"/>
+
+                    <Label Grid.Row="1"
+                           Grid.Column="0"
+                           Content="Ingredient Name:"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Height="auto"
+                           Width="auto" />
+                    <TextBox Grid.Row="1"
+                             Grid.Column="1"
+                             Text="{Binding NewIngredientName}"
+                             TextWrapping="Wrap"
+                             TextAlignment="Center"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Center"
+                             Height="auto"
+                             Width="160"
+                             Grid.ColumnSpan="2" />
+
+                    <Label Grid.Row="2"
+                           Grid.Column="0"
+                           Content="Price: "
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Height="auto"
+                           Width="auto" />
+                    <TextBox Grid.Row="2"
+                             Grid.Column="1"
+                             Text="{Binding NewIngredientPrice}"
+                             TextWrapping="Wrap"
+                             TextAlignment="Center"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             Width="160" />
+
+
+                    <Label Content="Ingredient Amount:"
+                           Grid.Row="3"
+                           Grid.Column="0"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
+                    <TextBox Grid.Row="3"
+                             Grid.Column="1"
+                             Text="{Binding NewIngredientAmount}"
+                             TextWrapping="Wrap"
+                             TextAlignment="Center"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             Width="160" />
+                </Grid.Children>
+            </Grid>
+
+            <ListBox Grid.Column="2"
+                     Grid.Row="0"
+                     Grid.RowSpan="2"
+                     Name="AllIngredient"
+                     ItemsSource="{Binding AllIngredients}"
+                     SelectedItem="{Binding SelectedIngredient}"
+                     VerticalContentAlignment="Stretch"
+                     MinWidth="200" />
+
+            <Button Grid.Column="2"
+                    Grid.Row="2"
+                    Content="Reload List"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Padding="10,0,10,0"
+                    Margin="10"
+                    Command="{Binding ReloadListCommand}"
+                    MinHeight="40" />
+        </Grid.Children>
+    </Grid>
+</UserControl>

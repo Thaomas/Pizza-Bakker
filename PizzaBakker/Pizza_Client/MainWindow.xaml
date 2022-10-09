@@ -22,6 +22,9 @@
             <DataTemplate DataType="{x:Type viewModels:AddIngredientViewModel}">
                 <views:AddIngredientView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:KitchenViewModel}">
+                <views:KitchenView/>
+            </DataTemplate>
         </Grid.Resources>
 
         <ContentControl Content="{Binding Path=CurrentViewModel}"/>
