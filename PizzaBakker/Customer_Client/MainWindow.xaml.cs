@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Employee_Client
+namespace Customer_Client
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

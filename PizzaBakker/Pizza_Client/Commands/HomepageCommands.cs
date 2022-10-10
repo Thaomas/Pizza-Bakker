@@ -1,11 +1,12 @@
-﻿using Pizza_Client.Stores;
-using Pizza_Client.Util;
-using Pizza_Client.ViewModels;
+﻿using Employee_Client.Stores;
+using Employee_Client.Util;
+using Employee_Client.ViewModels;
 using Shared;
-using Shared.Order;
+using Shared.Packet;
+using Shared.Packet.Order;
 using System;
 
-namespace Pizza_Client.Commands
+namespace Employee_Client.Commands
 {
     public class ChangeStatusCommand : CommandBase
     {

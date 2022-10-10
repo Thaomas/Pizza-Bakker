@@ -1,10 +1,10 @@
-﻿using Pizza_Client.Stores;
-using Pizza_Client.Util;
-using Pizza_Client.ViewModels;
+﻿using Employee_Client.Stores;
+using Employee_Client.Util;
+using Employee_Client.ViewModels;
 using System.Threading;
 using System.Windows;
 
-namespace Pizza_Client
+namespace Employee_Client
 {
     public partial class App : Application
     {

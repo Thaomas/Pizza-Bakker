@@ -1,13 +1,14 @@
-﻿using Pizza_Client.Stores;
-using Pizza_Client.Util;
-using Pizza_Client.ViewModels;
+﻿using Employee_Client.Stores;
+using Employee_Client.Util;
+using Employee_Client.ViewModels;
 using Shared;
-using Shared.Login;
+using Shared.Packet;
+using Shared.Packet.Login;
 using System;
 using System.Diagnostics;
 using System.Windows;
 
-namespace Pizza_Client.Commands
+namespace Employee_Client.Commands
 {
     public class LoginCommand : CommandBase
     {
@@ -44,7 +45,8 @@ namespace Pizza_Client.Commands
                 data = new LoginPacket()
                 {
                     username = uint.Parse(_loginViewModel.Username),
-                    password = _loginViewModel.Password
+                    password = _loginViewModel.Password,
+                    clientType = ClientType.BAKER
                 }
             }, LoginCallback);
         }

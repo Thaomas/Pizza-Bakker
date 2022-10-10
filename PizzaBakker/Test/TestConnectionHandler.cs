@@ -13,9 +13,9 @@ namespace Test
         {
             _tcpListener.Start();
 
-            Pizza_Client.Util.ConnectionHandler connectionHandler = Pizza_Client.Util.ConnectionHandler.GetInstance();
+            //ConnectionHandler connectionHandler = ConnectionHandler.GetInstance();
 
-            connectionHandler.ConnectToServer();
+            //connectionHandler.ConnectToServer();
         }
 
         [Test]

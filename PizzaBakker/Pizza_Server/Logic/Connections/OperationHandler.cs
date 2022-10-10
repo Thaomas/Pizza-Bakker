@@ -2,9 +2,10 @@ using Pizza_Server.Logic.Connections.Types;
 using Pizza_Server.Logic.WarehouseNS;
 using Pizza_Server.Main;
 using Shared;
-using Shared.Login;
-using Shared.Order;
-using Shared.Warehouse;
+using Shared.Packet;
+using Shared.Packet.Login;
+using Shared.Packet.Order;
+using Shared.Packet.Warehouse;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,10 +33,10 @@ namespace Pizza_Server.Logic.Connections
                 { PacketType.GET_LIST, GetList},
                 { PacketType.DELETE_INGREDIENT, DeleteIngredient},
             };
-            
+
             _customerOperationHandlers = new();
         }
-        
+
         public void HandleDataCallback(DataPacket packet, Client client)
         {
             if (packet.type == PacketType.AUTHENTICATION)
@@ -125,7 +126,8 @@ namespace Pizza_Server.Logic.Connections
             uint id = Warehouse.GetInstance()._ingredients.Keys.Max();
             string name = addPacket.ingredient.Ingredient.Name;
 
-            try {
+            try
+            {
                 if (Warehouse.GetInstance()._ingredients.Values.All(v => v.Ingredient.Name != name))
                 {
                     if (Warehouse.GetInstance()._ingredients.TryGetValue(id, out WarehouseItem dd))
@@ -133,15 +135,19 @@ namespace Pizza_Server.Logic.Connections
                         uint total = id + 1;
                         addPacket.ingredient.Ingredient.Id = total;
                         Warehouse.GetInstance()._ingredients.Add(total, addPacket.ingredient);
-                    } else {
+                    }
+                    else
+                    {
                         addPacket.ingredient.Ingredient.Id = 1;
                         Warehouse.GetInstance()._ingredients.Add(1, addPacket.ingredient);
                     }
                 }
-            }catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Console.WriteLine(e);
             }
-            
+
             Client client = _server.IdToClient[packet.senderID];
             client.SendData(new DataPacket<AddIngredientResponsePacket>
             {
@@ -153,7 +159,7 @@ namespace Pizza_Server.Logic.Connections
                 }
             });
         }
- 
+
         public void GetList(DataPacket packet)
         {
             Client client = _server.IdToClient[packet.senderID];

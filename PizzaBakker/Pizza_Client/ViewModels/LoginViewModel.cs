@@ -1,9 +1,9 @@
-﻿using Pizza_Client.Commands;
-using Pizza_Client.Stores;
+﻿using Employee_Client.Commands;
+using Employee_Client.Stores;
 using Shared;
 using System.Windows.Input;
 
-namespace Pizza_Client.ViewModels
+namespace Employee_Client.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {

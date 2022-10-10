@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Pizza_Client.Components
+namespace Employee_Client.Components
 {
     /// <summary>
     /// Interaction logic for BindablePasswordBox.xaml

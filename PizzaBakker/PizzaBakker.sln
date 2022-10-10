@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pizza_Server", "Pizza_Serve
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{DAA1B069-E90A-4B45-A9D3-3D825D3182CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer_Client", "Customer_Client\Customer_Client.csproj", "{8E96B830-9CC6-477A-AC86-056230A9553D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{DAA1B069-E90A-4B45-A9D3-3D825D3182CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAA1B069-E90A-4B45-A9D3-3D825D3182CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAA1B069-E90A-4B45-A9D3-3D825D3182CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E96B830-9CC6-477A-AC86-056230A9553D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E96B830-9CC6-477A-AC86-056230A9553D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E96B830-9CC6-477A-AC86-056230A9553D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E96B830-9CC6-477A-AC86-056230A9553D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Shared\Shared.projitems*{38e516f4-4941-4d54-a152-13eae2422743}*SharedItemsImports = 5
 		Shared\Shared.projitems*{678f3b32-5ed9-43de-9f7a-533e5007e7b8}*SharedItemsImports = 5
+		Shared\Shared.projitems*{8e96b830-9cc6-477a-ac86-056230a9553d}*SharedItemsImports = 5
 		Shared\Shared.projitems*{96141a0a-991c-491c-ab34-5b8891372309}*SharedItemsImports = 13
 		Shared\Shared.projitems*{daa1b069-e90a-4b45-a9d3-3d825d3182ce}*SharedItemsImports = 5
 	EndGlobalSection

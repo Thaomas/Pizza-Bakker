@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 
-namespace Shared
+namespace Shared.Packet
 {
     public abstract class DAbstract
     {
@@ -96,7 +96,7 @@ namespace Shared
             public List<WarehouseItem> warehouseList;
             public StatusCode statusCode;
         }
-        
+
         public class GetListRequestPacket : DAbstract { }
 
         public class GetListResponsePacket : DAbstract

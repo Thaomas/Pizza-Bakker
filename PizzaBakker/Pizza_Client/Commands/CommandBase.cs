@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Pizza_Client.Commands
+namespace Employee_Client.Commands
 {
     public abstract class CommandBase : ICommand
     {

@@ -1,12 +1,10 @@
-using Pizza_Client.Commands.WarehouseCommands;
-using Pizza_Client.Stores;
+using Employee_Client.Commands.WarehouseCommands;
+using Employee_Client.Stores;
 using Shared;
 using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Pizza_Client.ViewModels
+namespace Employee_Client.ViewModels
 {
     class KitchenViewModel : BaseViewModel
     {
@@ -80,7 +78,7 @@ namespace Pizza_Client.ViewModels
             DeleteIngredientCommand = new DeleteIngredientCommand(_navigationStore);
 
             //Load Ingredients for all the connected clients every 3-Seconds
-            
+
             /*Task.Run(() =>
             {
                 while (true)

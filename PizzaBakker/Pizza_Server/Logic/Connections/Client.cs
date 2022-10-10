@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Shared;
+using Shared.Packet;
 using System;
 using System.Net.Sockets;
 using System.Text;

@@ -1,7 +1,7 @@
 ﻿using Shared;
 using System;
 
-namespace Employee_Client.Stores
+namespace Customer_Client.Stores
 {
     public class NavigationStore
     {
