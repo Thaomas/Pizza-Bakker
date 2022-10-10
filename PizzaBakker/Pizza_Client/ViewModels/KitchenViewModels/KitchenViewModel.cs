@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Pizza_Client.Commands.KitchenCommands;
 
 namespace Pizza_Client.ViewModels
 {
@@ -65,19 +66,15 @@ namespace Pizza_Client.ViewModels
             }
         }
 
-        public ICommand AddIngredientCommand { get; }
-        public ICommand ReloadListCommand { get; }
-        public ICommand DeleteIngredientCommand { get; }
-
+        public ICommand PlaceOrderCommand { get; }
+        
         public KitchenViewModel(NavigationStore navigationStore)
         {
 
             _navigationStore = navigationStore;
             AllIngredients = new List<WarehouseItem>();
 
-            AddIngredientCommand = new AddIngredientCommand(_navigationStore);
-            ReloadListCommand = new ReloadListCommand(_navigationStore);
-            DeleteIngredientCommand = new DeleteIngredientCommand(_navigationStore);
+            PlaceOrderCommand = new PlaceOrderCommand(_navigationStore);
 
             //Load Ingredients for all the connected clients every 3-Seconds
             

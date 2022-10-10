@@ -23,11 +23,22 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.Children>
-
+            <Button
+                Grid.Column="0"
+                Grid.Row="1"
+                Width="auto"
+                Height="auto"
+                Content="Add The Ingredient"
+                Command="{Binding PlaceOrderCommand}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Padding="10,0,10,0"
+                MinHeight="40"/>
+            
             <TextBlock Grid.Column="0"
                 Grid.Row="1"
-                Text="Failed Orders"
-                Background="Red"
+                Text="In Delivery"
+                Background="LightPink"
                 Foreground="White"
                 FontSize="20"
                 FontWeight="SemiBold"
@@ -63,7 +74,7 @@
 
             <TextBlock Grid.Column="0"
                 Grid.Row="0"
-                Text="All Orders Status"
+                Text="Inprogress Orders"
                 Background="LightSkyBlue"
                 Foreground="White"
                 FontSize="20"
@@ -78,7 +89,7 @@
                 ItemsSource="{Binding AllIngredients}"
                 SelectedItem="{Binding SelectedIngredient}"
                 VerticalContentAlignment="Stretch"
-                MinWidth="200" Margin="298,46,277,3" />
+                MinWidth="200" Margin="298,46,277,213" />
 
             <TextBlock Grid.Column="0"
                 Grid.Row="0"
@@ -97,7 +108,20 @@
                 ItemsSource="{Binding AllIngredients}"
                 SelectedItem="{Binding SelectedIngredient}"
                 VerticalContentAlignment="Stretch"
-                MinWidth="200" Margin="17,46,558,3" />
+                MinWidth="200" Margin="17,46,558,213" />
+
+            <TextBlock Grid.Column="0"
+                Grid.Row="1"
+                Text="Order Detail:"
+                Background="LightGray"
+                Foreground="White"
+                FontSize="20"
+                FontWeight="SemiBold"
+                TextAlignment="Center"
+                Grid.ColumnSpan="2" Margin="300,44,277,8"/>
+            <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="124,89,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+            
+            <Label Content="Selected Order" Grid.Column="1" HorizontalAlignment="Left" Margin="19,86,0,0" Grid.Row="1" VerticalAlignment="Top" Width="97"/>
 
         </Grid.Children>
     </Grid>

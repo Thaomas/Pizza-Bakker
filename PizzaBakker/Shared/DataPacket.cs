@@ -119,4 +119,18 @@ namespace Shared
             public StatusCode statusCode;
         }
     }
+
+    namespace Kitchen
+    {
+        public class PlaceOrderRequestPacket : DAbstract
+        {
+            public Dictionary<int, List<string>> pizzaOrder;
+        }
+
+        public class PlaceOrderResponsePacket : DAbstract
+        {
+            public PizzaOrder orderList;
+            public StatusCode statusCode;
+        }
+    }
 }

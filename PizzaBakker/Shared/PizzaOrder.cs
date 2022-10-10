@@ -1,24 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Shared
 {
     public class PizzaOrder
     {
+        public Dictionary<string, List<Ingredient>> AllPizzas { get; set; }
         public string Name { get; set; }
         public Guid OrderID { get; set; }
-        public Tuple<Ingredient, int>[] Toppings { get; set; }
-
-        public decimal Price
+        
+        public PizzaOrder()
         {
-            get
-            {
-                decimal total = 0m;
-                foreach (var (ingredient, amount) in Toppings)
-                {
-                    total += ingredient.Price * amount;
-                }
-                return total;
-            }
+            AllPizzas = new();
         }
     }
 }

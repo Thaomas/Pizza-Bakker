@@ -9,7 +9,8 @@
         ERROR,
         ADD_INGREDIENT,
         DELETE_INGREDIENT,
-        GET_LIST
+        GET_LIST,
+        PLACE_ORDER
     }
 
     public enum StatusCode
@@ -24,28 +25,12 @@
         INTERNAL_SERVER_ERROR = 500 // Indicates that the server ran into an error it doesn't know how to handle.
     }
 
-    public enum PrivacyLevel
-    {
-        SELECTED_PEOPLE,
-        OPEN,
-        PRIVATE,
-        ZERO,
-        ONE,
-        TWO,
-        THREE
-    };
-
     public enum ClientType
     {
         CUSTOMER,
         EMPLOYEE,
         BAKER,
         WAREHOUSE
-    }
-
-    public enum OperationCodes
-    {
-        CHANGE_STATUS
     }
 
     public enum OrderStatus

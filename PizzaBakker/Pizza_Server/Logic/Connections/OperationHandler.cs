@@ -1,5 +1,6 @@
 using Pizza_Server.Logic.Connections.Types;
 using Pizza_Server.Logic.WarehouseNS;
+using Pizza_Server.Logic.Kitchen;
 using Pizza_Server.Main;
 using Shared;
 using Shared.Login;
@@ -8,6 +9,7 @@ using Shared.Warehouse;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Shared.Kitchen;
 
 namespace Pizza_Server.Logic.Connections
 {
@@ -23,7 +25,6 @@ namespace Pizza_Server.Logic.Connections
             _server = viewModel;
             _bakerOperationHandlers = new Dictionary<PacketType, Action<DataPacket>>
             {
-                { PacketType.CHANGE_STATUS, ChangeStatus}
             };
 
             _warehouseOperationHandlers = new Dictionary<PacketType, Action<DataPacket>>
@@ -31,11 +32,13 @@ namespace Pizza_Server.Logic.Connections
                 { PacketType.ADD_INGREDIENT, AddIngredient},
                 { PacketType.GET_LIST, GetList},
                 { PacketType.DELETE_INGREDIENT, DeleteIngredient},
+                { PacketType.PLACE_ORDER, PlaceOrder}
+
             };
             
             _customerOperationHandlers = new();
         }
-        
+
         public void HandleDataCallback(DataPacket packet, Client client)
         {
             if (packet.type == PacketType.AUTHENTICATION)
@@ -110,14 +113,7 @@ namespace Pizza_Server.Logic.Connections
 
             _server.Log = $"Employee: {employee.WorkId}, Logged in as a {client.ClientType}";
         }
-
-
-        public void ChangeStatus(DataPacket packet)
-        {
-            ChangeStatusPacket statusPacket = packet.GetData<ChangeStatusPacket>();
-            Client client = _server.IdToClient[packet.senderID];
-        }
-
+        
         public void AddIngredient(DataPacket packet)
         {
             AddIngredientRequestPacket addPacket = packet.GetData<AddIngredientRequestPacket>();
@@ -125,7 +121,8 @@ namespace Pizza_Server.Logic.Connections
             uint id = Warehouse.GetInstance()._ingredients.Keys.Max();
             string name = addPacket.ingredient.Ingredient.Name;
 
-            try {
+            try
+            {
                 if (Warehouse.GetInstance()._ingredients.Values.All(v => v.Ingredient.Name != name))
                 {
                     if (Warehouse.GetInstance()._ingredients.TryGetValue(id, out WarehouseItem dd))
@@ -153,19 +150,7 @@ namespace Pizza_Server.Logic.Connections
                 }
             });
         }
- 
-        public void GetList(DataPacket packet)
-        {
-            Client client = _server.IdToClient[packet.senderID];
-            client.SendData(new DataPacket<GetListResponsePacket>
-            {
-                type = PacketType.GET_LIST,
-                data = new GetListResponsePacket()
-                {
-                    allItems = Warehouse.GetInstance()._ingredients.Values.ToList()
-                }
-            });
-        }
+        
 
         public void DeleteIngredient(DataPacket packet)
         {
@@ -182,6 +167,92 @@ namespace Pizza_Server.Logic.Connections
                 {
                     statusCode = StatusCode.OK,
                     warehouseList = Warehouse.GetInstance()._ingredients.Values.ToList()
+                }
+            });
+        }
+        
+        
+        public void PlaceOrder(DataPacket packet)
+        {
+            Dictionary<int, List<string>> pizzaOrder = packet.GetData<PlaceOrderRequestPacket>().pizzaOrder;
+            Kitchen.Kitchen kitchen = new();
+            PizzaOrder e = new();
+
+            int counter = 0; 
+            foreach (var singlePizza in pizzaOrder.Values)
+            {
+                if (counter > 0)
+                {
+                    kitchen.orderPizza(singlePizza);    
+                }
+                counter++;
+            }
+
+            if (kitchen._orderComplete)
+            {
+                foreach (var singlePizzaa in pizzaOrder.Values) 
+                {
+                    int counterr = 0;
+                    List<Ingredient> pizza = new();
+                    singlePizzaa.Skip(0);
+                    if (counterr > 0)
+                    {
+                        foreach (string ingredient in singlePizzaa)
+                        {
+                            WarehouseItem rr = Warehouse.GetInstance()._ingredients.Values
+                                .First(name => name.Ingredient.Name.Equals(ingredient));
+                            pizza.Add(rr.Ingredient);
+                        }
+
+                        e.AllPizzas.Add(singlePizzaa[0], pizza);
+                    }
+
+                    counterr++;
+                }
+                
+                Console.WriteLine("order is gecompleted hjet wordt nu omgezet naar een PIZZA_ORDER OBJECT");
+            } else {
+                Console.WriteLine("gefaald ouw");
+            }
+
+            e.Name = "redje";
+
+            Console.WriteLine(e);
+            Console.WriteLine(e.Name);
+
+            foreach (string f in e.AllPizzas.Keys)
+            {
+                Console.WriteLine("key is: " + f);
+            }
+
+            Console.WriteLine("ingredeuibnt ");
+            foreach (var aa in e.AllPizzas.Values)
+            {
+                Console.WriteLine(aa);
+            }
+            
+            
+            Client client = _server.IdToClient[packet.senderID];
+            client.SendData(new DataPacket<PlaceOrderResponsePacket>
+            {
+                type = PacketType.PLACE_ORDER,
+                data = new PlaceOrderResponsePacket()
+                {
+                    statusCode = StatusCode.OK,
+                    orderList = e 
+                }
+            });
+        }
+        
+        public void GetList(DataPacket packet)
+        {
+            Client client = _server.IdToClient[packet.senderID];
+            client.SendData(new DataPacket<GetListResponsePacket>
+            {
+                type = PacketType.GET_LIST,
+                data = new GetListResponsePacket()
+                {
+                    allItems = Warehouse.GetInstance()._ingredients.Values.ToList()
                 }
             });
         }
