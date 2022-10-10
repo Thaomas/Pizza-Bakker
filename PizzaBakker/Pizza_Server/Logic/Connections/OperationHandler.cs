@@ -174,15 +174,13 @@ namespace Pizza_Server.Logic.Connections
         
         public void PlaceOrder(DataPacket packet)
         {
+
             Dictionary<int, List<string>> pizzaOrder = packet.GetData<PlaceOrderRequestPacket>().pizzaOrder;
             Kitchen.Kitchen kitchen = new();
-            PizzaOrder e = new();
-
-            foreach (var singlePizza in pizzaOrder.Values)
-            {
-                kitchen.orderPizza(singlePizza);
-                //TODO if (!kitchen._orderComplete) { break; }
-            }
+            
+            PizzaOrder _pizzaOrder = new();
+            
+            kitchen.orderPizza(pizzaOrder);
 
             if (kitchen._orderComplete)
             {
@@ -190,8 +188,7 @@ namespace Pizza_Server.Logic.Connections
                 {
                     int counterr = 0;
                     List<Ingredient> pizza = new();
-
-
+                    
                     foreach (string ingredient in singlePizzaa)
                     {
                         if (counterr > 0)
@@ -204,30 +201,29 @@ namespace Pizza_Server.Logic.Connections
                         counterr++;
                     }
 
-                    if (e.AllPizzas.ContainsKey(singlePizzaa[0]))
+                    if (_pizzaOrder.AllPizzas.ContainsKey(singlePizzaa[0]))
                     {
-                        e.AllPizzas[singlePizzaa[0]] = pizza;
+                        _pizzaOrder.AllPizzas[singlePizzaa[0]] = pizza;
                     } else {
-                        e.AllPizzas.Add(singlePizzaa[0], new List<Ingredient>( pizza) );
+                        _pizzaOrder.AllPizzas.Add(singlePizzaa[0], new List<Ingredient>( pizza) );
                     }
                 }
-                Console.WriteLine("order is gecompleted hjet wordt nu omgezet naar een PIZZA_ORDER OBJECT");
+                Console.WriteLine("order is gecompleted, het wordt nu omgezet naar een PIZZA_ORDER OBJECT");
             } else {
-                Console.WriteLine("gefaald ouw");
+                Console.WriteLine("order gefaald");
             }
 
-            e.Name = "redje";
+            _pizzaOrder.Name = "ordernummer: 73732";
 
-            foreach (string f in e.AllPizzas.Keys)
+            foreach (string f in _pizzaOrder.AllPizzas.Keys)
             {
                 Console.WriteLine("key is: " + f);
-                foreach (var aa in e.AllPizzas[f])
+                foreach (var aa in _pizzaOrder.AllPizzas[f])
                 {
                     Console.WriteLine("ingredient: " + aa);
                 }
             }
 
-            
             
             Client client = _server.IdToClient[packet.senderID];
             client.SendData(new DataPacket<PlaceOrderResponsePacket>
@@ -236,7 +232,7 @@ namespace Pizza_Server.Logic.Connections
                 data = new PlaceOrderResponsePacket()
                 {
                     statusCode = StatusCode.OK,
-                    orderList = e 
+                    orderList = _pizzaOrder
                 }
             });
         }

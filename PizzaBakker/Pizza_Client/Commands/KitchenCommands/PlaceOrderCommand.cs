@@ -22,7 +22,7 @@ namespace Pizza_Client.Commands.KitchenCommands
         public override void Execute(object parameter)
         {
             Dictionary<int, List<string>> list = new();
-            //5  45  19  19  26
+            //6  6  6  8  8 
             List<string> pizzaPollo = new();
             pizzaPollo.Add("pizza pollo");
             pizzaPollo.Add("kaas");
@@ -32,11 +32,11 @@ namespace Pizza_Client.Commands.KitchenCommands
             
             List<string> pizzamargarita = new();
             pizzamargarita.Add("pizza margarttia");
-            pizzamargarita.Add("salami");
             pizzamargarita.Add("kaas");
+            pizzamargarita.Add("uien");
             pizzamargarita.Add("deeg");
-            pizzamargarita.Add("deeg");
-            
+            pizzamargarita.Add("salami");
+
             
             list.Add(1,pizzaPollo);
             list.Add(2, pizzamargarita);

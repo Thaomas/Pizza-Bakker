@@ -8,69 +8,73 @@ namespace Pizza_Server.Logic.Kitchen
 {
     public class Kitchen
     {
-        public bool _orderComplete = true; 
-        
-        public Kitchen()
-        {
-            
-        }
+        public bool _orderComplete = true;
 
-        /*public static Kitchen GetInstance()
-        {
-            if (_singleton == null)
-                _singleton = new Kitchen();
-            return _singleton;
-        }*/
-        
-        public void orderPizza(List<string> orderPizza)
-        {
-            
-            List<string> _outOfStockIngredients = new();
+        private Dictionary<uint, WarehouseItem> copyWarehouseItems;
+        List<string> _outOfStockIngredients = new();
 
-            for (int i = 1; i < orderPizza.Count; i++)
+        public void orderPizza(Dictionary<int, List<string>> orderPizza)
+        {
+
+            Dictionary<string, int> ingredientCounter = new();
+
+            foreach (var pizza in orderPizza.Values)
             {
-                if (!checkIngredient(orderPizza[i]))
+                for (int i = 1; i < pizza.Count; i++)
                 {
-                    _orderComplete = false;
                     
-                    if (!_outOfStockIngredients.Contains(orderPizza[i]))
+                    if (ingredientCounter.ContainsKey(pizza[i]))
                     {
-                        _outOfStockIngredients.Add(orderPizza[i]);
+                        ingredientCounter[pizza[i]] += 1;
+                    } else {
+                        ingredientCounter.Add(pizza[i], 1);
                     }
-                }
+                }    
             }
-            //TODO eerst checkken of alle bestelingen valid zijn en dan pas substracten
+
+            if (!checkIngredient(ingredientCounter))
+            {
+                _orderComplete = false;
+            }
+
             if (_orderComplete)
             {
-//                foreach (string singleIngedient in orderPizza)
-                for (int i = 1; i < orderPizza.Count; i++)
+                foreach (var saved in ingredientCounter.Keys)
                 {
-                    Console.WriteLine(orderPizza[i]);
-                    WarehouseItem retrievedIngredient = Warehouse.GetInstance()._ingredients.Values
-                        .First(name => name.Ingredient.Name.Equals(orderPizza[i]));
+                    uint ingredientcount = (uint)ingredientCounter.FirstOrDefault(x => x.Key == saved).Value;
+                
+                    WarehouseItem retrievedIngredientt = Warehouse.GetInstance()._ingredients.Values.First(name => name.Ingredient.Name.Equals(saved));
+                 
+                    retrievedIngredientt.Count -= ingredientcount;
 
-                    retrievedIngredient.Count -= 1;
-
-                    Warehouse.GetInstance()._ingredients[retrievedIngredient.Ingredient.Id] = retrievedIngredient;
-                }
-            } else  {
-
-                foreach (string singleIngedient in _outOfStockIngredients)
-                {
-                    Console.WriteLine(singleIngedient);
+                    Warehouse.GetInstance()._ingredients[retrievedIngredientt.Ingredient.Id] = retrievedIngredientt;
                 }
             }
         }
         
-        public bool checkIngredient(string singleIngredient)
+        public bool checkIngredient(Dictionary<string, int> singleIngredient)
         {
-            WarehouseItem retrievedIngredient = Warehouse.GetInstance()._ingredients.Values.First(name => name.Ingredient.Name.Equals(singleIngredient));
+            bool _orderRight = true;
+            WarehouseItem retrievedIngredient;
             
-            if (retrievedIngredient.Count > 0) {
-                return true;
-            } else {
-                return false;
-            }                
+            foreach (var saved in singleIngredient.Keys)
+            {
+                int _pizzaInputCount = singleIngredient[saved];
+                
+                retrievedIngredient = Warehouse.GetInstance()._ingredients.Values.First(name => name.Ingredient.Name.Equals(saved));
+                
+                if (_pizzaInputCount > retrievedIngredient.Count)
+                {
+                    _orderRight = false;
+                    retrievedIngredient.Count = 0;
+                    Warehouse.GetInstance()._ingredients[retrievedIngredient.Ingredient.Id] = retrievedIngredient;
+                    
+                    if (!_outOfStockIngredients.Contains(saved)) {
+                       _outOfStockIngredients.Add(saved);
+                    }    
+                }
+            }
+            return _orderRight;
         }
     }
 }
