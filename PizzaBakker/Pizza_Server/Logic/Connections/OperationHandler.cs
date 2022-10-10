@@ -178,14 +178,10 @@ namespace Pizza_Server.Logic.Connections
             Kitchen.Kitchen kitchen = new();
             PizzaOrder e = new();
 
-            int counter = 0; 
             foreach (var singlePizza in pizzaOrder.Values)
             {
-                if (counter > 0)
-                {
-                    kitchen.orderPizza(singlePizza);    
-                }
-                counter++;
+                kitchen.orderPizza(singlePizza);
+                //TODO if (!kitchen._orderComplete) { break; }
             }
 
             if (kitchen._orderComplete)
@@ -194,22 +190,27 @@ namespace Pizza_Server.Logic.Connections
                 {
                     int counterr = 0;
                     List<Ingredient> pizza = new();
-                    singlePizzaa.Skip(0);
-                    if (counterr > 0)
+
+
+                    foreach (string ingredient in singlePizzaa)
                     {
-                        foreach (string ingredient in singlePizzaa)
+                        if (counterr > 0)
                         {
                             WarehouseItem rr = Warehouse.GetInstance()._ingredients.Values
                                 .First(name => name.Ingredient.Name.Equals(ingredient));
+
                             pizza.Add(rr.Ingredient);
                         }
-
-                        e.AllPizzas.Add(singlePizzaa[0], pizza);
+                        counterr++;
                     }
 
-                    counterr++;
+                    if (e.AllPizzas.ContainsKey(singlePizzaa[0]))
+                    {
+                        e.AllPizzas[singlePizzaa[0]] = pizza;
+                    } else {
+                        e.AllPizzas.Add(singlePizzaa[0], new List<Ingredient>( pizza) );
+                    }
                 }
-                
                 Console.WriteLine("order is gecompleted hjet wordt nu omgezet naar een PIZZA_ORDER OBJECT");
             } else {
                 Console.WriteLine("gefaald ouw");
@@ -217,19 +218,15 @@ namespace Pizza_Server.Logic.Connections
 
             e.Name = "redje";
 
-            Console.WriteLine(e);
-            Console.WriteLine(e.Name);
-
             foreach (string f in e.AllPizzas.Keys)
             {
                 Console.WriteLine("key is: " + f);
+                foreach (var aa in e.AllPizzas[f])
+                {
+                    Console.WriteLine("ingredient: " + aa);
+                }
             }
 
-            Console.WriteLine("ingredeuibnt ");
-            foreach (var aa in e.AllPizzas.Values)
-            {
-                Console.WriteLine(aa);
-            }
             
             
             Client client = _server.IdToClient[packet.senderID];

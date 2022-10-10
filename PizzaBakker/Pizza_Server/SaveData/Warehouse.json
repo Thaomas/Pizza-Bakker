@@ -21,7 +21,7 @@
       "Id": 5,
       "Price": 1.0
     },
-    "Count": 49
+    "Count": 35
   },
   {
     "Ingredient": {
@@ -29,7 +29,7 @@
       "Id": 4,
       "Price": 150.0
     },
-    "Count": 19
+    "Count": 14
   },
   {
     "Ingredient": {
@@ -37,7 +37,7 @@
       "Id": 6,
       "Price": 3.0
     },
-    "Count": 19
+    "Count": 14
   },
   {
     "Ingredient": {
@@ -45,6 +45,6 @@
       "Id": 7,
       "Price": 2.0
     },
-    "Count": 27
+    "Count": 23
   }
 ]

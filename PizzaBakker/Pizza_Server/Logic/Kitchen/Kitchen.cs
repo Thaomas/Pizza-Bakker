@@ -8,8 +8,8 @@ namespace Pizza_Server.Logic.Kitchen
 {
     public class Kitchen
     {
-        private static Kitchen _singleton;
         public bool _orderComplete = true; 
+        
         public Kitchen()
         {
             
@@ -39,11 +39,13 @@ namespace Pizza_Server.Logic.Kitchen
                     }
                 }
             }
-            
+            //TODO eerst checkken of alle bestelingen valid zijn en dan pas substracten
             if (_orderComplete)
             {
+//                foreach (string singleIngedient in orderPizza)
                 for (int i = 1; i < orderPizza.Count; i++)
                 {
+                    Console.WriteLine(orderPizza[i]);
                     WarehouseItem retrievedIngredient = Warehouse.GetInstance()._ingredients.Values
                         .First(name => name.Ingredient.Name.Equals(orderPizza[i]));
 
@@ -53,9 +55,9 @@ namespace Pizza_Server.Logic.Kitchen
                 }
             } else  {
 
-                for (int i = 1; i < orderPizza.Count; i++)
+                foreach (string singleIngedient in _outOfStockIngredients)
                 {
-                    Console.WriteLine(orderPizza[i]);
+                    Console.WriteLine(singleIngedient);
                 }
             }
         }
