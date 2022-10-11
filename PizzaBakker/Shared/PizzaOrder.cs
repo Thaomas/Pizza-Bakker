@@ -5,7 +5,7 @@ namespace Shared
 {
     public class PizzaOrder
     {
-        public Dictionary<string, List<Ingredient>> AllPizzas { get; set; }
+        public List<string> AllPizzas { get; set; }
         public string Name { get; set; }
         public Guid OrderID { get; set; }
         

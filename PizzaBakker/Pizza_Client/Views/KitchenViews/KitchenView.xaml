@@ -105,7 +105,7 @@
                 Grid.Row="0"
                 Grid.RowSpan="2"
                 Name="IncomingOrders"
-                ItemsSource="{Binding AllIngredients}"
+                ItemsSource="{Binding IncomingOrders}"
                 SelectedItem="{Binding SelectedIngredient}"
                 VerticalContentAlignment="Stretch"
                 MinWidth="200" Margin="17,46,558,213" />

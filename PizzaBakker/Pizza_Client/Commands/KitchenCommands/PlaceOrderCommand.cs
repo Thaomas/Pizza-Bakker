@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Pizza_Client.Stores;
 using Pizza_Client.Util;
 using Pizza_Client.ViewModels;
@@ -54,8 +55,8 @@ namespace Pizza_Client.Commands.KitchenCommands
 
         private void PlaceOrderCallback(DataPacket obj)
         {
-            //AddIngredientResponsePacket data = obj.GetData<AddIngredientResponsePacket>();
-            //_addIngredientViewModel.AllIngredients = data.warehouseList;
+             PlaceOrderResponsePacket data = obj.GetData<PlaceOrderResponsePacket>();
+             _placeOrderViewModel.IncomingOrders = data.orderList.AllPizzas;
         }
     }
 }

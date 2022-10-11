@@ -179,49 +179,34 @@ namespace Pizza_Server.Logic.Connections
             Kitchen.Kitchen kitchen = new();
             
             PizzaOrder _pizzaOrder = new();
+
+            Random random = new Random();
+            int randomNumber = random.Next(0, 1000);
             
+            _pizzaOrder.Name = "ordernummer: " + randomNumber;
+
             kitchen.orderPizza(pizzaOrder);
 
             if (kitchen._orderComplete)
             {
-                foreach (var singlePizzaa in pizzaOrder.Values) 
+                List<string> pizza = new();
+                foreach (var singlePizzaa in pizzaOrder.Values)
                 {
-                    int counterr = 0;
-                    List<Ingredient> pizza = new();
-                    
-                    foreach (string ingredient in singlePizzaa)
-                    {
-                        if (counterr > 0)
-                        {
-                            WarehouseItem rr = Warehouse.GetInstance()._ingredients.Values
-                                .First(name => name.Ingredient.Name.Equals(ingredient));
-
-                            pizza.Add(rr.Ingredient);
-                        }
-                        counterr++;
-                    }
-
-                    if (_pizzaOrder.AllPizzas.ContainsKey(singlePizzaa[0]))
-                    {
-                        _pizzaOrder.AllPizzas[singlePizzaa[0]] = pizza;
-                    } else {
-                        _pizzaOrder.AllPizzas.Add(singlePizzaa[0], new List<Ingredient>( pizza) );
-                    }
+                    pizza.Add(singlePizzaa[0]);
                 }
+
+                _pizzaOrder.AllPizzas = pizza;
+                
                 Console.WriteLine("order is gecompleted, het wordt nu omgezet naar een PIZZA_ORDER OBJECT");
+                
             } else {
                 Console.WriteLine("order gefaald");
             }
 
-            _pizzaOrder.Name = "ordernummer: 73732";
-
-            foreach (string f in _pizzaOrder.AllPizzas.Keys)
+            Console.WriteLine("ordernummer is: " + _pizzaOrder.Name);
+            foreach (string pizza in _pizzaOrder.AllPizzas)
             {
-                Console.WriteLine("key is: " + f);
-                foreach (var aa in _pizzaOrder.AllPizzas[f])
-                {
-                    Console.WriteLine("ingredient: " + aa);
-                }
+                Console.WriteLine("pizza: " + pizza);
             }
 
             

@@ -52,6 +52,17 @@ namespace Pizza_Client.ViewModels
                 OnPropertyChanged(nameof(AllIngredients));
             }
         }
+        
+        private List<string> _incomingOrders;
+
+        public List<string> IncomingOrders {
+            get => _incomingOrders;
+            set
+            {
+                _incomingOrders = value;
+                OnPropertyChanged(nameof(IncomingOrders));
+            }
+        }
 
         private WarehouseItem _selectedIngredient;
 
