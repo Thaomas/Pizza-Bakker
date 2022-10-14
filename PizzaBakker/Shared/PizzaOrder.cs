@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Shared
 {
@@ -18,6 +19,9 @@ namespace Shared
         public override string ToString()
         {
             return $"Order {OrderId.ToString()}";
+
         }
+        //TODO DEBUG CODE
+        public PizzaOrder Clone() => JsonConvert.DeserializeObject<PizzaOrder>(JsonConvert.SerializeObject(this));
     }
 }

@@ -1,12 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Documents;
 using Pizza_Client.Stores;
 using Pizza_Client.Util;
 using Pizza_Client.ViewModels;
-using Pizza_Server.Logic;
 using Shared;
 using Shared.Kitchen;
 using System.Collections.Generic;
@@ -61,8 +55,9 @@ namespace Pizza_Client.Commands.KitchenCommands
             PlaceOrderResponsePacket data = obj.GetData<PlaceOrderResponsePacket>();
 
             List<PizzaOrder> ds = new();
-            ds.Add(data.orderList);
-            ds.Add(data.orderList);
+            ds.Add(data.order.Clone());
+            data.order.OrderId++;
+            ds.Add(data.order);
 
             _placeOrderViewModel.AllOrders = ds;
         }

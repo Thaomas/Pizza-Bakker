@@ -217,7 +217,7 @@ namespace Pizza_Server.Logic.Connections
                 data = new PlaceOrderResponsePacket()
                 {
                     statusCode = StatusCode.OK,
-                    orderList = _pizzaOrder
+                    order = _pizzaOrder
                 }
             });
         }

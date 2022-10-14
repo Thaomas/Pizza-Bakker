@@ -1,12 +1,10 @@
-using Pizza_Server.Logic.WarehouseNS;
-using Shared;
-using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json;
 using Pizza_Server.Logic.Connections;
 using Pizza_Server.Logic.WarehouseNS;
 using Shared;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Pizza_Server.Logic
 {
@@ -98,12 +96,13 @@ namespace Pizza_Server.Logic
             }
             return _orderRight;
         }
-        
+
         public void LoadFromFile()
         {
             AllOrders = IO.ReadObjectFromFile<List<PizzaOrder>>("SaveData\\PizzaOrders.json");
 
-            if (AllOrders == null) {
+            if (AllOrders == null)
+            {
                 Console.WriteLine("Geen orders beschikbaar!");
             }
         }

@@ -3,10 +3,9 @@ using Pizza_Client.Stores;
 using Shared;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
-using Pizza_Client.Commands.KitchenCommands;
-using Pizza_Server.Logic;
 
 namespace Pizza_Client.ViewModels
 {
@@ -27,9 +26,6 @@ namespace Pizza_Client.ViewModels
             }
         }
 
-        
-        
-        
         private List<PizzaOrder> _allOrders;
 
         public List<PizzaOrder> AllOrders
@@ -45,9 +41,29 @@ namespace Pizza_Client.ViewModels
         }
 
         public List<PizzaOrder> IncomingOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.ORDERED)).ToList<PizzaOrder>();
-        public List<PizzaOrder> InProgressOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.IN_PROGRESS)).ToList<PizzaOrder>();
+        public PizzaOrder SelectedIncomingOrders
+        {
+            get => SelectedOrder;
+            set => SelectedOrder = value;
+        }
+        public List<PizzaOrder> InProgressOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.IN_PROGRESS) || p.Status.Equals(OrderStatus.BAKING)).ToList<PizzaOrder>();
+        public PizzaOrder SelectedInProgressOrders
+        {
+            get => SelectedOrder;
+            set => SelectedOrder = value;
+        }
         public List<PizzaOrder> DeliveryOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.DELIVERING)).ToList<PizzaOrder>();
+        public PizzaOrder SelectedDeliveryOrders
+        {
+            get => SelectedOrder;
+            set => SelectedOrder = value;
+        }
         public List<PizzaOrder> DeliveredOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.DELIVERED)).ToList<PizzaOrder>();
+        public PizzaOrder SelectedDeliveredOrders
+        {
+            get => SelectedOrder;
+            set => SelectedOrder = value;
+        }
 
         private PizzaOrder _selectedOrder;
         public PizzaOrder SelectedOrder
@@ -56,20 +72,27 @@ namespace Pizza_Client.ViewModels
             set
             {
                 _selectedOrder = value;
-                SelectedOrderPizzas = value.AllPizzas;
+                if (value == null)
+                    return;
+                SelectedOrderDetails = value.AllPizzas;
+                value.AllPizzas.ForEach(s => Trace.WriteLine(s));
                 SelectedOrderStatus = value.Status;
-                OnPropertyChanged(nameof(SelectedOrder));
+
+                OnPropertyChanged(nameof(SelectedIncomingOrders));
+                OnPropertyChanged(nameof(SelectedInProgressOrders));
+                OnPropertyChanged(nameof(SelectedDeliveryOrders));
+                OnPropertyChanged(nameof(SelectedDeliveredOrders));
             }
         }
 
-        private List<string> _selectedOrderPizzas;
-        public List<string> SelectedOrderPizzas
+        private List<string> _selectedOrderDetails;
+        public List<string> SelectedOrderDetails
         {
-            get => _selectedOrderPizzas;
+            get => _selectedOrderDetails;
             set
             {
-                _selectedOrderPizzas = value;
-                OnPropertyChanged(nameof(SelectedOrderPizzas));
+                _selectedOrderDetails = value;
+                OnPropertyChanged(nameof(SelectedOrderDetails));
             }
         }
 
@@ -82,18 +105,18 @@ namespace Pizza_Client.ViewModels
                 _selectedOrderStatus = value;
                 OnPropertyChanged(nameof(SelectedOrderStatus));
 
-                if (_selectedOrderStatus == null || SelectedOrder == null|| SelectedOrder?.Status == value)
+                if (SelectedOrder == null || SelectedOrder?.Status == value)
                     return;
                 SelectedOrder.Status = value;
 
                 OnPropertyChanged(nameof(IncomingOrders));
                 OnPropertyChanged(nameof(InProgressOrders));
                 OnPropertyChanged(nameof(DeliveryOrders));
-                OnPropertyChanged(nameof(DeliveredOrders)); 
+                OnPropertyChanged(nameof(DeliveredOrders));
             }
         }
 
-        
+
         public ICommand PlaceOrderCommand { get; }
 
         public KitchenViewModel(NavigationStore navigationStore)

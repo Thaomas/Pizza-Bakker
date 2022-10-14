@@ -129,7 +129,7 @@ namespace Shared
 
         public class PlaceOrderResponsePacket : DAbstract
         {
-            public PizzaOrder orderList;
+            public PizzaOrder order;
             public StatusCode statusCode;
         }
     }
