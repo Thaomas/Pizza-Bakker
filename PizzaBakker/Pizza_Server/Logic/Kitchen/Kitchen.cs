@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
+using Pizza_Server.Logic.Connections;
 using Pizza_Server.Logic.WarehouseNS;
 using Shared;
 
@@ -9,10 +11,11 @@ namespace Pizza_Server.Logic
     public class Kitchen
     {
         private static Kitchen _singleton;
+        public List<PizzaOrder> AllOrders = new();
 
         private Kitchen()
         {
-            
+            LoadFromFile();
         }
         
         public static Kitchen GetInstance()
@@ -89,6 +92,21 @@ namespace Pizza_Server.Logic
                 }
             }
             return _orderRight;
+        }
+        
+        public void LoadFromFile()
+        {
+            AllOrders = IO.ReadObjectFromFile<List<PizzaOrder>>("SaveData\\PizzaOrders.json");
+
+            if (AllOrders == null) {
+                Console.WriteLine("Geen orders beschikbaar!");
+            }
+        }
+
+        public void SaveOrders()
+        {
+            string serializeData = JsonConvert.SerializeObject(AllOrders, Formatting.Indented);
+            IO.WriteFile("SaveData\\PizzaOrders.json", serializeData);
         }
     }
 }

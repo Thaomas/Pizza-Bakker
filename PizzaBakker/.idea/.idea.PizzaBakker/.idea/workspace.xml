@@ -5,13 +5,16 @@
     <projectFile>Pizza_Server/Pizza_Server.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="30b1c637-7b05-45ee-9a78-fa50a634a910" name="Changes" comment="" />
+    <list default="true" id="30b1c637-7b05-45ee-9a78-fa50a634a910" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Pizza_Server/SaveData/PizzaOrders.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/.nuget/packages/microsoft.net.test.sdk/16.9.4/build/netcoreapp2.1/Microsoft.NET.Test.Sdk.Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Pizza_Client/Commands/KitchenCommands/PlaceOrderCommand.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Pizza_Client/ViewModels/KitchenViewModels/KitchenViewModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Pizza_Client/Views/KitchenViews/KitchenView.xaml" root0="FORCE_HIGHLIGHTING" />

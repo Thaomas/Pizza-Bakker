@@ -176,13 +176,12 @@ namespace Pizza_Server.Logic.Connections
         {
 
             Dictionary<int, List<string>> pizzaOrder = packet.GetData<PlaceOrderRequestPacket>().pizzaOrder;
-             
-            
             
             PizzaOrder _pizzaOrder = new();
             
             _pizzaOrder.OrderId = (uint) new Random().Next(0, 1000);
 
+            _pizzaOrder.status = OrderStatus.ORDERED;
             kitchen.orderPizza(pizzaOrder);
 
             if (kitchen._orderComplete)
@@ -200,13 +199,8 @@ namespace Pizza_Server.Logic.Connections
             } else {
                 Console.WriteLine("order gefaald");
             }
-
-            Console.WriteLine("ordernummer is: " + _pizzaOrder.OrderId);
-            foreach (string pizza in _pizzaOrder.AllPizzas)
-            {
-                Console.WriteLine("pizza: " + pizza);
-            }
-
+            
+            Kitchen.GetInstance().AllOrders.Add(_pizzaOrder);
             
             Client client = _server.IdToClient[packet.senderID];
             client.SendData(new DataPacket<PlaceOrderResponsePacket>

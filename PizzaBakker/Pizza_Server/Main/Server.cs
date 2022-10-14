@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using Pizza_Server.Logic;
 
 namespace Pizza_Server.Main
 {
@@ -72,7 +73,7 @@ namespace Pizza_Server.Main
             {
                 SaveEmployees(IdToEmployee);
                 Warehouse.GetInstance().SaveIngredients();
-                
+                Kitchen.GetInstance().SaveOrders();
                 Thread.Sleep(10000);
             }
         }

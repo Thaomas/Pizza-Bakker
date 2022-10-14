@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Pizza_Client.Commands.KitchenCommands;
+using Pizza_Server.Logic;
 
 namespace Pizza_Client.ViewModels
 {
@@ -15,13 +16,12 @@ namespace Pizza_Client.ViewModels
         private readonly NavigationStore _navigationStore;
 
         public BaseViewModel CurrentViewModel => _navigationStore.CurrentViewModel;
-
-        private List<PizzaOrder> _allOrders;
-
+        
         
         private List<PizzaOrder> _incomingOrders;
-        public List<PizzaOrder> IncomingOrders {
-            get => _incomingOrders;
+        public List<PizzaOrder> IncomingOrders
+        {
+            get => _incomingOrders;  
             set
             {
                 _incomingOrders = value;
