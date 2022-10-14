@@ -13,7 +13,7 @@ namespace Pizza_Client.ViewModels
         private readonly NavigationStore _navigationStore;
 
         public BaseViewModel CurrentViewModel => _navigationStore.CurrentViewModel;
-        
+
         private string _NewIngredientName;
         public string NewIngredientName
         {
@@ -111,7 +111,7 @@ namespace Pizza_Client.ViewModels
                 OnPropertyChanged(nameof(SelectedIngredient));
             }
         }
-       
+
         public ICommand AddIngredientCommand { get; }
         public ICommand ReloadListCommand { get; }
         public ICommand DeleteIngredientCommand { get; }
@@ -127,14 +127,15 @@ namespace Pizza_Client.ViewModels
             DeleteIngredientCommand = new DeleteIngredientCommand(_navigationStore);
 
             //Load Ingredients for all the connected clients every 3-Seconds
-            Task.Run(() => {
+            Task.Run(() =>
+            {
                 while (true)
                 {
                     ReloadListCommand.Execute(null);
                     Thread.Sleep(3000);
                 }
             });
-            
+
 
         }
     }

@@ -13,14 +13,11 @@
             <DataTemplate DataType="{x:Type viewModels:LoginViewModel}">
                 <views:LoginView/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModels:HomepageViewModel}">
-                <views:HomepageView/>
-            </DataTemplate>
             <DataTemplate DataType="{x:Type viewModels:WarehouseViewModel}">
                 <views:WarehouseView/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type viewModels:AddIngredientViewModel}">
-                <views:AddIngredientView/>
+            <DataTemplate DataType="{x:Type viewModels:KitchenViewModel}">
+                <views:KitchenView/>
             </DataTemplate>
         </Grid.Resources>
 

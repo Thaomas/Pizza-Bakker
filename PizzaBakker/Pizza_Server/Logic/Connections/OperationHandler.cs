@@ -2,12 +2,13 @@ using Pizza_Server.Logic.Connections.Types;
 using Pizza_Server.Logic.WarehouseNS;
 using Pizza_Server.Main;
 using Shared;
+using Shared.Kitchen;
 using Shared.Login;
-using Shared.Order;
 using Shared.Warehouse;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 
 namespace Pizza_Server.Logic.Connections
 {
@@ -17,13 +18,13 @@ namespace Pizza_Server.Logic.Connections
         private readonly Dictionary<PacketType, Action<DataPacket>> _customerOperationHandlers;
         private readonly Dictionary<PacketType, Action<DataPacket>> _bakerOperationHandlers;
         private readonly Dictionary<PacketType, Action<DataPacket>> _warehouseOperationHandlers;
+        private Kitchen kitchen = Kitchen.GetInstance();
 
         public OperationHandler(Server viewModel)
         {
             _server = viewModel;
             _bakerOperationHandlers = new Dictionary<PacketType, Action<DataPacket>>
             {
-                { PacketType.CHANGE_STATUS, ChangeStatus}
             };
 
             _warehouseOperationHandlers = new Dictionary<PacketType, Action<DataPacket>>
@@ -31,11 +32,14 @@ namespace Pizza_Server.Logic.Connections
                 { PacketType.ADD_INGREDIENT, AddIngredient},
                 { PacketType.GET_LIST, GetList},
                 { PacketType.DELETE_INGREDIENT, DeleteIngredient},
+                { PacketType.PLACE_ORDER, PlaceOrder},
+                { PacketType.CHANGE_STATUS, ChangeOrderStatus}
+
             };
-            
+
             _customerOperationHandlers = new();
         }
-        
+
         public void HandleDataCallback(DataPacket packet, Client client)
         {
             if (packet.type == PacketType.AUTHENTICATION)
@@ -111,13 +115,6 @@ namespace Pizza_Server.Logic.Connections
             _server.Log = $"Employee: {employee.WorkId}, Logged in as a {client.ClientType}";
         }
 
-
-        public void ChangeStatus(DataPacket packet)
-        {
-            ChangeStatusPacket statusPacket = packet.GetData<ChangeStatusPacket>();
-            Client client = _server.IdToClient[packet.senderID];
-        }
-
         public void AddIngredient(DataPacket packet)
         {
             AddIngredientRequestPacket addPacket = packet.GetData<AddIngredientRequestPacket>();
@@ -125,7 +122,8 @@ namespace Pizza_Server.Logic.Connections
             uint id = Warehouse.GetInstance()._ingredients.Keys.Max();
             string name = addPacket.ingredient.Ingredient.Name;
 
-            try {
+            try
+            {
                 if (Warehouse.GetInstance()._ingredients.Values.All(v => v.Ingredient.Name != name))
                 {
                     if (Warehouse.GetInstance()._ingredients.TryGetValue(id, out WarehouseItem dd))
@@ -133,15 +131,19 @@ namespace Pizza_Server.Logic.Connections
                         uint total = id + 1;
                         addPacket.ingredient.Ingredient.Id = total;
                         Warehouse.GetInstance()._ingredients.Add(total, addPacket.ingredient);
-                    } else {
+                    }
+                    else
+                    {
                         addPacket.ingredient.Ingredient.Id = 1;
                         Warehouse.GetInstance()._ingredients.Add(1, addPacket.ingredient);
                     }
                 }
-            }catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Console.WriteLine(e);
             }
-            
+
             Client client = _server.IdToClient[packet.senderID];
             client.SendData(new DataPacket<AddIngredientResponsePacket>
             {
@@ -153,19 +155,7 @@ namespace Pizza_Server.Logic.Connections
                 }
             });
         }
- 
-        public void GetList(DataPacket packet)
-        {
-            Client client = _server.IdToClient[packet.senderID];
-            client.SendData(new DataPacket<GetListResponsePacket>
-            {
-                type = PacketType.GET_LIST,
-                data = new GetListResponsePacket()
-                {
-                    allItems = Warehouse.GetInstance()._ingredients.Values.ToList()
-                }
-            });
-        }
+
 
         public void DeleteIngredient(DataPacket packet)
         {
@@ -182,6 +172,74 @@ namespace Pizza_Server.Logic.Connections
                 {
                     statusCode = StatusCode.OK,
                     warehouseList = Warehouse.GetInstance()._ingredients.Values.ToList()
+                }
+            });
+        }
+
+
+        public void PlaceOrder(DataPacket packet)
+        {
+
+            Dictionary<int, List<string>> pizzaOrder = packet.GetData<PlaceOrderRequestPacket>().pizzaOrder;
+            PizzaOrder _pizzaOrder = new();
+
+            _pizzaOrder.OrderId = (uint)new Random().Next(0, 1000);
+            _pizzaOrder.Status = OrderStatus.ORDERED;
+            kitchen.orderPizza(pizzaOrder);
+
+            if (kitchen._orderComplete)
+            {
+                List<string> pizza = new();
+                foreach (var singlePizzaa in pizzaOrder.Values)
+                {
+                    pizza.Add(singlePizzaa[0]);
+                }
+
+                _pizzaOrder.AllPizzas = pizza;
+
+                Console.WriteLine("order is gecompleted, het wordt nu omgezet naar een PIZZA_ORDER OBJECT");
+
+            }
+            else
+            {
+                Console.WriteLine("order gefaald");
+            }
+
+            Console.WriteLine("ordernummer is: " + _pizzaOrder.OrderId);
+            foreach (string pizza in _pizzaOrder.AllPizzas)
+            {
+                Console.WriteLine("pizza: " + pizza);
+            }
+
+            Kitchen.GetInstance().AllOrders.Add(_pizzaOrder);
+            Client client = _server.IdToClient[packet.senderID];
+            client.SendData(new DataPacket<PlaceOrderResponsePacket>
+            {
+                type = PacketType.PLACE_ORDER,
+                data = new PlaceOrderResponsePacket()
+                {
+                    statusCode = StatusCode.OK,
+                    orderList = Kitchen.GetInstance().AllOrders
+                }
+            });
+        }
+        
+        private void ChangeOrderStatus(DataPacket obj)
+        {
+            ChangeStatusOrderRequestPacket pizza = obj.GetData<ChangeStatusOrderRequestPacket>();
+
+            Kitchen.GetInstance().AllOrders.First(p => p.OrderId == pizza.pizzaOrderId).Status = pizza.pizzaOrderStatus;
+        }
+
+        public void GetList(DataPacket packet)
+        {
+            Client client = _server.IdToClient[packet.senderID];
+            client.SendData(new DataPacket<GetListResponsePacket>
+            {
+                type = PacketType.GET_LIST,
+                data = new GetListResponsePacket()
+                {
+                    allItems = Warehouse.GetInstance()._ingredients.Values.ToList()
                 }
             });
         }

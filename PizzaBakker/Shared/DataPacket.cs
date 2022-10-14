@@ -64,26 +64,6 @@ namespace Shared
         }
     }
 
-    namespace Order
-    {
-        public class GetOrdersPacket : DAbstract
-        {
-            public Dictionary<Guid, PizzaOrder> orders;
-        }
-
-        public class ChangeStatusPacket : DAbstract
-        {
-            public OrderStatus orderStatus;
-            public Guid orderID;
-        }
-
-        public class StatusPacket : DAbstract
-        {
-            public OrderStatus orderStatus;
-            public Guid orderID;
-        }
-    }
-
     namespace Warehouse
     {
         public class AddIngredientRequestPacket : DAbstract
@@ -96,7 +76,7 @@ namespace Shared
             public List<WarehouseItem> warehouseList;
             public StatusCode statusCode;
         }
-        
+
         public class GetListRequestPacket : DAbstract { }
 
         public class GetListResponsePacket : DAbstract
@@ -116,6 +96,32 @@ namespace Shared
         public class DeleteIngredientResponsePacket : DAbstract
         {
             public List<WarehouseItem> warehouseList;
+            public StatusCode statusCode;
+        }
+    }
+
+    namespace Kitchen
+    {
+        public class PlaceOrderRequestPacket : DAbstract
+        {
+            public Dictionary<int, List<string>> pizzaOrder;
+        }
+
+        public class PlaceOrderResponsePacket : DAbstract
+        {
+            public List<PizzaOrder> orderList;
+            public StatusCode statusCode;
+        }
+        
+        public class ChangeStatusOrderRequestPacket : DAbstract
+        {
+            public uint pizzaOrderId;
+            public OrderStatus pizzaOrderStatus;
+        }
+
+        public class ChangeStatusOrderResponsePacket : DAbstract
+        {
+            public List<PizzaOrder> orderList;
             public StatusCode statusCode;
         }
     }

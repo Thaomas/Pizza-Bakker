@@ -1,4 +1,3 @@
-using System;
 using Pizza_Client.Stores;
 using Pizza_Client.Util;
 using Pizza_Client.ViewModels;
@@ -18,7 +17,7 @@ namespace Pizza_Client.Commands.WarehouseCommands
         }
 
         public override void Execute(object parameter)
-        { 
+        {
             ConnectionHandler connectionHandler = ConnectionHandler.GetInstance();
             connectionHandler.SendData(new DataPacket<AddIngredientRequestPacket>()
             {
@@ -33,7 +32,7 @@ namespace Pizza_Client.Commands.WarehouseCommands
                             Name = _addIngredientViewModel.NewIngredientName,
                             Price = _addIngredientViewModel.NewIngredientPrice
                         }
-                    } 
+                    }
                 }
             }, AddIngredientCallback);
         }

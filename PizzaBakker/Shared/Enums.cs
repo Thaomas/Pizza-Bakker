@@ -9,7 +9,8 @@
         ERROR,
         ADD_INGREDIENT,
         DELETE_INGREDIENT,
-        GET_LIST
+        GET_LIST,
+        PLACE_ORDER
     }
 
     public enum StatusCode
@@ -22,18 +23,8 @@
         FORBIDDEN = 403,            // Indicates that the requested action is not allowed for that user.
         NOT_FOUND = 404,            // Indicates that the requested data is not found.
         INTERNAL_SERVER_ERROR = 500 // Indicates that the server ran into an error it doesn't know how to handle.
-    }
 
-    public enum PrivacyLevel
-    {
-        SELECTED_PEOPLE,
-        OPEN,
-        PRIVATE,
-        ZERO,
-        ONE,
-        TWO,
-        THREE
-    };
+    }
 
     public enum ClientType
     {
@@ -43,16 +34,10 @@
         WAREHOUSE
     }
 
-    public enum OperationCodes
-    {
-        CHANGE_STATUS
-    }
-
     public enum OrderStatus
     {
         ORDERED,
-        IN_PROGRESS,
-        BAKING,
+        PREPARING,
         DELIVERING,
         DELIVERED
     }

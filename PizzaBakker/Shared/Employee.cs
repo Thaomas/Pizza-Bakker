@@ -11,9 +11,8 @@ namespace Shared
         public DateTime? Birthday { get; set; }
         public string Department { get; set; }
         public string Password { get; set; }
-        public PrivacyLevel PrivacyLevel { get; set; }
 
-        public Employee(string firstName, string lastName, uint workId, DateTime? birthday, string department, string password, PrivacyLevel privacyLevel)
+        public Employee(string firstName, string lastName, uint workId, DateTime? birthday, string department, string password)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -21,7 +20,6 @@ namespace Shared
             Birthday = birthday;
             Department = department;
             Password = password;
-            PrivacyLevel = privacyLevel;
         }
     }
 }

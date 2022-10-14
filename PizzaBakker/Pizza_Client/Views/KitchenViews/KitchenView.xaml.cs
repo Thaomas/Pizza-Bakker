@@ -5,11 +5,12 @@ namespace Pizza_Client.Views
     /// <summary>
     /// Interaction logic for HomepageView.xaml
     /// </summary>
-    public partial class HomepageView : UserControl
+    public partial class KitchenView : UserControl
     {
-        public HomepageView()
+        public KitchenView()
         {
             InitializeComponent();
         }
+
     }
 }

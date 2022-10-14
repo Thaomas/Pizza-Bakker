@@ -1,24 +1,27 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Shared
 {
     public class PizzaOrder
     {
-        public string Name { get; set; }
-        public Guid OrderID { get; set; }
-        public Tuple<Ingredient, int>[] Toppings { get; set; }
+        public List<string> AllPizzas { get; set; }
+        public uint OrderId { get; set; }
+        //public Guid CustomerID { get; set; }
+        public uint CustomerID { get; set; }
+        public OrderStatus Status { get; set; }
 
-        public decimal Price
+        public PizzaOrder()
         {
-            get
-            {
-                decimal total = 0m;
-                foreach (var (ingredient, amount) in Toppings)
-                {
-                    total += ingredient.Price * amount;
-                }
-                return total;
-            }
+            AllPizzas = new();
         }
+
+        public override string ToString()
+        {
+            return $"Order {OrderId.ToString()}";
+
+        }
+        //TODO DEBUG CODE
+        public PizzaOrder Clone() => JsonConvert.DeserializeObject<PizzaOrder>(JsonConvert.SerializeObject(this));
     }
 }

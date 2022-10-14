@@ -56,7 +56,7 @@ namespace Pizza_Client.Commands
 
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    _navigationStore.CurrentViewModel = new WarehouseViewModel(_navigationStore);
+                    _navigationStore.CurrentViewModel = new KitchenViewModel(_navigationStore);
                 });
 
                 return;
