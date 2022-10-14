@@ -6,6 +6,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="30b1c637-7b05-45ee-9a78-fa50a634a910" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Pizza_Client/Commands/KitchenCommands/ChangeStatusOrderCommand.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Pizza_Server/SaveData/PizzaOrders.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,7 +33,9 @@
     <option name="selectedTabId" value="SWEA" />
   </component>
   <component name="ProjectId" id="2FnxSPFxdCxR7pM4NAlsZE3aody" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />

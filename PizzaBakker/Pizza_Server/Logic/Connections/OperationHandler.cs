@@ -31,11 +31,19 @@ namespace Pizza_Server.Logic.Connections
                 { PacketType.ADD_INGREDIENT, AddIngredient},
                 { PacketType.GET_LIST, GetList},
                 { PacketType.DELETE_INGREDIENT, DeleteIngredient},
-                { PacketType.PLACE_ORDER, PlaceOrder}
+                { PacketType.PLACE_ORDER, PlaceOrder},
+                { PacketType.CHANGE_STATUS, ChangeOrderStatus}
 
             };
 
             _customerOperationHandlers = new();
+        }
+
+        private void ChangeOrderStatus(DataPacket obj)
+        {
+            Console.WriteLine("operation changestatuss");
+            Console.WriteLine(obj.GetData<ChangeStatusOrderRequestPacket>().pizzaOrder);
+            
         }
 
         public void HandleDataCallback(DataPacket packet, Client client)
@@ -217,7 +225,7 @@ namespace Pizza_Server.Logic.Connections
                 data = new PlaceOrderResponsePacket()
                 {
                     statusCode = StatusCode.OK,
-                    orderList = _pizzaOrder
+                    orderList = Kitchen.GetInstance().AllOrders
                 }
             });
         }

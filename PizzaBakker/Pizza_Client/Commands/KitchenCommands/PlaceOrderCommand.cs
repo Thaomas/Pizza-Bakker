@@ -9,7 +9,7 @@ using Pizza_Client.ViewModels;
 using Pizza_Server.Logic;
 using Shared;
 using Shared.Kitchen;
-using System.Collections.Generic;
+using Shared.Warehouse;
 
 namespace Pizza_Client.Commands.KitchenCommands
 {
@@ -22,7 +22,7 @@ namespace Pizza_Client.Commands.KitchenCommands
         {
             _navigationStore = navigationStore;
         }
-
+        
         public override void Execute(object parameter)
         {
             Dictionary<int, List<string>> list = new();
@@ -33,7 +33,7 @@ namespace Pizza_Client.Commands.KitchenCommands
             pizzaPollo.Add("deeg");
             pizzaPollo.Add("uien");
             pizzaPollo.Add("kip");
-
+            
             List<string> pizzamargarita = new();
             pizzamargarita.Add("pizza margarttia");
             pizzamargarita.Add("kaas");
@@ -41,30 +41,28 @@ namespace Pizza_Client.Commands.KitchenCommands
             pizzamargarita.Add("deeg");
             pizzamargarita.Add("salami");
 
-
-            list.Add(1, pizzaPollo);
+            
+            list.Add(1,pizzaPollo);
             list.Add(2, pizzamargarita);
-
+            
             ConnectionHandler connectionHandler = ConnectionHandler.GetInstance();
             connectionHandler.SendData(new DataPacket<PlaceOrderRequestPacket>()
             {
                 type = PacketType.PLACE_ORDER,
                 data = new PlaceOrderRequestPacket()
                 {
-                    pizzaOrder = list
+                    pizzaOrder = list 
                 }
             }, PlaceOrderCallback);
         }
 
         private void PlaceOrderCallback(DataPacket obj)
         {
-            PlaceOrderResponsePacket data = obj.GetData<PlaceOrderResponsePacket>();
+             PlaceOrderResponsePacket data = obj.GetData<PlaceOrderResponsePacket>();
 
-            List<PizzaOrder> ds = new();
-            ds.Add(data.orderList);
-            ds.Add(data.orderList);
 
-            _placeOrderViewModel.AllOrders = ds;
+             _placeOrderViewModel.AllOrders = data.orderList;
+
         }
     }
 }
