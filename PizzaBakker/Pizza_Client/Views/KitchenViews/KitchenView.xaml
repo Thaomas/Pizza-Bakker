@@ -11,117 +11,137 @@
              MinWidth="630"
              >
 
-    <Grid>
+    <Grid Margin="4">
+        <Grid.Resources>
+            <Style TargetType="{x:Type ListBox}">
+                <Setter Property="Margin"
+                        Value="2 1 2 5" />
+                <Setter Property="HorizontalContentAlignment"
+                        Value="Center" />
+            </Style>
+            <Style TargetType="{x:Type Label}">
+                <Setter Property="Margin"
+                        Value="1 0 1 0" />
+                <Setter Property="Padding"
+                        Value="0 5 0 10" />
+                <Setter Property="HorizontalContentAlignment"
+                        Value="Center" />
+                <Setter Property="FontSize"
+                        Value="20" />
+            </Style>
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="Padding"
+                        Value="0 2 0 5" />
+                <Setter Property="HorizontalAlignment"
+                        Value="Center" />
+                <Setter Property="FontSize"
+                        Value="12" />
+            </Style>
+        </Grid.Resources>
+        
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+
         <Grid.Children>
-            <Button
-                Grid.Column="0"
-                Grid.Row="1"
-                Width="auto"
-                Height="auto"
-                Content="Add The Ingredient"
-                Command="{Binding PlaceOrderCommand}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Padding="10,0,10,0"
-                MinHeight="40"/>
+            <Label Grid.Column="0"
+                   Grid.Row="0"
+                   Content="Incoming Orders"
+                   Background="gray"
+                   Foreground="White"
+                   FontWeight="SemiBold"/>
             
-            <TextBlock Grid.Column="0"
-                Grid.Row="1"
-                Text="In Delivery"
-                Background="LightPink"
-                Foreground="White"
-                FontSize="20"
-                FontWeight="SemiBold"
-                TextAlignment="Center"
-                Grid.ColumnSpan="2" Margin="574,28,1,152"/>
-
-            <ListBox Grid.Column="1"
-                Grid.Row="0"
-                Name="AllIngredient"
-                ItemsSource="{Binding AllIngredients}"
-                SelectedItem="{Binding SelectedIngredient}"
-                VerticalContentAlignment="Stretch"
-                MinWidth="200" Margin="573,46,1,30" />
-
-            <TextBlock Grid.Column="0"
-                Grid.Row="0"
-                Text="Deliverd Orders"
-                Background="LawnGreen"
-                Foreground="White"
-                FontSize="20"
-                FontWeight="SemiBold"
-                TextAlignment="Center"
-                Grid.ColumnSpan="2" Margin="573,1,2,179"/>
-
-            <ListBox Grid.Column="1"
-                Grid.Row="1"
-                Name="AllIngrdfedient"
-                ItemsSource="{Binding AllIngredients}"
-                SelectedItem="{Binding SelectedIngredient}"
-                VerticalContentAlignment="Stretch"
-                MinWidth="200" Margin="574,73,0,3" />
-
-
-            <TextBlock Grid.Column="0"
-                Grid.Row="0"
-                Text="Inprogress Orders"
-                Background="LightSkyBlue"
-                Foreground="White"
-                FontSize="20"
-                FontWeight="SemiBold"
-                TextAlignment="Center"
-                Grid.ColumnSpan="2" Margin="298,1,277,179"/>
-
-            <ListBox Grid.Column="1"
-                Grid.Row="0"
-                Grid.RowSpan="2"
-                Name="AllInsadgredient"
-                ItemsSource="{Binding AllIngredients}"
-                SelectedItem="{Binding SelectedIngredient}"
-                VerticalContentAlignment="Stretch"
-                MinWidth="200" Margin="298,46,277,213" />
-
-            <TextBlock Grid.Column="0"
-                Grid.Row="0"
-                Text="Incoming Orders"
-                Background="gray"
-                Foreground="White"
-                FontSize="20"
-                FontWeight="SemiBold"
-                TextAlignment="Center"
-                Grid.ColumnSpan="2" Margin="17,1,558,179"/>
-
-            <ListBox Grid.Column="1"
-                Grid.Row="0"
-                Grid.RowSpan="2"
-                Name="IncomingOrders"
-                ItemsSource="{Binding IncomingOrders}"
-                SelectedItem="{Binding SelectedIngredient}"
-                VerticalContentAlignment="Stretch"
-                MinWidth="200" Margin="17,46,558,213" />
-
             <ListBox Grid.Column="0"
-                Grid.Row="1"
-                Background="LightGray"
-                Foreground="White"
-                FontSize="20"
-                FontWeight="SemiBold"
-                ItemsSource="{Binding SelectedOrderPizzas}"
-                Grid.ColumnSpan="2" Margin="300,44,277,8"/>
-            <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="124,89,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
-            
-            <Label Content="Selected Order" Grid.Column="1" HorizontalAlignment="Left" Margin="19,86,0,0" Grid.Row="1" VerticalAlignment="Top" Width="97"/>
+                     Grid.Row="1"
+                     Name="IncomingOrders"
+                     ItemsSource="{Binding IncomingOrders}"
+                     SelectedItem="{Binding SelectedIngredient}"
+                     VerticalContentAlignment="Center"/>
 
+            <Label Grid.Column="1"
+                   Grid.Row="0"
+                   Content="In Progress Orders"
+                   Background="LightSkyBlue"
+                   Foreground="White"
+                   FontWeight="SemiBold"/>
+
+            <ListBox Grid.Column="1"
+                     Grid.Row="1"
+                     Name="InProgressOrders"
+                     ItemsSource="{Binding AllIngredients}"
+                     SelectedItem="{Binding SelectedIngredient}"
+                     VerticalContentAlignment="Center"
+                     />
+
+            <Label Grid.Column="2"
+                   Grid.Row="0"
+                   Content="In Delivery"
+                   Background="LightPink"
+                   Foreground="White"
+                   FontWeight="SemiBold"/>
+
+            <ListBox Grid.Column="2"
+                     Grid.Row="1"
+                     Name="DevileryOrders"
+                     ItemsSource="{Binding AllIngredients}"
+                     SelectedItem="{Binding SelectedIngredient}"
+                     VerticalContentAlignment="Center"/>
+
+            <Label Grid.Column="2"
+                   Grid.Row="2"
+                   Content="Deliverd Orders"
+                   Background="LawnGreen"
+                   Foreground="White"
+                   FontWeight="SemiBold"/>
+
+            <ListBox Grid.Column="2"
+                     Grid.Row="3"
+                     Name="DeliveredOrders"
+                     ItemsSource="{Binding AllIngredients}"
+                     SelectedItem="{Binding SelectedIngredient}"
+                     VerticalContentAlignment="Center"/>
+
+            <Label Grid.Column="1"
+                   Grid.Row="2"
+                   Content="Order Detail:"
+                   Background="LightGray"
+                   Foreground="White"
+                   FontWeight="SemiBold"/>
+
+            <ListBox Grid.Column="1"
+                     Grid.Row="3"
+                     Name="SelectedOrderDetails"
+                     ItemsSource="{Binding AllIngredients}"
+                     SelectedItem="{Binding SelectedIngredient}"
+                     VerticalContentAlignment="Center"
+                     BorderThickness="2"/>
+
+
+            <Label Grid.Column="0"
+                   Grid.Row="2"
+                   Content="Selected Order"
+                   Background="LightGray"
+                   Foreground="White"
+                   FontWeight="SemiBold"/>
+            
+            <ComboBox Grid.Column="0" 
+                      Grid.Row="3"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      FontSize="15"
+                      ItemsSource="{Binding OrderStatuses}"
+                      SelectedItem ="{Binding SelectedOrderStatus}"
+                      Padding="50,20"
+                      />
+           
         </Grid.Children>
     </Grid>
 </UserControl>

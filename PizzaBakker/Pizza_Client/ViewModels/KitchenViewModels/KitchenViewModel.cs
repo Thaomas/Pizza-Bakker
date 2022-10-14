@@ -1,10 +1,9 @@
-using Pizza_Client.Commands.WarehouseCommands;
+using Pizza_Client.Commands.KitchenCommands;
 using Pizza_Client.Stores;
 using Shared;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Pizza_Client.Commands.KitchenCommands;
 using Pizza_Server.Logic;
@@ -16,8 +15,34 @@ namespace Pizza_Client.ViewModels
         private readonly NavigationStore _navigationStore;
 
         public BaseViewModel CurrentViewModel => _navigationStore.CurrentViewModel;
+
+        private List<OrderStatus> _orderStatuses;
+        public List<OrderStatus> OrderStatuses
+        {
+            get => _orderStatuses;
+            set
+            {
+                _orderStatuses = value;
+                OnPropertyChanged(nameof(OrderStatuses));
+            }
+        }
+
+        private OrderStatus _selectedOrderStatus;
+
+        public OrderStatus SelectedOrderStatus
+        {
+            get => _selectedOrderStatus;
+            set
+            {
+                _selectedOrderStatus = value;
+                OnPropertyChanged(nameof(SelectedOrderStatus));
+            }
+        }
         
         
+        private List<PizzaOrder> _allOrders;
+
+
         private List<PizzaOrder> _incomingOrders;
         public List<PizzaOrder> IncomingOrders
         {
@@ -55,16 +80,17 @@ namespace Pizza_Client.ViewModels
         }
 
         public ICommand PlaceOrderCommand { get; }
-        
+
         public KitchenViewModel(NavigationStore navigationStore)
         {
 
             _navigationStore = navigationStore;
-
+            OrderStatuses = Enum.GetValues<OrderStatus>().ToList();
+            SelectedOrderStatus = OrderStatus.ORDERED;
             PlaceOrderCommand = new PlaceOrderCommand(_navigationStore);
-
+            PlaceOrderCommand.Execute(null);
             //Load Ingredients for all the connected clients every 3-Seconds
-            
+
             /*Task.Run(() =>
             {
                 while (true)
