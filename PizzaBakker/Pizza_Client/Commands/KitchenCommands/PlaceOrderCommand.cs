@@ -4,6 +4,7 @@ using Pizza_Client.ViewModels;
 using Shared;
 using Shared.Kitchen;
 using Shared.Warehouse;
+using System.Collections.Generic;
 
 namespace Pizza_Client.Commands.KitchenCommands
 {
@@ -53,11 +54,6 @@ namespace Pizza_Client.Commands.KitchenCommands
         private void PlaceOrderCallback(DataPacket obj)
         {
              PlaceOrderResponsePacket data = obj.GetData<PlaceOrderResponsePacket>();
-
-            List<PizzaOrder> ds = new();
-            ds.Add(data.order.Clone());
-            data.order.OrderId++;
-            ds.Add(data.order);
 
              _placeOrderViewModel.AllOrders = data.orderList;
 

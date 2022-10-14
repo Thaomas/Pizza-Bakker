@@ -138,7 +138,7 @@ namespace Shared
             public string pizzaOrder;
         }
 
-        public class ChangeStatusOrderRequestResponse : DAbstract
+        public class ChangeStatusOrderResponsePacket : DAbstract
         {
             public List<PizzaOrder> orderList;
             public StatusCode statusCode;

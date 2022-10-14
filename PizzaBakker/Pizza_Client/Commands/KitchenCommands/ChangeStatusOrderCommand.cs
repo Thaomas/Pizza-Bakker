@@ -29,12 +29,12 @@ namespace Pizza_Client.Commands.KitchenCommands
                 {
                     pizzaOrder = parameter.ToString() 
                 }
-            }, PlaceOrderCallback);
+            }, ChangeOrderCallback);
         }
 
-        private void PlaceOrderCallback(DataPacket obj)
+        private void ChangeOrderCallback(DataPacket obj)
         {
-            PlaceOrderResponsePacket data = obj.GetData<PlaceOrderResponsePacket>();
+            ChangeStatusOrderResponsePacket data = obj.GetData<ChangeStatusOrderResponsePacket>();
 
 
             _placeOrderViewModel.AllOrders = data.orderList;

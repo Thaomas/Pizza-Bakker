@@ -8,6 +8,7 @@ using Shared.Warehouse;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 
 namespace Pizza_Server.Logic.Connections
 {
@@ -39,11 +40,20 @@ namespace Pizza_Server.Logic.Connections
             _customerOperationHandlers = new();
         }
 
-        private void ChangeOrderStatus(DataPacket obj)
+        private void ChangeOrderStatus(DataPacket packet)
         {
             Console.WriteLine("operation changestatuss");
-            Console.WriteLine(obj.GetData<ChangeStatusOrderRequestPacket>().pizzaOrder);
-            
+            Console.WriteLine(packet.GetData<ChangeStatusOrderRequestPacket>().pizzaOrder);
+            Client client = _server.IdToClient[packet.senderID];
+            client.SendData(new DataPacket<ChangeStatusOrderResponsePacket>
+            {
+                type = PacketType.CHANGE_STATUS,
+                data = new ChangeStatusOrderResponsePacket()
+                {
+                    orderList = Kitchen.GetInstance().AllOrders,
+                    statusCode = StatusCode.OK
+                }
+            });
         }
 
         public void HandleDataCallback(DataPacket packet, Client client)
