@@ -49,7 +49,7 @@ namespace Pizza_Client.ViewModels
             get => SelectedOrder;
             set => SelectedOrder = value;
         }
-        public List<PizzaOrder> InProgressOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.IN_PROGRESS) || p.Status.Equals(OrderStatus.BAKING)).ToList<PizzaOrder>();
+        public List<PizzaOrder> InProgressOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.PREPARING)).ToList<PizzaOrder>();
         public PizzaOrder SelectedInProgressOrders
         {
             get => SelectedOrder;
@@ -75,16 +75,17 @@ namespace Pizza_Client.ViewModels
             set
             {
                 _selectedOrder = value;
-                if (value == null)
-                    return;
-                SelectedOrderDetails = value.AllPizzas;
-                value.AllPizzas.ForEach(s => Trace.WriteLine(s));
-                SelectedOrderStatus = value.Status;
-
                 OnPropertyChanged(nameof(SelectedIncomingOrders));
                 OnPropertyChanged(nameof(SelectedInProgressOrders));
                 OnPropertyChanged(nameof(SelectedDeliveryOrders));
                 OnPropertyChanged(nameof(SelectedDeliveredOrders));
+
+                if (value == null)
+                    return;
+
+                SelectedOrderDetails = value.AllPizzas;
+                value.AllPizzas.ForEach(s => Trace.WriteLine(s));
+                SelectedOrderStatus = value.Status;
             }
         }
 
@@ -99,6 +100,17 @@ namespace Pizza_Client.ViewModels
             }
         }
 
+        private string _selectedPizzaOrderTitle;
+        public string SelectedPizzaOrderTitle
+        {
+            get => _selectedPizzaOrderTitle;
+            set
+            {
+                _selectedPizzaOrderTitle = value;
+                OnPropertyChanged(nameof(SelectedPizzaOrderTitle));
+            }
+        }
+
         private OrderStatus _selectedOrderStatus;
         public OrderStatus SelectedOrderStatus
         {
@@ -110,6 +122,7 @@ namespace Pizza_Client.ViewModels
 
                 if (SelectedOrder == null || SelectedOrder?.Status == value)
                     return;
+
                 SelectedOrder.Status = value;
                 
                 ChangeStatusOrderCommand.Execute(SelectedOrder);
@@ -131,6 +144,7 @@ namespace Pizza_Client.ViewModels
             _navigationStore = navigationStore;
             OrderStatuses = Enum.GetValues<OrderStatus>().ToList();
             SelectedOrderStatus = OrderStatus.ORDERED;
+            SelectedPizzaOrderTitle = "No Order Selected";
             PlaceOrderCommand = new PlaceOrderCommand(_navigationStore);
             ChangeStatusOrderCommand = new ChangeStatusOrderCommand(_navigationStore);
             

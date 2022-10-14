@@ -15,7 +15,7 @@
     ],
     "OrderId": 463,
     "CustomerID": 0,
-    "Status": 0
+    "Status": 1
   },
   {
     "AllPizzas": [
@@ -24,7 +24,7 @@
     ],
     "OrderId": 723,
     "CustomerID": 0,
-    "Status": 0
+    "Status": 3
   },
   {
     "AllPizzas": [
@@ -51,7 +51,7 @@
     ],
     "OrderId": 315,
     "CustomerID": 0,
-    "Status": 2
+    "Status": 0
   },
   {
     "AllPizzas": [
@@ -78,7 +78,7 @@
     ],
     "OrderId": 899,
     "CustomerID": 0,
-    "Status": 2
+    "Status": 0
   },
   {
     "AllPizzas": [
@@ -131,6 +131,60 @@
       "pizza margarttia"
     ],
     "OrderId": 887,
+    "CustomerID": 0,
+    "Status": 0
+  },
+  {
+    "AllPizzas": [
+      "pizza pollo",
+      "pizza margarttia"
+    ],
+    "OrderId": 462,
+    "CustomerID": 0,
+    "Status": 0
+  },
+  {
+    "AllPizzas": [
+      "pizza pollo",
+      "pizza margarttia"
+    ],
+    "OrderId": 355,
+    "CustomerID": 0,
+    "Status": 0
+  },
+  {
+    "AllPizzas": [
+      "pizza pollo",
+      "pizza margarttia"
+    ],
+    "OrderId": 55,
+    "CustomerID": 0,
+    "Status": 0
+  },
+  {
+    "AllPizzas": [
+      "pizza pollo",
+      "pizza margarttia"
+    ],
+    "OrderId": 530,
+    "CustomerID": 0,
+    "Status": 0
+  },
+  {
+    "AllPizzas": [
+      "pizza pollo",
+      "pizza margarttia"
+    ],
+    "OrderId": 193,
+    "CustomerID": 0,
+    "Status": 0
+  },
+  {
+    "AllPizzas": [
+      "pizza pollo",
+      "pizza margarttia"
+    ],
+    "OrderId": 679,
     "CustomerID": 0,
     "Status": 0
   }

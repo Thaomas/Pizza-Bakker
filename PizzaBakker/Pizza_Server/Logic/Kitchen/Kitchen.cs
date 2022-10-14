@@ -30,6 +30,15 @@ namespace Pizza_Server.Logic
         private Dictionary<uint, WarehouseItem> copyWarehouseItems;
         List<string> _outOfStockIngredients = new();
 
+        public bool changeOrderStatus(PizzaOrder order)
+        {
+            PizzaOrder o = AllOrders.Find(o => o.OrderId == order.OrderId);
+            if(o == null)
+                return false;
+            o.Status = order.Status;
+            return true;
+        }
+
         public void orderPizza(Dictionary<int, List<string>> orderPizza)
         {
 
