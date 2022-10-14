@@ -1,6 +1,5 @@
 using Pizza_Server.Logic.Connections.Types;
 using Pizza_Server.Logic.WarehouseNS;
-using Pizza_Server.Logic.Kitchen;
 using Pizza_Server.Main;
 using Shared;
 using Shared.Login;
@@ -19,7 +18,8 @@ namespace Pizza_Server.Logic.Connections
         private readonly Dictionary<PacketType, Action<DataPacket>> _customerOperationHandlers;
         private readonly Dictionary<PacketType, Action<DataPacket>> _bakerOperationHandlers;
         private readonly Dictionary<PacketType, Action<DataPacket>> _warehouseOperationHandlers;
-
+        private Kitchen kitchen = Kitchen.GetInstance();
+        
         public OperationHandler(Server viewModel)
         {
             _server = viewModel;
@@ -176,14 +176,12 @@ namespace Pizza_Server.Logic.Connections
         {
 
             Dictionary<int, List<string>> pizzaOrder = packet.GetData<PlaceOrderRequestPacket>().pizzaOrder;
-            Kitchen.Kitchen kitchen = new();
+             
+            
             
             PizzaOrder _pizzaOrder = new();
-
-            Random random = new Random();
-            int randomNumber = random.Next(0, 1000);
             
-            _pizzaOrder.Name = "ordernummer: " + randomNumber;
+            _pizzaOrder.OrderId = (uint) new Random().Next(0, 1000);
 
             kitchen.orderPizza(pizzaOrder);
 
@@ -203,7 +201,7 @@ namespace Pizza_Server.Logic.Connections
                 Console.WriteLine("order gefaald");
             }
 
-            Console.WriteLine("ordernummer is: " + _pizzaOrder.Name);
+            Console.WriteLine("ordernummer is: " + _pizzaOrder.OrderId);
             foreach (string pizza in _pizzaOrder.AllPizzas)
             {
                 Console.WriteLine("pizza: " + pizza);

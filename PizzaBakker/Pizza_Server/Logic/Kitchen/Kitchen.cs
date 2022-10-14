@@ -4,10 +4,24 @@ using System.Linq;
 using Pizza_Server.Logic.WarehouseNS;
 using Shared;
 
-namespace Pizza_Server.Logic.Kitchen
+namespace Pizza_Server.Logic
 {
     public class Kitchen
     {
+        private static Kitchen _singleton;
+
+        private Kitchen()
+        {
+            
+        }
+        
+        public static Kitchen GetInstance()
+        {
+            if (_singleton == null)
+                _singleton = new Kitchen();
+            return _singleton;
+        }
+        
         public bool _orderComplete = true;
 
         private Dictionary<uint, WarehouseItem> copyWarehouseItems;

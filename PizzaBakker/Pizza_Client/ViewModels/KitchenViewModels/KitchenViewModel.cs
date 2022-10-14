@@ -2,6 +2,7 @@ using Pizza_Client.Commands.WarehouseCommands;
 using Pizza_Client.Stores;
 using Shared;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -15,47 +16,11 @@ namespace Pizza_Client.ViewModels
 
         public BaseViewModel CurrentViewModel => _navigationStore.CurrentViewModel;
 
+        private List<PizzaOrder> _allOrders;
 
-        private string _ingredientPrice;
-
-        public string IngredientPrice
-        {
-            get => _ingredientPrice;
-            set
-            {
-                _ingredientPrice = value;
-                OnPropertyChanged(nameof(IngredientPrice));
-            }
-        }
-
-
-        private string _ingredientAmount;
-
-        public string IngredientAmount
-        {
-            get => _ingredientAmount;
-            set
-            {
-                _ingredientAmount = value;
-                OnPropertyChanged(nameof(IngredientAmount));
-            }
-        }
-
-        private List<WarehouseItem> _allIngredients;
-
-        public List<WarehouseItem> AllIngredients
-        {
-            get => _allIngredients;
-            set
-            {
-                _allIngredients = value;
-                OnPropertyChanged(nameof(AllIngredients));
-            }
-        }
         
-        private List<string> _incomingOrders;
-
-        public List<string> IncomingOrders {
+        private List<PizzaOrder> _incomingOrders;
+        public List<PizzaOrder> IncomingOrders {
             get => _incomingOrders;
             set
             {
@@ -64,15 +29,27 @@ namespace Pizza_Client.ViewModels
             }
         }
 
-        private WarehouseItem _selectedIngredient;
+        private List<string> _selectedOrderPizzas;
+        public List<string> SelectedOrderPizzas
+        {
+            get => _selectedOrderPizzas;
+            set
+            {
+                _selectedOrderPizzas = value;
 
-        public WarehouseItem SelectedIngredient
+                OnPropertyChanged(nameof(SelectedOrderPizzas));
+            }
+        }
+        
+        
+        private PizzaOrder _selectedIngredient;
+        public PizzaOrder SelectedIngredient
         {
             get => _selectedIngredient;
             set
             {
                 _selectedIngredient = value;
-
+                SelectedOrderPizzas = value.AllPizzas;
                 OnPropertyChanged(nameof(SelectedIngredient));
             }
         }
@@ -83,7 +60,6 @@ namespace Pizza_Client.ViewModels
         {
 
             _navigationStore = navigationStore;
-            AllIngredients = new List<WarehouseItem>();
 
             PlaceOrderCommand = new PlaceOrderCommand(_navigationStore);
 

@@ -56,7 +56,12 @@ namespace Pizza_Client.Commands.KitchenCommands
         private void PlaceOrderCallback(DataPacket obj)
         {
              PlaceOrderResponsePacket data = obj.GetData<PlaceOrderResponsePacket>();
-             _placeOrderViewModel.IncomingOrders = data.orderList.AllPizzas;
+
+             List<PizzaOrder> ds = new();
+             ds.Add(data.orderList);
+             ds.Add(data.orderList);
+
+             _placeOrderViewModel.IncomingOrders =  ds;
         }
     }
 }
