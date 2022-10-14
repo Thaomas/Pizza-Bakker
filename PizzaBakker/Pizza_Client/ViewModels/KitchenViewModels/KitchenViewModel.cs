@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
+using Pizza_Client.Commands;
+using Pizza_Client.Commands.KitchenCommands;
+using Pizza_Server.Logic;
 
 namespace Pizza_Client.ViewModels
 {
@@ -108,7 +111,7 @@ namespace Pizza_Client.ViewModels
                 if (SelectedOrder == null || SelectedOrder?.Status == value)
                     return;
                 SelectedOrder.Status = value;
-
+                ChangeStatusOrderCommand.Execute(value, sele);
                 OnPropertyChanged(nameof(IncomingOrders));
                 OnPropertyChanged(nameof(InProgressOrders));
                 OnPropertyChanged(nameof(DeliveryOrders));
@@ -118,6 +121,7 @@ namespace Pizza_Client.ViewModels
 
 
         public ICommand PlaceOrderCommand { get; }
+        public ICommand ChangeStatusOrderCommand { get; }
 
         public KitchenViewModel(NavigationStore navigationStore)
         {
@@ -126,6 +130,9 @@ namespace Pizza_Client.ViewModels
             OrderStatuses = Enum.GetValues<OrderStatus>().ToList();
             SelectedOrderStatus = OrderStatus.ORDERED;
             PlaceOrderCommand = new PlaceOrderCommand(_navigationStore);
+            ChangeStatusOrderCommand = new ChangeStatusOrderCommand(_navigationStore);
+            
+            
             PlaceOrderCommand.Execute(null);
             //Load Ingredients for all the connected clients every 3-Seconds
 
