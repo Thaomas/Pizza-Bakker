@@ -96,7 +96,7 @@ namespace Shared
             public List<WarehouseItem> warehouseList;
             public StatusCode statusCode;
         }
-        
+
         public class GetListRequestPacket : DAbstract { }
 
         public class GetListResponsePacket : DAbstract

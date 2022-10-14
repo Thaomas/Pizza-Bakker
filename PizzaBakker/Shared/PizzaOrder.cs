@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Shared
 {
@@ -9,8 +8,8 @@ namespace Shared
         public uint OrderId { get; set; }
         //public Guid CustomerID { get; set; }
         public uint CustomerID { get; set; }
-        public OrderStatus status { get; set; }
-        
+        public OrderStatus Status { get; set; }
+
         public PizzaOrder()
         {
             AllPizzas = new();
@@ -18,7 +17,7 @@ namespace Shared
 
         public override string ToString()
         {
-            return OrderId.ToString();
+            return $"Order {OrderId.ToString()}";
         }
     }
 }

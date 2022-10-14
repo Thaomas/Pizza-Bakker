@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace Pizza_Client.Views
 {
@@ -12,6 +11,6 @@ namespace Pizza_Client.Views
         {
             InitializeComponent();
         }
-        
+
     }
 }

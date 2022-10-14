@@ -6,7 +6,7 @@
     ],
     "OrderId": 697,
     "CustomerID": 0,
-    "status": 0
+    "Status": 0
   },
   {
     "AllPizzas": [
@@ -15,7 +15,7 @@
     ],
     "OrderId": 973,
     "CustomerID": 0,
-    "status": 0
+    "Status": 0
   },
   {
     "AllPizzas": [
@@ -24,7 +24,7 @@
     ],
     "OrderId": 25,
     "CustomerID": 0,
-    "status": 0
+    "Status": 0
   },
   {
     "AllPizzas": [
@@ -33,7 +33,7 @@
     ],
     "OrderId": 815,
     "CustomerID": 0,
-    "status": 0
+    "Status": 0
   },
   {
     "AllPizzas": [
@@ -42,7 +42,7 @@
     ],
     "OrderId": 398,
     "CustomerID": 0,
-    "status": 0
+    "Status": 0
   },
   {
     "AllPizzas": [
@@ -51,7 +51,7 @@
     ],
     "OrderId": 471,
     "CustomerID": 0,
-    "status": 0
+    "Status": 0
   },
   {
     "AllPizzas": [
@@ -60,7 +60,7 @@
     ],
     "OrderId": 681,
     "CustomerID": 0,
-    "status": 0
+    "Status": 0
   },
   {
     "AllPizzas": [
@@ -69,7 +69,7 @@
     ],
     "OrderId": 830,
     "CustomerID": 0,
-    "status": 0
+    "Status": 0
   },
   {
     "AllPizzas": [
@@ -78,7 +78,7 @@
     ],
     "OrderId": 750,
     "CustomerID": 0,
-    "status": 0
+    "Status": 0
   },
   {
     "AllPizzas": [
@@ -87,7 +87,7 @@
     ],
     "OrderId": 702,
     "CustomerID": 0,
-    "status": 0
+    "Status": 0
   },
   {
     "AllPizzas": [
@@ -96,7 +96,7 @@
     ],
     "OrderId": 253,
     "CustomerID": 0,
-    "status": 0
+    "Status": 0
   },
   {
     "AllPizzas": [
@@ -105,7 +105,7 @@
     ],
     "OrderId": 24,
     "CustomerID": 0,
-    "status": 0
+    "Status": 0
   },
   {
     "AllPizzas": [
@@ -114,7 +114,7 @@
     ],
     "OrderId": 205,
     "CustomerID": 0,
-    "status": 0
+    "Status": 0
   },
   {
     "AllPizzas": [
@@ -123,7 +123,7 @@
     ],
     "OrderId": 585,
     "CustomerID": 0,
-    "status": 0
+    "Status": 0
   },
   {
     "AllPizzas": [
@@ -132,7 +132,7 @@
     ],
     "OrderId": 579,
     "CustomerID": 0,
-    "status": 0
+    "Status": 0
   },
   {
     "AllPizzas": [
@@ -141,7 +141,7 @@
     ],
     "OrderId": 903,
     "CustomerID": 0,
-    "status": 0
+    "Status": 0
   },
   {
     "AllPizzas": [
@@ -150,7 +150,7 @@
     ],
     "OrderId": 180,
     "CustomerID": 0,
-    "status": 0
+    "Status": 0
   },
   {
     "AllPizzas": [
@@ -159,6 +159,15 @@
     ],
     "OrderId": 349,
     "CustomerID": 0,
-    "status": 0
+    "Status": 0
+  },
+  {
+    "AllPizzas": [
+      "pizza pollo",
+      "pizza margarttia"
+    ],
+    "OrderId": 344,
+    "CustomerID": 0,
+    "Status": 0
   }
 ]

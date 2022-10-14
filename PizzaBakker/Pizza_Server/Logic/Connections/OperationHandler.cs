@@ -2,13 +2,12 @@ using Pizza_Server.Logic.Connections.Types;
 using Pizza_Server.Logic.WarehouseNS;
 using Pizza_Server.Main;
 using Shared;
+using Shared.Kitchen;
 using Shared.Login;
-using Shared.Order;
 using Shared.Warehouse;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Shared.Kitchen;
 
 namespace Pizza_Server.Logic.Connections
 {
@@ -19,7 +18,7 @@ namespace Pizza_Server.Logic.Connections
         private readonly Dictionary<PacketType, Action<DataPacket>> _bakerOperationHandlers;
         private readonly Dictionary<PacketType, Action<DataPacket>> _warehouseOperationHandlers;
         private Kitchen kitchen = Kitchen.GetInstance();
-        
+
         public OperationHandler(Server viewModel)
         {
             _server = viewModel;
@@ -35,7 +34,7 @@ namespace Pizza_Server.Logic.Connections
                 { PacketType.PLACE_ORDER, PlaceOrder}
 
             };
-            
+
             _customerOperationHandlers = new();
         }
 
@@ -113,7 +112,7 @@ namespace Pizza_Server.Logic.Connections
 
             _server.Log = $"Employee: {employee.WorkId}, Logged in as a {client.ClientType}";
         }
-        
+
         public void AddIngredient(DataPacket packet)
         {
             AddIngredientRequestPacket addPacket = packet.GetData<AddIngredientRequestPacket>();
@@ -130,15 +129,19 @@ namespace Pizza_Server.Logic.Connections
                         uint total = id + 1;
                         addPacket.ingredient.Ingredient.Id = total;
                         Warehouse.GetInstance()._ingredients.Add(total, addPacket.ingredient);
-                    } else {
+                    }
+                    else
+                    {
                         addPacket.ingredient.Ingredient.Id = 1;
                         Warehouse.GetInstance()._ingredients.Add(1, addPacket.ingredient);
                     }
                 }
-            }catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Console.WriteLine(e);
             }
-            
+
             Client client = _server.IdToClient[packet.senderID];
             client.SendData(new DataPacket<AddIngredientResponsePacket>
             {
@@ -150,7 +153,7 @@ namespace Pizza_Server.Logic.Connections
                 }
             });
         }
-        
+
 
         public void DeleteIngredient(DataPacket packet)
         {
@@ -170,18 +173,16 @@ namespace Pizza_Server.Logic.Connections
                 }
             });
         }
-        
-        
+
+
         public void PlaceOrder(DataPacket packet)
         {
 
             Dictionary<int, List<string>> pizzaOrder = packet.GetData<PlaceOrderRequestPacket>().pizzaOrder;
-            
             PizzaOrder _pizzaOrder = new();
-            
-            _pizzaOrder.OrderId = (uint) new Random().Next(0, 1000);
 
-            _pizzaOrder.status = OrderStatus.ORDERED;
+            _pizzaOrder.OrderId = (uint)new Random().Next(0, 1000);
+            _pizzaOrder.Status = OrderStatus.ORDERED;
             kitchen.orderPizza(pizzaOrder);
 
             if (kitchen._orderComplete)
@@ -193,15 +194,22 @@ namespace Pizza_Server.Logic.Connections
                 }
 
                 _pizzaOrder.AllPizzas = pizza;
-                
+
                 Console.WriteLine("order is gecompleted, het wordt nu omgezet naar een PIZZA_ORDER OBJECT");
-                
-            } else {
+
+            }
+            else
+            {
                 Console.WriteLine("order gefaald");
             }
-            
+
+            Console.WriteLine("ordernummer is: " + _pizzaOrder.OrderId);
+            foreach (string pizza in _pizzaOrder.AllPizzas)
+            {
+                Console.WriteLine("pizza: " + pizza);
+            }
+
             Kitchen.GetInstance().AllOrders.Add(_pizzaOrder);
-            
             Client client = _server.IdToClient[packet.senderID];
             client.SendData(new DataPacket<PlaceOrderResponsePacket>
             {
@@ -213,7 +221,7 @@ namespace Pizza_Server.Logic.Connections
                 }
             });
         }
-        
+
         public void GetList(DataPacket packet)
         {
             Client client = _server.IdToClient[packet.senderID];

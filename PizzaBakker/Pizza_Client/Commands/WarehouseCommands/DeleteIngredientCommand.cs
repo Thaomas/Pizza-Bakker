@@ -1,8 +1,6 @@
-using System.Linq;
 using Pizza_Client.Stores;
 using Pizza_Client.Util;
 using Pizza_Client.ViewModels;
-using Pizza_Server.Logic.WarehouseNS;
 using Shared;
 using Shared.Warehouse;
 

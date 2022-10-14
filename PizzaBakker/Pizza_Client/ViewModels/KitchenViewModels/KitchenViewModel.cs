@@ -27,30 +27,38 @@ namespace Pizza_Client.ViewModels
             }
         }
 
-        private OrderStatus _selectedOrderStatus;
-
-        public OrderStatus SelectedOrderStatus
-        {
-            get => _selectedOrderStatus;
-            set
-            {
-                _selectedOrderStatus = value;
-                OnPropertyChanged(nameof(SelectedOrderStatus));
-            }
-        }
+        
         
         
         private List<PizzaOrder> _allOrders;
 
-
-        private List<PizzaOrder> _incomingOrders;
-        public List<PizzaOrder> IncomingOrders
+        public List<PizzaOrder> AllOrders
         {
-            get => _incomingOrders;  
             set
             {
-                _incomingOrders = value;
+                _allOrders = value;
                 OnPropertyChanged(nameof(IncomingOrders));
+                OnPropertyChanged(nameof(InProgressOrders));
+                OnPropertyChanged(nameof(DeliveryOrders));
+                OnPropertyChanged(nameof(DeliveredOrders));
+            }
+        }
+
+        public List<PizzaOrder> IncomingOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.ORDERED)).ToList<PizzaOrder>();
+        public List<PizzaOrder> InProgressOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.IN_PROGRESS)).ToList<PizzaOrder>();
+        public List<PizzaOrder> DeliveryOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.DELIVERING)).ToList<PizzaOrder>();
+        public List<PizzaOrder> DeliveredOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.DELIVERED)).ToList<PizzaOrder>();
+
+        private PizzaOrder _selectedOrder;
+        public PizzaOrder SelectedOrder
+        {
+            get => _selectedOrder;
+            set
+            {
+                _selectedOrder = value;
+                SelectedOrderPizzas = value.AllPizzas;
+                SelectedOrderStatus = value.Status;
+                OnPropertyChanged(nameof(SelectedOrder));
             }
         }
 
@@ -61,24 +69,31 @@ namespace Pizza_Client.ViewModels
             set
             {
                 _selectedOrderPizzas = value;
-
                 OnPropertyChanged(nameof(SelectedOrderPizzas));
             }
         }
-        
-        
-        private PizzaOrder _selectedIngredient;
-        public PizzaOrder SelectedIngredient
+
+        private OrderStatus _selectedOrderStatus;
+        public OrderStatus SelectedOrderStatus
         {
-            get => _selectedIngredient;
+            get => _selectedOrderStatus;
             set
             {
-                _selectedIngredient = value;
-                SelectedOrderPizzas = value.AllPizzas;
-                OnPropertyChanged(nameof(SelectedIngredient));
+                _selectedOrderStatus = value;
+                OnPropertyChanged(nameof(SelectedOrderStatus));
+
+                if (_selectedOrderStatus == null || SelectedOrder == null|| SelectedOrder?.Status == value)
+                    return;
+                SelectedOrder.Status = value;
+
+                OnPropertyChanged(nameof(IncomingOrders));
+                OnPropertyChanged(nameof(InProgressOrders));
+                OnPropertyChanged(nameof(DeliveryOrders));
+                OnPropertyChanged(nameof(DeliveredOrders)); 
             }
         }
 
+        
         public ICommand PlaceOrderCommand { get; }
 
         public KitchenViewModel(NavigationStore navigationStore)
