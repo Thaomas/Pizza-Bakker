@@ -64,26 +64,6 @@ namespace Shared
         }
     }
 
-    namespace Order
-    {
-        public class GetOrdersPacket : DAbstract
-        {
-            public Dictionary<Guid, PizzaOrder> orders;
-        }
-
-        public class ChangeStatusPacket : DAbstract
-        {
-            public OrderStatus orderStatus;
-            public Guid orderID;
-        }
-
-        public class StatusPacket : DAbstract
-        {
-            public OrderStatus orderStatus;
-            public Guid orderID;
-        }
-    }
-
     namespace Warehouse
     {
         public class AddIngredientRequestPacket : DAbstract
@@ -135,7 +115,8 @@ namespace Shared
         
         public class ChangeStatusOrderRequestPacket : DAbstract
         {
-            public string pizzaOrder;
+            public uint pizzaOrderId;
+            public OrderStatus pizzaOrderStatus;
         }
 
         public class ChangeStatusOrderResponsePacket : DAbstract

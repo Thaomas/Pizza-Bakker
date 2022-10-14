@@ -40,22 +40,6 @@ namespace Pizza_Server.Logic.Connections
             _customerOperationHandlers = new();
         }
 
-        private void ChangeOrderStatus(DataPacket packet)
-        {
-            Console.WriteLine("operation changestatuss");
-            Console.WriteLine(packet.GetData<ChangeStatusOrderRequestPacket>().pizzaOrder);
-            Client client = _server.IdToClient[packet.senderID];
-            client.SendData(new DataPacket<ChangeStatusOrderResponsePacket>
-            {
-                type = PacketType.CHANGE_STATUS,
-                data = new ChangeStatusOrderResponsePacket()
-                {
-                    orderList = Kitchen.GetInstance().AllOrders,
-                    statusCode = StatusCode.OK
-                }
-            });
-        }
-
         public void HandleDataCallback(DataPacket packet, Client client)
         {
             if (packet.type == PacketType.AUTHENTICATION)
@@ -238,6 +222,13 @@ namespace Pizza_Server.Logic.Connections
                     orderList = Kitchen.GetInstance().AllOrders
                 }
             });
+        }
+        
+        private void ChangeOrderStatus(DataPacket obj)
+        {
+            ChangeStatusOrderRequestPacket pizza = obj.GetData<ChangeStatusOrderRequestPacket>();
+
+            Kitchen.GetInstance().AllOrders.First(p => p.OrderId == pizza.pizzaOrderId).Status = pizza.pizzaOrderStatus;
         }
 
         public void GetList(DataPacket packet)

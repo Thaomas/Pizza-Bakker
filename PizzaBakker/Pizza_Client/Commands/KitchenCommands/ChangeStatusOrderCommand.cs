@@ -1,5 +1,6 @@
 
 
+using System;
 using System.Collections.Generic;
 using Pizza_Client.Stores;
 using Pizza_Client.Util;
@@ -27,19 +28,10 @@ namespace Pizza_Client.Commands.KitchenCommands
                 type = PacketType.CHANGE_STATUS,
                 data = new ChangeStatusOrderRequestPacket()
                 {
-                    pizzaOrder = parameter.ToString() 
+                    pizzaOrderId = ((PizzaOrder)parameter).OrderId,
+                    pizzaOrderStatus = ((PizzaOrder)parameter).Status 
                 }
-            }, ChangeOrderCallback);
+            });
         }
-
-        private void ChangeOrderCallback(DataPacket obj)
-        {
-            ChangeStatusOrderResponsePacket data = obj.GetData<ChangeStatusOrderResponsePacket>();
-
-
-            _placeOrderViewModel.AllOrders = data.orderList;
-
-        }
-        
     }
 }

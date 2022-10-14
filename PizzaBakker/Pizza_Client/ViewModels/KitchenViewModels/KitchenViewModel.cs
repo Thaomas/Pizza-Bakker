@@ -111,7 +111,9 @@ namespace Pizza_Client.ViewModels
                 if (SelectedOrder == null || SelectedOrder?.Status == value)
                     return;
                 SelectedOrder.Status = value;
-                ChangeStatusOrderCommand.Execute(value);
+                
+                ChangeStatusOrderCommand.Execute(SelectedOrder);
+                
                 OnPropertyChanged(nameof(IncomingOrders));
                 OnPropertyChanged(nameof(InProgressOrders));
                 OnPropertyChanged(nameof(DeliveryOrders));

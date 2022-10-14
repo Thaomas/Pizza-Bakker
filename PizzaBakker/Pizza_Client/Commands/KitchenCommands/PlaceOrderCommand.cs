@@ -21,7 +21,7 @@ namespace Pizza_Client.Commands.KitchenCommands
         public override void Execute(object parameter)
         {
             Dictionary<int, List<string>> list = new();
-            //6  6  6  8  8 
+
             List<string> pizzaPollo = new();
             pizzaPollo.Add("pizza pollo");
             pizzaPollo.Add("kaas");
@@ -36,7 +36,6 @@ namespace Pizza_Client.Commands.KitchenCommands
             pizzamargarita.Add("deeg");
             pizzamargarita.Add("salami");
 
-            
             list.Add(1,pizzaPollo);
             list.Add(2, pizzamargarita);
             
@@ -54,9 +53,8 @@ namespace Pizza_Client.Commands.KitchenCommands
         private void PlaceOrderCallback(DataPacket obj)
         {
              PlaceOrderResponsePacket data = obj.GetData<PlaceOrderResponsePacket>();
-
+             
              _placeOrderViewModel.AllOrders = data.orderList;
-
         }
     }
 }
