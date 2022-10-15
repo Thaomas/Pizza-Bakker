@@ -61,6 +61,7 @@ namespace Shared
         public class LoginResponsePacket : DAbstract
         {
             public StatusCode statusCode;
+            public ClientType clientType;
         }
     }
 
@@ -79,7 +80,7 @@ namespace Shared
 
         public class GetListRequestPacket : DAbstract { }
 
-        public class GetListResponsePacket : DAbstract
+        public class GetIngredientListResponsePacket : DAbstract
         {
             public List<WarehouseItem> allItems;
         }
@@ -112,17 +113,22 @@ namespace Shared
             public List<PizzaOrder> orderList;
             public StatusCode statusCode;
         }
-        
+
         public class ChangeStatusOrderRequestPacket : DAbstract
         {
             public uint pizzaOrderId;
             public OrderStatus pizzaOrderStatus;
         }
 
-        public class ChangeStatusOrderResponsePacket : DAbstract
+        public class CheckOrderChangesPacket : DAbstract
         {
-            public List<PizzaOrder> orderList;
+            public DateTime newest;
+        }
+        public class CheckOrderChangesResponsePacket : DAbstract
+        {
             public StatusCode statusCode;
+            public DateTime newest;
+            public List<PizzaOrder> orders;
         }
     }
 }

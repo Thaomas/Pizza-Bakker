@@ -4,6 +4,8 @@ using Pizza_Server.Logic.WarehouseNS;
 using Shared;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 
 namespace Pizza_Server.Logic
@@ -11,33 +13,28 @@ namespace Pizza_Server.Logic
     public class Kitchen
     {
         private static Kitchen _singleton;
-        public List<PizzaOrder> AllOrders = new();
+        public DateTime NewestOrderDateTime;
+        public ObservableCollection<PizzaOrder> AllOrders;
 
         private Kitchen()
         {
             LoadFromFile();
         }
 
-        public static Kitchen GetInstance()
+        public static Kitchen Instance
         {
-            if (_singleton == null)
-                _singleton = new Kitchen();
-            return _singleton;
+            get
+            {
+                if (_singleton == null)
+                    _singleton = new Kitchen();
+                return _singleton;
+            }
         }
 
         public bool _orderComplete = true;
 
         private Dictionary<uint, WarehouseItem> copyWarehouseItems;
         List<string> _outOfStockIngredients = new();
-
-        public bool changeOrderStatus(PizzaOrder order)
-        {
-            PizzaOrder o = AllOrders.Find(o => o.OrderId == order.OrderId);
-            if(o == null)
-                return false;
-            o.Status = order.Status;
-            return true;
-        }
 
         public void orderPizza(Dictionary<int, List<string>> orderPizza)
         {
@@ -80,6 +77,16 @@ namespace Pizza_Server.Logic
             }
         }
 
+        public void ChangeOrderStatus(uint orderId, OrderStatus status)
+        {
+            try
+            {
+                AllOrders.First(p => p.OrderId == orderId).Status = status;
+                ListChanged();
+            }
+            catch (InvalidOperationException ex) { };
+        }
+
         public bool checkIngredient(Dictionary<string, int> singleIngredient)
         {
             bool _orderRight = true;
@@ -108,12 +115,30 @@ namespace Pizza_Server.Logic
 
         public void LoadFromFile()
         {
-            AllOrders = IO.ReadObjectFromFile<List<PizzaOrder>>("SaveData\\PizzaOrders.json");
+            AllOrders = new ObservableCollection<PizzaOrder>();
+            IO.ReadObjectFromFile<List<PizzaOrder>>("SaveData\\PizzaOrders.json").ForEach(o =>
+            {
+                if (o.OrderId2 == Guid.Empty)
+                    o.OrderId2 = Guid.NewGuid();
+                AllOrders.Add(o);
+            });
+            AllOrders.CollectionChanged += ListChanged;
 
+            NewestOrderDateTime = DateTime.Now;
             if (AllOrders == null)
             {
                 Console.WriteLine("Geen orders beschikbaar!");
             }
+        }
+
+
+        private void ListChanged()
+        {
+            NewestOrderDateTime = DateTime.Now;
+        }
+        private void ListChanged(object sender, NotifyCollectionChangedEventArgs args)
+        {
+            NewestOrderDateTime = DateTime.Now;
         }
 
         public void SaveOrders()

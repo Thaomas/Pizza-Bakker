@@ -5,18 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
-using Pizza_Client.Commands;
-using Pizza_Client.Commands.KitchenCommands;
-using Pizza_Server.Logic;
 
 namespace Pizza_Client.ViewModels
 {
     class KitchenViewModel : BaseViewModel
     {
         private readonly NavigationStore _navigationStore;
-
         public BaseViewModel CurrentViewModel => _navigationStore.CurrentViewModel;
+
 
         private List<OrderStatus> _orderStatuses;
         public List<OrderStatus> OrderStatuses
@@ -74,18 +73,19 @@ namespace Pizza_Client.ViewModels
             get => _selectedOrder;
             set
             {
+                if (value == null)
+                    return;
+
                 _selectedOrder = value;
                 OnPropertyChanged(nameof(SelectedIncomingOrders));
                 OnPropertyChanged(nameof(SelectedInProgressOrders));
                 OnPropertyChanged(nameof(SelectedDeliveryOrders));
                 OnPropertyChanged(nameof(SelectedDeliveredOrders));
 
-                if (value == null)
-                    return;
-
                 SelectedOrderDetails = value.AllPizzas;
                 value.AllPizzas.ForEach(s => Trace.WriteLine(s));
                 SelectedOrderStatus = value.Status;
+                SelectedOrderTitle = value.Title;
             }
         }
 
@@ -100,14 +100,14 @@ namespace Pizza_Client.ViewModels
             }
         }
 
-        private string _selectedPizzaOrderTitle;
-        public string SelectedPizzaOrderTitle
+        private string _selectedOrderTitle;
+        public string SelectedOrderTitle
         {
-            get => _selectedPizzaOrderTitle;
+            get => _selectedOrderTitle;
             set
             {
-                _selectedPizzaOrderTitle = value;
-                OnPropertyChanged(nameof(SelectedPizzaOrderTitle));
+                _selectedOrderTitle = value;
+                OnPropertyChanged(nameof(SelectedOrderTitle));
             }
         }
 
@@ -124,9 +124,9 @@ namespace Pizza_Client.ViewModels
                     return;
 
                 SelectedOrder.Status = value;
-                
+
                 ChangeStatusOrderCommand.Execute(SelectedOrder);
-                
+
                 OnPropertyChanged(nameof(IncomingOrders));
                 OnPropertyChanged(nameof(InProgressOrders));
                 OnPropertyChanged(nameof(DeliveryOrders));
@@ -134,32 +134,33 @@ namespace Pizza_Client.ViewModels
             }
         }
 
-
         public ICommand PlaceOrderCommand { get; }
         public ICommand ChangeStatusOrderCommand { get; }
+        public ICommand CheckOrderListCommand { get; }
 
         public KitchenViewModel(NavigationStore navigationStore)
         {
-
             _navigationStore = navigationStore;
             OrderStatuses = Enum.GetValues<OrderStatus>().ToList();
             SelectedOrderStatus = OrderStatus.ORDERED;
-            SelectedPizzaOrderTitle = "No Order Selected";
+            SelectedOrderTitle = "No Order Selected";
+            AllOrders = new List<PizzaOrder>();
+
             PlaceOrderCommand = new PlaceOrderCommand(_navigationStore);
             ChangeStatusOrderCommand = new ChangeStatusOrderCommand(_navigationStore);
-            
-            
-            PlaceOrderCommand.Execute(null);
-            //Load Ingredients for all the connected clients every 3-Seconds
+            CheckOrderListCommand = new CheckOrderListCommand(navigationStore);
 
-            /*Task.Run(() =>
+            Task.Run(() =>
             {
                 while (true)
                 {
-                    ReloadListCommand.Execute(null);
-                    Thread.Sleep(3000);
+                    CheckOrderListCommand.Execute(null);
+                    Thread.Sleep(5000);
                 }
-            });*/
+            });
         }
+
+
+
     }
 }

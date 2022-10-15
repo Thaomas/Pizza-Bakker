@@ -9,7 +9,8 @@
         ERROR,
         ADD_INGREDIENT,
         DELETE_INGREDIENT,
-        GET_LIST,
+        GET_INGREDIENT_LIST,
+        GET_ORDER_LIST,
         PLACE_ORDER
     }
 

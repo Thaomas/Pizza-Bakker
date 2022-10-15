@@ -3,7 +3,6 @@ using Pizza_Client.Util;
 using Pizza_Client.ViewModels;
 using Shared;
 using Shared.Kitchen;
-using Shared.Warehouse;
 using System.Collections.Generic;
 
 namespace Pizza_Client.Commands.KitchenCommands
@@ -17,7 +16,7 @@ namespace Pizza_Client.Commands.KitchenCommands
         {
             _navigationStore = navigationStore;
         }
-        
+
         public override void Execute(object parameter)
         {
             Dictionary<int, List<string>> list = new();
@@ -28,7 +27,7 @@ namespace Pizza_Client.Commands.KitchenCommands
             pizzaPollo.Add("deeg");
             pizzaPollo.Add("uien");
             pizzaPollo.Add("kip");
-            
+
             List<string> pizzamargarita = new();
             pizzamargarita.Add("pizza margarttia");
             pizzamargarita.Add("kaas");
@@ -36,25 +35,25 @@ namespace Pizza_Client.Commands.KitchenCommands
             pizzamargarita.Add("deeg");
             pizzamargarita.Add("salami");
 
-            list.Add(1,pizzaPollo);
+            list.Add(1, pizzaPollo);
             list.Add(2, pizzamargarita);
-            
+
             ConnectionHandler connectionHandler = ConnectionHandler.GetInstance();
             connectionHandler.SendData(new DataPacket<PlaceOrderRequestPacket>()
             {
                 type = PacketType.PLACE_ORDER,
                 data = new PlaceOrderRequestPacket()
                 {
-                    pizzaOrder = list 
+                    pizzaOrder = list
                 }
             }, PlaceOrderCallback);
         }
 
         private void PlaceOrderCallback(DataPacket obj)
         {
-             PlaceOrderResponsePacket data = obj.GetData<PlaceOrderResponsePacket>();
-             
-             _placeOrderViewModel.AllOrders = data.orderList;
+            PlaceOrderResponsePacket data = obj.GetData<PlaceOrderResponsePacket>();
+
+            _placeOrderViewModel.AllOrders = data.orderList;
         }
     }
 }

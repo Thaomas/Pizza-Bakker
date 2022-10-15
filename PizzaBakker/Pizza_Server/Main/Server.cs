@@ -73,7 +73,7 @@ namespace Pizza_Server.Main
             {
                 SaveEmployees(IdToEmployee);
                 Warehouse.GetInstance().SaveIngredients();
-                Kitchen.GetInstance().SaveOrders();
+                Kitchen.Instance.SaveOrders();
                 Thread.Sleep(10000);
             }
         }
