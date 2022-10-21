@@ -10,7 +10,8 @@
         ADD_INGREDIENT,
         DELETE_INGREDIENT,
         GET_LIST,
-        PLACE_ORDER
+        PLACE_ORDER,
+        UPDATE_INGREDIENT
     }
 
     public enum StatusCode

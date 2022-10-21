@@ -33,13 +33,15 @@ namespace Pizza_Server.Logic.Connections
                 { PacketType.GET_LIST, GetList},
                 { PacketType.DELETE_INGREDIENT, DeleteIngredient},
                 { PacketType.PLACE_ORDER, PlaceOrder},
-                { PacketType.CHANGE_STATUS, ChangeOrderStatus}
+                { PacketType.CHANGE_STATUS, ChangeOrderStatus},
+                { PacketType.UPDATE_INGREDIENT, UpdateIngredient}
 
             };
 
             _customerOperationHandlers = new();
         }
 
+    
         public void HandleDataCallback(DataPacket packet, Client client)
         {
             if (packet.type == PacketType.AUTHENTICATION)
@@ -156,6 +158,27 @@ namespace Pizza_Server.Logic.Connections
             });
         }
 
+        public void UpdateIngredient(DataPacket obj)
+        {
+            UpdateIngredientRequestPacket updatePacket = obj.GetData<UpdateIngredientRequestPacket>();
+
+            var updateIngredient = Warehouse.GetInstance()._ingredients.Values.First(x => x.Ingredient.Name == updatePacket.name);
+
+            Warehouse.GetInstance()._ingredients[updateIngredient.Ingredient.Id].Count = (uint)updatePacket.count;
+            Warehouse.GetInstance()._ingredients[updateIngredient.Ingredient.Id].Ingredient.Price = updatePacket.price;
+            
+            Client client = _server.IdToClient[obj.senderID];
+            client.SendData(new DataPacket<UpdateIngredientResponsePacket>
+            {
+                type = PacketType.UPDATE_INGREDIENT,
+                data = new UpdateIngredientResponsePacket()
+                {
+                    statusCode = StatusCode.OK,
+                    warehouseList = Warehouse.GetInstance()._ingredients.Values.ToList()
+                }
+            });        
+        }
+
 
         public void DeleteIngredient(DataPacket packet)
         {
@@ -166,7 +189,6 @@ namespace Pizza_Server.Logic.Connections
             Client client = _server.IdToClient[packet.senderID];
             client.SendData(new DataPacket<DeleteIngredientResponsePacket>
             {
-
                 type = PacketType.DELETE_INGREDIENT,
                 data = new DeleteIngredientResponsePacket()
                 {

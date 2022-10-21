@@ -7,6 +7,7 @@
   <component name="ChangeListManager">
     <list default="true" id="30b1c637-7b05-45ee-9a78-fa50a634a910" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/Pizza_Client/Commands/KitchenCommands/ChangeStatusOrderCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Pizza_Client/Commands/WarehouseCommands/UpdateIngredientCommand.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Pizza_Server/SaveData/PizzaOrders.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -120,6 +121,7 @@
       <workItem from="1665475439974" duration="41000" />
       <workItem from="1665492686186" duration="6054000" />
       <workItem from="1665769937538" duration="1038000" />
+      <workItem from="1666296866375" duration="5507000" />
     </task>
     <servers />
   </component>

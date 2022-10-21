@@ -115,6 +115,7 @@ namespace Pizza_Client.ViewModels
         public ICommand AddIngredientCommand { get; }
         public ICommand ReloadListCommand { get; }
         public ICommand DeleteIngredientCommand { get; }
+        public ICommand UpdateIngredientCommand { get; }
 
         public WarehouseViewModel(NavigationStore navigationStore)
         {
@@ -125,6 +126,7 @@ namespace Pizza_Client.ViewModels
             AddIngredientCommand = new AddIngredientCommand(_navigationStore);
             ReloadListCommand = new ReloadListCommand(_navigationStore);
             DeleteIngredientCommand = new DeleteIngredientCommand(_navigationStore);
+            UpdateIngredientCommand = new UpdateIngredientCommand(_navigationStore);
 
             //Load Ingredients for all the connected clients every 3-Seconds
             Task.Run(() =>
