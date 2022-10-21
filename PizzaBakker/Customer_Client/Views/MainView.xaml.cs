@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Customer.Views
+namespace Customer_Client.Views
 {
     /// <summary>
     /// Interaction logic for MainView.xaml

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Customer.ViewModels
+namespace Customer_Client.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
