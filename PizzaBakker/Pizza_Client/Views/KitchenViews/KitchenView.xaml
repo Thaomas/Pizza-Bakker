@@ -95,6 +95,36 @@
                      SelectedItem="{Binding SelectedDeliveryOrders}"
                      VerticalContentAlignment="Center"/>
 
+            <Label Grid.Column="0"
+                   Grid.Row="2"
+                   Content="Selected Order"
+                   Background="LightGray"
+                   Foreground="White"
+                   FontWeight="SemiBold" />
+
+            <ComboBox Grid.Column="0"
+                      Grid.Row="3"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      FontSize="15"
+                      ItemsSource="{Binding OrderStatuses}"
+                      SelectedItem="{Binding SelectedOrderStatus}"
+                      Padding="50,20" />
+
+            <Label Grid.Column="1"
+                   Grid.Row="2"
+                   Content="Order Detail:"
+                   Background="LightGray"
+                   Foreground="White"
+                   FontWeight="SemiBold" />
+
+            <ListBox Grid.Column="1"
+                     Grid.Row="3"
+                     Name="SelectedOrderDetails"
+                     ItemsSource="{Binding SelectedOrderDetails}"
+                     VerticalContentAlignment="Center"
+                     BorderThickness="2" />
+            
             <Label Grid.Column="2"
                    Grid.Row="2"
                    Content="Deliverd Orders"
@@ -107,40 +137,7 @@
                      Name="DeliveredOrders"
                      ItemsSource="{Binding DeliveredOrders}"
                      SelectedItem="{Binding SelectedDeliveredOrders}"
-                     VerticalContentAlignment="Center"/>
-
-            <Label Grid.Column="1"
-                   Grid.Row="2"
-                   Content="Order Detail:"
-                   Background="LightGray"
-                   Foreground="White"
-                   FontWeight="SemiBold"/>
-
-            <ListBox Grid.Column="1"
-                     Grid.Row="3"
-                     Name="SelectedOrderDetails"
-                     ItemsSource="{Binding SelectedOrderDetails}"
-                     VerticalContentAlignment="Center"
-                     BorderThickness="2"/>
-
-
-            <Label Grid.Column="0"
-                   Grid.Row="2"
-                   Content="Selected Order"
-                   Background="LightGray"
-                   Foreground="White"
-                   FontWeight="SemiBold"/>
-            
-            <ComboBox Grid.Column="0" 
-                      Grid.Row="3"
-                      HorizontalAlignment="Center"
-                      VerticalAlignment="Center"
-                      FontSize="15"
-                      ItemsSource="{Binding OrderStatuses}"
-                      SelectedItem ="{Binding SelectedOrderStatus}"
-                      Padding="50,20"
-                      />
-           
+                     VerticalContentAlignment="Center" />
         </Grid.Children>
     </Grid>
 </UserControl>
