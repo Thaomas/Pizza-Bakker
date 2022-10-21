@@ -99,6 +99,21 @@ namespace Shared
             public List<WarehouseItem> warehouseList;
             public StatusCode statusCode;
         }
+        
+        public class UpdateIngredientRequestPacket : DAbstract
+        {
+            public Ingredient ingredientID;
+            public int count;
+            public int price;
+            public string name;
+          
+        }
+
+        public class UpdateIngredientResponsePacket : DAbstract
+        {
+            public List<WarehouseItem> warehouseList;
+            public StatusCode statusCode;
+        }
     }
 
     namespace Kitchen

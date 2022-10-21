@@ -10,6 +10,7 @@
         ADD_INGREDIENT,
         DELETE_INGREDIENT,
         GET_INGREDIENT_LIST,
+        UPDATE_INGREDIENT
         GET_ORDER_LIST,
         PLACE_ORDER
     }

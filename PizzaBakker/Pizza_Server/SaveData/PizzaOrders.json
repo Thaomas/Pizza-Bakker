@@ -1,8 +1,8 @@
 [
   {
     "AllPizzas": [
-      "pizza pollo",
-      "pizza margarttia"
+      "pizza spinazio",
+      "pizza Hawai"
     ],
     "OrderId": 815,
     "CustomerID": 0,
@@ -10,8 +10,8 @@
   },
   {
     "AllPizzas": [
-      "pizza pollo",
-      "pizza margarttia"
+      "pizza fruiti di mar",
+      "pizza quattro fourmagi"
     ],
     "OrderId": 463,
     "CustomerID": 0,
@@ -19,8 +19,8 @@
   },
   {
     "AllPizzas": [
-      "pizza pollo",
-      "pizza margarttia"
+      "pizza sucuk",
+      "pizza fungi"
     ],
     "OrderId": 723,
     "CustomerID": 0,
@@ -33,14 +33,14 @@
     ],
     "OrderId": 905,
     "CustomerID": 0,
-    "Status": 0
+    "Status": 4
   },
   {
     "AllPizzas": [
       "pizza pollo",
       "pizza margarttia"
     ],
-    "OrderId": 678,
+    "OrderId": 982,
     "CustomerID": 0,
     "Status": 0
   },
