@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Pizza_Server.Logic;
 using Pizza_Server.Logic.Connections;
 using Pizza_Server.Logic.Connections.Types;
 using Pizza_Server.Logic.WarehouseNS;
@@ -72,7 +73,7 @@ namespace Pizza_Server.Main
             {
                 SaveEmployees(IdToEmployee);
                 Warehouse.GetInstance().SaveIngredients();
-
+                Kitchen.Instance.SaveOrders();
                 Thread.Sleep(10000);
             }
         }

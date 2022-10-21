@@ -21,6 +21,7 @@ namespace Employee_Client.Commands
 
         public override void Execute(object parameter)
         {
+            string type = parameter as string;
             ConnectionHandler connectionHandler = ConnectionHandler.GetInstance();
             if (!connectionHandler.IsConnected || connectionHandler.ID == Guid.Empty)
             {
@@ -46,21 +47,22 @@ namespace Employee_Client.Commands
                 {
                     username = uint.Parse(_loginViewModel.Username),
                     password = _loginViewModel.Password,
-                    clientType = ClientType.BAKER
+                    clientType = (type.Equals("Baker")) ? ClientType.BAKER : ClientType.WAREHOUSE
                 }
-            }, LoginCallback);
+            }, LoginCallback); ;
         }
 
         public void LoginCallback(DataPacket packet)
         {
-            if (packet.GetData<LoginResponsePacket>().statusCode == StatusCode.ACCEPTED)
+            LoginResponsePacket data = packet.GetData<LoginResponsePacket>();
+            if (data.statusCode == StatusCode.ACCEPTED)
             {
-
+                Trace.WriteLine(data.clientType);
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    _navigationStore.CurrentViewModel = new KitchenViewModel(_navigationStore);
+                    BaseViewModel viewModel = (data.clientType.Equals(ClientType.BAKER)) ? new KitchenViewModel(_navigationStore) : new WarehouseViewModel(_navigationStore);
+                    _navigationStore.CurrentViewModel = viewModel;
                 });
-
                 return;
             }
 

@@ -22,14 +22,14 @@ namespace Employee_Client.Commands.WarehouseCommands
 
             connectionHandler.SendData(new DataPacket<GetListRequestPacket>
             {
-                type = PacketType.GET_LIST,
+                type = PacketType.GET_INGREDIENT_LIST,
                 data = new GetListRequestPacket() { }
             }, ReloadListCallBack);
         }
 
         private void ReloadListCallBack(DataPacket packet)
         {
-            GetListResponsePacket data = packet.GetData<GetListResponsePacket>();
+            GetIngredientListResponsePacket data = packet.GetData<GetIngredientListResponsePacket>();
             _warehouseViewModel.AllIngredients = data.allItems;
         }
     }

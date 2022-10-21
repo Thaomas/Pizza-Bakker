@@ -1,42 +1,24 @@
+using Pizza_Server.Logic.Connections.OperationHandlers;
 using Pizza_Server.Logic.Connections.Types;
-using Pizza_Server.Logic.WarehouseNS;
 using Pizza_Server.Main;
 using Shared;
-using Shared.Packet;
-using Shared.Packet.Login;
-using Shared.Packet.Order;
-using Shared.Packet.Warehouse;
+using Shared.Login;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Pizza_Server.Logic.Connections
 {
     class OperationHandler
     {
         private readonly Server _server;
-        private readonly Dictionary<PacketType, Action<DataPacket>> _customerOperationHandlers;
-        private readonly Dictionary<PacketType, Action<DataPacket>> _bakerOperationHandlers;
-        private readonly Dictionary<PacketType, Action<DataPacket>> _warehouseOperationHandlers;
+        private Kitchen kitchen = Kitchen.Instance;
 
         public OperationHandler(Server viewModel)
         {
             _server = viewModel;
-            _bakerOperationHandlers = new Dictionary<PacketType, Action<DataPacket>>
-            {
-                { PacketType.CHANGE_STATUS, ChangeStatus}
-            };
-
-            _warehouseOperationHandlers = new Dictionary<PacketType, Action<DataPacket>>
-            {
-                { PacketType.ADD_INGREDIENT, AddIngredient},
-                { PacketType.GET_LIST, GetList},
-                { PacketType.DELETE_INGREDIENT, DeleteIngredient},
-            };
-
-            _customerOperationHandlers = new();
         }
 
+    
         public void HandleDataCallback(DataPacket packet, Client client)
         {
             if (packet.type == PacketType.AUTHENTICATION)
@@ -46,7 +28,7 @@ namespace Pizza_Server.Logic.Connections
                 switch (authResponsePacket.clientType)
                 {
                     case ClientType.CUSTOMER:
-                        callback = (DataPacket p, Client c) => _customerOperationHandlers[p.type](packet);
+                        callback = new CustomerHandler(_server).Execute;
                         break;
                     case ClientType.EMPLOYEE:
                         callback = Authenticate;
@@ -95,101 +77,20 @@ namespace Pizza_Server.Logic.Connections
             }
 
             Employee employee = _server.IdToEmployee[id];
-            Dictionary<PacketType, Action<DataPacket>> oppHandler = (client.ClientType == ClientType.BAKER) ? _bakerOperationHandlers : _warehouseOperationHandlers;
-
-
-            client.Callback = (DataPacket p, Client c) => oppHandler[p.type](p);
+            client.ClientType = loginPacket.clientType;
+            client.Callback = (client.ClientType == ClientType.BAKER) ? new BakerHandler(_server).Execute : new WarehouseHandler(_server).Execute;
             // Let the client know that it can log in. 
             client.SendData(new DataPacket<LoginResponsePacket>
             {
                 type = PacketType.LOGIN,
                 data = new LoginResponsePacket()
                 {
-                    statusCode = StatusCode.ACCEPTED
+                    statusCode = StatusCode.ACCEPTED,
+                    clientType = client.ClientType
                 }
             });
 
             _server.Log = $"Employee: {employee.WorkId}, Logged in as a {client.ClientType}";
-        }
-
-
-        public void ChangeStatus(DataPacket packet)
-        {
-            ChangeStatusPacket statusPacket = packet.GetData<ChangeStatusPacket>();
-            Client client = _server.IdToClient[packet.senderID];
-        }
-
-        public void AddIngredient(DataPacket packet)
-        {
-            AddIngredientRequestPacket addPacket = packet.GetData<AddIngredientRequestPacket>();
-
-            uint id = Warehouse.GetInstance()._ingredients.Keys.Max();
-            string name = addPacket.ingredient.Ingredient.Name;
-
-            try
-            {
-                if (Warehouse.GetInstance()._ingredients.Values.All(v => v.Ingredient.Name != name))
-                {
-                    if (Warehouse.GetInstance()._ingredients.TryGetValue(id, out WarehouseItem dd))
-                    {
-                        uint total = id + 1;
-                        addPacket.ingredient.Ingredient.Id = total;
-                        Warehouse.GetInstance()._ingredients.Add(total, addPacket.ingredient);
-                    }
-                    else
-                    {
-                        addPacket.ingredient.Ingredient.Id = 1;
-                        Warehouse.GetInstance()._ingredients.Add(1, addPacket.ingredient);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-
-            Client client = _server.IdToClient[packet.senderID];
-            client.SendData(new DataPacket<AddIngredientResponsePacket>
-            {
-                type = PacketType.ADD_INGREDIENT,
-                data = new AddIngredientResponsePacket()
-                {
-                    warehouseList = Warehouse.GetInstance()._ingredients.Values.ToList(),
-                    statusCode = StatusCode.OK
-                }
-            });
-        }
-
-        public void GetList(DataPacket packet)
-        {
-            Client client = _server.IdToClient[packet.senderID];
-            client.SendData(new DataPacket<GetListResponsePacket>
-            {
-                type = PacketType.GET_LIST,
-                data = new GetListResponsePacket()
-                {
-                    allItems = Warehouse.GetInstance()._ingredients.Values.ToList()
-                }
-            });
-        }
-
-        public void DeleteIngredient(DataPacket packet)
-        {
-            DeleteIngredientRequestPacket deletePacket = packet.GetData<DeleteIngredientRequestPacket>();
-
-            Warehouse.GetInstance()._ingredients.Remove(deletePacket.ID);
-
-            Client client = _server.IdToClient[packet.senderID];
-            client.SendData(new DataPacket<DeleteIngredientResponsePacket>
-            {
-
-                type = PacketType.DELETE_INGREDIENT,
-                data = new DeleteIngredientResponsePacket()
-                {
-                    statusCode = StatusCode.OK,
-                    warehouseList = Warehouse.GetInstance()._ingredients.Values.ToList()
-                }
-            });
         }
     }
 }

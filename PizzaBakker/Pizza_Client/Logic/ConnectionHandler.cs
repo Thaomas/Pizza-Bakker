@@ -4,6 +4,7 @@ using Shared.Packet;
 using Shared.Packet.Login;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Sockets;
 using System.Text;
 
@@ -86,8 +87,8 @@ namespace Employee_Client.Util
             stream.EndRead(ar);
 
             string data = Encoding.UTF8.GetString(dataBuffer);
+            Trace.WriteLine(data);
             DataPacket dataPacket = JsonConvert.DeserializeObject<DataPacket>(data);
-
             if (callbacks.ContainsKey(dataPacket.type))
             {
                 callbacks[dataPacket.type](dataPacket);
@@ -110,8 +111,11 @@ namespace Employee_Client.Util
 
         public void SendData<T>(DataPacket<T> packet, Action<DataPacket> callback) where T : DAbstract
         {
-            this.callbacks.Add(packet.type, callback);
-            this.SendData(packet);
+            if (!this.callbacks.ContainsKey(packet.type))
+            {
+                this.callbacks.Add(packet.type, callback);
+                this.SendData(packet);
+            }
         }
     }
 }

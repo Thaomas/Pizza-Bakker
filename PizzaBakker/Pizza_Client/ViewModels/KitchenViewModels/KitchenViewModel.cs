@@ -1,7 +1,12 @@
 using Employee_Client.Commands.WarehouseCommands;
 using Employee_Client.Stores;
 using Shared;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Employee_Client.ViewModels
@@ -9,84 +14,153 @@ namespace Employee_Client.ViewModels
     class KitchenViewModel : BaseViewModel
     {
         private readonly NavigationStore _navigationStore;
-
         public BaseViewModel CurrentViewModel => _navigationStore.CurrentViewModel;
 
 
-        private string _ingredientPrice;
-
-        public string IngredientPrice
+        private List<OrderStatus> _orderStatuses;
+        public List<OrderStatus> OrderStatuses
         {
-            get => _ingredientPrice;
+            get => _orderStatuses;
             set
             {
-                _ingredientPrice = value;
-                OnPropertyChanged(nameof(IngredientPrice));
+                _orderStatuses = value;
+                OnPropertyChanged(nameof(OrderStatuses));
             }
         }
 
+        private List<PizzaOrder> _allOrders;
 
-        private string _ingredientAmount;
-
-        public string IngredientAmount
+        public List<PizzaOrder> AllOrders
         {
-            get => _ingredientAmount;
             set
             {
-                _ingredientAmount = value;
-                OnPropertyChanged(nameof(IngredientAmount));
+                _allOrders = value;
+                OnPropertyChanged(nameof(IncomingOrders));
+                OnPropertyChanged(nameof(InProgressOrders));
+                OnPropertyChanged(nameof(DeliveryOrders));
+                OnPropertyChanged(nameof(DeliveredOrders));
             }
         }
 
-        private List<WarehouseItem> _allIngredients;
-
-        public List<WarehouseItem> AllIngredients
+        public List<PizzaOrder> IncomingOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.ORDERED)).ToList<PizzaOrder>();
+        public PizzaOrder SelectedIncomingOrders
         {
-            get => _allIngredients;
+            get => SelectedOrder;
+            set => SelectedOrder = value;
+        }
+        public List<PizzaOrder> InProgressOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.PREPARING)).ToList<PizzaOrder>();
+        public PizzaOrder SelectedInProgressOrders
+        {
+            get => SelectedOrder;
+            set => SelectedOrder = value;
+        }
+        public List<PizzaOrder> DeliveryOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.DELIVERING)).ToList<PizzaOrder>();
+        public PizzaOrder SelectedDeliveryOrders
+        {
+            get => SelectedOrder;
+            set => SelectedOrder = value;
+        }
+        public List<PizzaOrder> DeliveredOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.DELIVERED)).ToList<PizzaOrder>();
+        public PizzaOrder SelectedDeliveredOrders
+        {
+            get => SelectedOrder;
+            set => SelectedOrder = value;
+        }
+
+        private PizzaOrder _selectedOrder;
+        public PizzaOrder SelectedOrder
+        {
+            get => _selectedOrder;
             set
             {
-                _allIngredients = value;
-                OnPropertyChanged(nameof(AllIngredients));
+                if (value == null)
+                    return;
+
+                _selectedOrder = value;
+                OnPropertyChanged(nameof(SelectedIncomingOrders));
+                OnPropertyChanged(nameof(SelectedInProgressOrders));
+                OnPropertyChanged(nameof(SelectedDeliveryOrders));
+                OnPropertyChanged(nameof(SelectedDeliveredOrders));
+
+                SelectedOrderDetails = value.AllPizzas;
+                value.AllPizzas.ForEach(s => Trace.WriteLine(s));
+                SelectedOrderStatus = value.Status;
+                SelectedOrderTitle = value.Title;
             }
         }
 
-        private WarehouseItem _selectedIngredient;
-
-        public WarehouseItem SelectedIngredient
+        private List<string> _selectedOrderDetails;
+        public List<string> SelectedOrderDetails
         {
-            get => _selectedIngredient;
+            get => _selectedOrderDetails;
             set
             {
-                _selectedIngredient = value;
-
-                OnPropertyChanged(nameof(SelectedIngredient));
+                _selectedOrderDetails = value;
+                OnPropertyChanged(nameof(SelectedOrderDetails));
             }
         }
 
-        public ICommand AddIngredientCommand { get; }
-        public ICommand ReloadListCommand { get; }
-        public ICommand DeleteIngredientCommand { get; }
+        private string _selectedOrderTitle;
+        public string SelectedOrderTitle
+        {
+            get => _selectedOrderTitle;
+            set
+            {
+                _selectedOrderTitle = value;
+                OnPropertyChanged(nameof(SelectedOrderTitle));
+            }
+        }
+
+        private OrderStatus _selectedOrderStatus;
+        public OrderStatus SelectedOrderStatus
+        {
+            get => _selectedOrderStatus;
+            set
+            {
+                _selectedOrderStatus = value;
+                OnPropertyChanged(nameof(SelectedOrderStatus));
+
+                if (SelectedOrder == null || SelectedOrder?.Status == value)
+                    return;
+
+                SelectedOrder.Status = value;
+
+                ChangeStatusOrderCommand.Execute(SelectedOrder);
+
+                OnPropertyChanged(nameof(IncomingOrders));
+                OnPropertyChanged(nameof(InProgressOrders));
+                OnPropertyChanged(nameof(DeliveryOrders));
+                OnPropertyChanged(nameof(DeliveredOrders));
+            }
+        }
+
+        public ICommand PlaceOrderCommand { get; }
+        public ICommand ChangeStatusOrderCommand { get; }
+        public ICommand CheckOrderListCommand { get; }
 
         public KitchenViewModel(NavigationStore navigationStore)
         {
-
             _navigationStore = navigationStore;
-            AllIngredients = new List<WarehouseItem>();
+            OrderStatuses = Enum.GetValues<OrderStatus>().ToList();
+            SelectedOrderStatus = OrderStatus.ORDERED;
+            SelectedOrderTitle = "No Order Selected";
+            AllOrders = new List<PizzaOrder>();
 
-            AddIngredientCommand = new AddIngredientCommand(_navigationStore);
-            ReloadListCommand = new ReloadListCommand(_navigationStore);
-            DeleteIngredientCommand = new DeleteIngredientCommand(_navigationStore);
+            PlaceOrderCommand = new PlaceOrderCommand(_navigationStore);
+            ChangeStatusOrderCommand = new ChangeStatusOrderCommand(_navigationStore);
+            CheckOrderListCommand = new CheckOrderListCommand(navigationStore);
 
-            //Load Ingredients for all the connected clients every 3-Seconds
-
-            /*Task.Run(() =>
+            Task.Run(() =>
             {
                 while (true)
                 {
-                    ReloadListCommand.Execute(null);
-                    Thread.Sleep(3000);
+                    CheckOrderListCommand.Execute(null);
+                    Thread.Sleep(5000);
                 }
-            });*/
+            });
         }
+
+
+
     }
 }

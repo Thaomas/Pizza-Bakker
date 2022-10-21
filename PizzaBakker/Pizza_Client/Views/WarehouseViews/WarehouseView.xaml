@@ -44,6 +44,19 @@
                 Padding="10,0,10,0"
                 MinHeight="40"/>
 
+            <Button
+                Grid.Column="0"
+                Grid.Row="0"
+                Width="auto"
+                Height="auto"
+                Content="Update The Ingredient"
+                Command="{Binding UpdateIngredientCommand}"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0 100 0 0"
+                Padding="10,0,10,0"
+                MinHeight="40"/>
+
             <!-- Ingredient Info Grid -->
             <Grid Grid.Column="1"
                   Grid.Row="0"
