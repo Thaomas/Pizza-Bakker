@@ -16,7 +16,7 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
             _server = server;
             this.OperationHandler = new Dictionary<PacketType, Action<DataPacket>>()
             {
-                { PacketType.CHANGE_STATUS, ChangeOrderStatus},
+                {PacketType.CHANGE_STATUS, ChangeOrderStatus},
                 {PacketType.GET_ORDER_LIST, GetList }
             };
         }

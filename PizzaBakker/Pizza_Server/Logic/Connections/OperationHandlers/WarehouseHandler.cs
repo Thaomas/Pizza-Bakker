@@ -18,7 +18,8 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
             {
                 { PacketType.ADD_INGREDIENT, AddIngredient},
                 { PacketType.GET_INGREDIENT_LIST, GetIngredientList},
-                { PacketType.DELETE_INGREDIENT, DeleteIngredient}
+                { PacketType.DELETE_INGREDIENT, DeleteIngredient},
+                { PacketType.UPDATE_INGREDIENT, UpdateIngredient}
             };
         }
 
@@ -59,6 +60,26 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
                 {
                     warehouseList = Warehouse.GetInstance()._ingredients.Values.ToList(),
                     statusCode = StatusCode.OK
+                }
+            });
+        }
+        public void UpdateIngredient(DataPacket obj)
+        {
+            UpdateIngredientRequestPacket updatePacket = obj.GetData<UpdateIngredientRequestPacket>();
+
+            var updateIngredient = Warehouse.GetInstance()._ingredients.Values.First(x => x.Ingredient.Name == updatePacket.name);
+
+            Warehouse.GetInstance()._ingredients[updateIngredient.Ingredient.Id].Count = (uint)updatePacket.count;
+            Warehouse.GetInstance()._ingredients[updateIngredient.Ingredient.Id].Ingredient.Price = updatePacket.price;
+
+            Client client = _server.IdToClient[obj.senderID];
+            client.SendData(new DataPacket<UpdateIngredientResponsePacket>
+            {
+                type = PacketType.UPDATE_INGREDIENT,
+                data = new UpdateIngredientResponsePacket()
+                {
+                    statusCode = StatusCode.OK,
+                    warehouseList = Warehouse.GetInstance()._ingredients.Values.ToList()
                 }
             });
         }

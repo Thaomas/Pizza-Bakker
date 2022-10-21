@@ -104,9 +104,9 @@ namespace Pizza_Client.ViewModels
             {
                 _selectedIngredient = value;
 
-                IngredientName = value.Ingredient.Name;
-                IngredientPrice = value.Ingredient.Price.ToString();
-                IngredientAmount = value.Count.ToString();
+                IngredientName = value?.Ingredient.Name;
+                IngredientPrice = value?.Ingredient.Price.ToString();
+                IngredientAmount = value?.Count.ToString();
 
                 OnPropertyChanged(nameof(SelectedIngredient));
             }
