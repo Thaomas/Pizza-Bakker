@@ -8,10 +8,9 @@ namespace Shared
     {
         public List<Pizza> Pizzas { get; set; }
         public List<string> AllPizzas { get; set; }
-        public uint OrderId { get; set; }
-        public Guid OrderId2 { get; set; }
-        public Guid CustomerID2 { get; set; }
-        public uint CustomerID { get; set; }
+        public Guid OrderId { get; set; }
+        public uint OrderNumber { get; set; }
+        public Guid CustomerID { get; set; }
         public OrderStatus Status { get; set; }
 
 
@@ -20,11 +19,11 @@ namespace Shared
             AllPizzas = new();
         }
 
-        public string Title => $"Order {OrderId.ToString()}";
+        public string Title => $"Order {OrderNumber.ToString()}";
 
         public override string ToString()
         {
-            return $"Order {OrderId.ToString()} | Pizza's: {AllPizzas.Count}";
+            return $"Order {OrderNumber.ToString()} | Pizza's: {AllPizzas.Count}";
 
         }
         //TODO DEBUG CODE

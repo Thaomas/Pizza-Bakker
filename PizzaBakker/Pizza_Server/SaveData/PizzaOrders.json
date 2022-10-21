@@ -5,12 +5,11 @@
       "pizza spinazio",
       "pizza Hawai"
     ],
-    "OrderId": 815,
-    "OrderId2": "5b39baa0-8b3d-4fd8-8109-740ea8fbc111",
-    "CustomerID2": "00000000-0000-0000-0000-000000000000",
-    "CustomerID": 0,
+    "OrderId": "5b39baa0-8b3d-4fd8-8109-740ea8fbc111",
+    "OrderNumber": 552,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 1,
-    "Title": "Order 815"
+    "Title": "Order 552"
   },
   {
     "Pizzas": null,
@@ -18,12 +17,11 @@
       "pizza fruiti di mar",
       "pizza quattro fourmagi"
     ],
-    "OrderId": 463,
-    "OrderId2": "9c0e04f4-c3b6-4da6-bd44-664bc6df140f",
-    "CustomerID2": "00000000-0000-0000-0000-000000000000",
-    "CustomerID": 0,
+    "OrderId": "9c0e04f4-c3b6-4da6-bd44-664bc6df140f",
+    "OrderNumber": 794,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 1,
-    "Title": "Order 463"
+    "Title": "Order 794"
   },
   {
     "Pizzas": null,
@@ -31,12 +29,11 @@
       "pizza sucuk",
       "pizza fungi"
     ],
-    "OrderId": 723,
-    "OrderId2": "f63b60e7-1044-4f5e-a9b3-47eb46444622",
-    "CustomerID2": "00000000-0000-0000-0000-000000000000",
-    "CustomerID": 0,
+    "OrderId": "f63b60e7-1044-4f5e-a9b3-47eb46444622",
+    "OrderNumber": 659,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 3,
-    "Title": "Order 723"
+    "Title": "Order 659"
   },
   {
     "Pizzas": null,
@@ -44,12 +41,11 @@
       "pizza pollo",
       "pizza margarttia"
     ],
-    "OrderId": 905,
-    "OrderId2": "d1a530d6-98fd-461e-8508-d92ddcc7add1",
-    "CustomerID2": "00000000-0000-0000-0000-000000000000",
-    "CustomerID": 0,
+    "OrderId": "d1a530d6-98fd-461e-8508-d92ddcc7add1",
+    "OrderNumber": 255,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 4,
-    "Title": "Order 905"
+    "Title": "Order 255"
   },
   {
     "Pizzas": null,
@@ -57,12 +53,11 @@
       "pizza pollo",
       "pizza margarttia"
     ],
-    "OrderId": 982,
-    "OrderId2": "ef0737f2-a5eb-44b5-b4d6-fd38504e8944",
-    "CustomerID2": "00000000-0000-0000-0000-000000000000",
-    "CustomerID": 0,
+    "OrderId": "ef0737f2-a5eb-44b5-b4d6-fd38504e8944",
+    "OrderNumber": 96,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 0,
-    "Title": "Order 982"
+    "Title": "Order 96"
   },
   {
     "Pizzas": null,
@@ -70,12 +65,11 @@
       "pizza pollo",
       "pizza margarttia"
     ],
-    "OrderId": 315,
-    "OrderId2": "99223000-91bd-426a-b310-cd6a430cb661",
-    "CustomerID2": "00000000-0000-0000-0000-000000000000",
-    "CustomerID": 0,
+    "OrderId": "99223000-91bd-426a-b310-cd6a430cb661",
+    "OrderNumber": 37,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 0,
-    "Title": "Order 315"
+    "Title": "Order 37"
   },
   {
     "Pizzas": null,
@@ -83,12 +77,11 @@
       "pizza pollo",
       "pizza margarttia"
     ],
-    "OrderId": 958,
-    "OrderId2": "2e1cf84b-1673-4499-a3bd-47dd338e8aa7",
-    "CustomerID2": "00000000-0000-0000-0000-000000000000",
-    "CustomerID": 0,
+    "OrderId": "2e1cf84b-1673-4499-a3bd-47dd338e8aa7",
+    "OrderNumber": 926,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 0,
-    "Title": "Order 958"
+    "Title": "Order 926"
   },
   {
     "Pizzas": null,
@@ -96,12 +89,11 @@
       "pizza pollo",
       "pizza margarttia"
     ],
-    "OrderId": 191,
-    "OrderId2": "3511df03-5245-48ab-8d87-5dfc027f27c4",
-    "CustomerID2": "00000000-0000-0000-0000-000000000000",
-    "CustomerID": 0,
+    "OrderId": "3511df03-5245-48ab-8d87-5dfc027f27c4",
+    "OrderNumber": 455,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 0,
-    "Title": "Order 191"
+    "Title": "Order 455"
   },
   {
     "Pizzas": null,
@@ -109,12 +101,11 @@
       "pizza pollo",
       "pizza margarttia"
     ],
-    "OrderId": 899,
-    "OrderId2": "f6fd00f6-54e4-4205-a115-103b91115cff",
-    "CustomerID2": "00000000-0000-0000-0000-000000000000",
-    "CustomerID": 0,
+    "OrderId": "f6fd00f6-54e4-4205-a115-103b91115cff",
+    "OrderNumber": 129,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 0,
-    "Title": "Order 899"
+    "Title": "Order 129"
   },
   {
     "Pizzas": null,
@@ -122,12 +113,11 @@
       "pizza pollo",
       "pizza margarttia"
     ],
-    "OrderId": 491,
-    "OrderId2": "d6233043-9261-4be1-b117-d041b57a1dff",
-    "CustomerID2": "00000000-0000-0000-0000-000000000000",
-    "CustomerID": 0,
+    "OrderId": "d6233043-9261-4be1-b117-d041b57a1dff",
+    "OrderNumber": 59,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 0,
-    "Title": "Order 491"
+    "Title": "Order 59"
   },
   {
     "Pizzas": null,
@@ -135,12 +125,11 @@
       "pizza pollo",
       "pizza margarttia"
     ],
-    "OrderId": 144,
-    "OrderId2": "2286de02-0cfd-4866-b848-c8f9ab1fe986",
-    "CustomerID2": "00000000-0000-0000-0000-000000000000",
-    "CustomerID": 0,
+    "OrderId": "2286de02-0cfd-4866-b848-c8f9ab1fe986",
+    "OrderNumber": 909,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 0,
-    "Title": "Order 144"
+    "Title": "Order 909"
   },
   {
     "Pizzas": null,
@@ -148,12 +137,11 @@
       "pizza pollo",
       "pizza margarttia"
     ],
-    "OrderId": 998,
-    "OrderId2": "0ddd5dad-da1a-428f-a327-4f5b5e022e0e",
-    "CustomerID2": "00000000-0000-0000-0000-000000000000",
-    "CustomerID": 0,
+    "OrderId": "0ddd5dad-da1a-428f-a327-4f5b5e022e0e",
+    "OrderNumber": 297,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 0,
-    "Title": "Order 998"
+    "Title": "Order 297"
   },
   {
     "Pizzas": null,
@@ -161,12 +149,11 @@
       "pizza pollo",
       "pizza margarttia"
     ],
-    "OrderId": 513,
-    "OrderId2": "d8ee9b8a-7ea7-484b-b950-84f8bf845af8",
-    "CustomerID2": "00000000-0000-0000-0000-000000000000",
-    "CustomerID": 0,
+    "OrderId": "d8ee9b8a-7ea7-484b-b950-84f8bf845af8",
+    "OrderNumber": 569,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 0,
-    "Title": "Order 513"
+    "Title": "Order 569"
   },
   {
     "Pizzas": null,
@@ -174,12 +161,11 @@
       "pizza pollo",
       "pizza margarttia"
     ],
-    "OrderId": 726,
-    "OrderId2": "5644b7b1-6ee9-49aa-bbf3-064f7a87c611",
-    "CustomerID2": "00000000-0000-0000-0000-000000000000",
-    "CustomerID": 0,
+    "OrderId": "5644b7b1-6ee9-49aa-bbf3-064f7a87c611",
+    "OrderNumber": 747,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 0,
-    "Title": "Order 726"
+    "Title": "Order 747"
   },
   {
     "Pizzas": null,
@@ -187,12 +173,11 @@
       "pizza pollo",
       "pizza margarttia"
     ],
-    "OrderId": 887,
-    "OrderId2": "7cc55318-c3a4-4396-a047-0c8d12bcf474",
-    "CustomerID2": "00000000-0000-0000-0000-000000000000",
-    "CustomerID": 0,
+    "OrderId": "7cc55318-c3a4-4396-a047-0c8d12bcf474",
+    "OrderNumber": 681,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 0,
-    "Title": "Order 887"
+    "Title": "Order 681"
   },
   {
     "Pizzas": null,
@@ -200,12 +185,11 @@
       "pizza pollo",
       "pizza margarttia"
     ],
-    "OrderId": 462,
-    "OrderId2": "4592d477-6e6f-4266-9aa4-994a1ea7f9ec",
-    "CustomerID2": "00000000-0000-0000-0000-000000000000",
-    "CustomerID": 0,
+    "OrderId": "4592d477-6e6f-4266-9aa4-994a1ea7f9ec",
+    "OrderNumber": 95,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 0,
-    "Title": "Order 462"
+    "Title": "Order 95"
   },
   {
     "Pizzas": null,
@@ -213,12 +197,11 @@
       "pizza pollo",
       "pizza margarttia"
     ],
-    "OrderId": 355,
-    "OrderId2": "347bc9a5-6de7-4fd1-ac4c-cdc40414761b",
-    "CustomerID2": "00000000-0000-0000-0000-000000000000",
-    "CustomerID": 0,
+    "OrderId": "347bc9a5-6de7-4fd1-ac4c-cdc40414761b",
+    "OrderNumber": 928,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 0,
-    "Title": "Order 355"
+    "Title": "Order 928"
   },
   {
     "Pizzas": null,
@@ -226,12 +209,11 @@
       "pizza pollo",
       "pizza margarttia"
     ],
-    "OrderId": 55,
-    "OrderId2": "b23b14c9-5d0e-4cca-94eb-4e9e36da4c10",
-    "CustomerID2": "00000000-0000-0000-0000-000000000000",
-    "CustomerID": 0,
+    "OrderId": "b23b14c9-5d0e-4cca-94eb-4e9e36da4c10",
+    "OrderNumber": 312,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 0,
-    "Title": "Order 55"
+    "Title": "Order 312"
   },
   {
     "Pizzas": null,
@@ -239,12 +221,11 @@
       "pizza pollo",
       "pizza margarttia"
     ],
-    "OrderId": 530,
-    "OrderId2": "48be8a6c-e711-4d71-848c-5d634874c061",
-    "CustomerID2": "00000000-0000-0000-0000-000000000000",
-    "CustomerID": 0,
+    "OrderId": "48be8a6c-e711-4d71-848c-5d634874c061",
+    "OrderNumber": 630,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 0,
-    "Title": "Order 530"
+    "Title": "Order 630"
   },
   {
     "Pizzas": null,
@@ -252,12 +233,11 @@
       "pizza pollo",
       "pizza margarttia"
     ],
-    "OrderId": 193,
-    "OrderId2": "f8f42e91-9abf-464d-8927-d83379faaf1a",
-    "CustomerID2": "00000000-0000-0000-0000-000000000000",
-    "CustomerID": 0,
+    "OrderId": "f8f42e91-9abf-464d-8927-d83379faaf1a",
+    "OrderNumber": 713,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 0,
-    "Title": "Order 193"
+    "Title": "Order 713"
   },
   {
     "Pizzas": null,
@@ -265,11 +245,10 @@
       "pizza pollo",
       "pizza margarttia"
     ],
-    "OrderId": 679,
-    "OrderId2": "2794a480-643f-4db7-828a-e2054b2789bc",
-    "CustomerID2": "00000000-0000-0000-0000-000000000000",
-    "CustomerID": 0,
+    "OrderId": "2794a480-643f-4db7-828a-e2054b2789bc",
+    "OrderNumber": 326,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 0,
-    "Title": "Order 679"
+    "Title": "Order 326"
   }
 ]

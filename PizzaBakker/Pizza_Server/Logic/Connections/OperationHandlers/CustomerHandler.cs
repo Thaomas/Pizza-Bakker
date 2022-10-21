@@ -28,7 +28,7 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
             Dictionary<int, List<string>> pizzaOrder = packet.GetData<PlaceOrderRequestPacket>().pizzaOrder;
             PizzaOrder _pizzaOrder = new();
 
-            _pizzaOrder.OrderId = (uint)new Random().Next(0, 1000);
+            _pizzaOrder.OrderId = Guid.NewGuid();
             _pizzaOrder.Status = OrderStatus.ORDERED;
             _kitchen.orderPizza(pizzaOrder);
 

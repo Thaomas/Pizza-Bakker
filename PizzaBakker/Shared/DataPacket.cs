@@ -131,7 +131,7 @@ namespace Shared.Packet
 
         public class ChangeStatusOrderRequestPacket : DAbstract
         {
-            public uint pizzaOrderId;
+            public Guid pizzaOrderId;
             public OrderStatus pizzaOrderStatus;
         }
 

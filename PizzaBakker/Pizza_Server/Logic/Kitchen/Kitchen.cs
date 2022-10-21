@@ -14,7 +14,7 @@ namespace Pizza_Server.Logic
     {
         private static Kitchen _singleton;
         public DateTime NewestOrderDateTime;
-        public ObservableCollection<PizzaOrder> AllOrders;
+        public List<PizzaOrder> AllOrders;
 
         private Kitchen()
         {
@@ -77,7 +77,7 @@ namespace Pizza_Server.Logic
             }
         }
 
-        public void ChangeOrderStatus(uint orderId, OrderStatus status)
+        public void ChangeOrderStatus(Guid orderId, OrderStatus status)
         {
             try
             {
@@ -115,15 +115,8 @@ namespace Pizza_Server.Logic
 
         public void LoadFromFile()
         {
-            AllOrders = new ObservableCollection<PizzaOrder>();
-            IO.ReadObjectFromFile<List<PizzaOrder>>("SaveData\\PizzaOrders.json").ForEach(o =>
-            {
-                if (o.OrderId2 == Guid.Empty)
-                    o.OrderId2 = Guid.NewGuid();
-                AllOrders.Add(o);
-            });
-            AllOrders.CollectionChanged += ListChanged;
-
+            AllOrders = IO.ReadObjectFromFile<List<PizzaOrder>>("SaveData\\PizzaOrders.json");
+            AllOrders.ForEach(e => e.OrderNumber = (e.OrderNumber == 0) ? (uint)new Random().Next(0, 1000) : e.OrderNumber);
             NewestOrderDateTime = DateTime.Now;
             if (AllOrders == null)
             {
@@ -133,10 +126,6 @@ namespace Pizza_Server.Logic
 
 
         private void ListChanged()
-        {
-            NewestOrderDateTime = DateTime.Now;
-        }
-        private void ListChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
             NewestOrderDateTime = DateTime.Now;
         }
