@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Employee.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Ingredient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pizza.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PizzaOrder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WarehouseItem.cs" />
   </ItemGroup>

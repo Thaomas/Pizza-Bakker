@@ -1,12 +1,12 @@
 using System;
-using Pizza_Client.Stores;
-using Pizza_Client.Util;
-using Pizza_Client.ViewModels;
+using Employee_Client.Stores;
+using Employee_Client.Util;
+using Employee_Client.ViewModels;
 using Shared;
-using Shared.Kitchen;
-using Shared.Warehouse;
+using Shared.Packet;
+using Shared.Packet.Warehouse;
 
-namespace Pizza_Client.Commands.WarehouseCommands
+namespace Employee_Client.Commands.WarehouseCommands
 {
     public class UpdateIngredientCommand : CommandBase
     {

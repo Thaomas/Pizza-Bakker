@@ -1,7 +1,8 @@
 ﻿using Pizza_Server.Logic.Connections.Types;
 using Pizza_Server.Main;
 using Shared;
-using Shared.Kitchen;
+using Shared.Packet;
+using Shared.Packet.Kitchen;
 using System;
 using System.Collections.Generic;
 using System.Linq;

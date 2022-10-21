@@ -2,7 +2,8 @@
 using Pizza_Server.Logic.WarehouseNS;
 using Pizza_Server.Main;
 using Shared;
-using Shared.Warehouse;
+using Shared.Packet;
+using Shared.Packet.Warehouse;
 using System;
 using System.Collections.Generic;
 using System.Linq;

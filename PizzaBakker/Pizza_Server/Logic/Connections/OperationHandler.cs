@@ -2,9 +2,9 @@ using Pizza_Server.Logic.Connections.OperationHandlers;
 using Pizza_Server.Logic.Connections.Types;
 using Pizza_Server.Main;
 using Shared;
-using Shared.Login;
+using Shared.Packet;
+using Shared.Packet.Login;
 using System;
-using System.Collections.Generic;
 
 namespace Pizza_Server.Logic.Connections
 {

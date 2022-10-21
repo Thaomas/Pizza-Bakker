@@ -1,3 +1,4 @@
+using Employee_Client.Commands.KitchenCommands;
 using Employee_Client.Commands.WarehouseCommands;
 using Employee_Client.Stores;
 using Shared;
