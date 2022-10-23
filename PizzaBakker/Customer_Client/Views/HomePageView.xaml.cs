@@ -2,9 +2,9 @@
 
 namespace Customer_Client.Views
 {
-    public partial class MainView : UserControl
+    public partial class HomePageView : UserControl
     {
-        public MainView()
+        public HomePageView()
         {
             InitializeComponent();
         }

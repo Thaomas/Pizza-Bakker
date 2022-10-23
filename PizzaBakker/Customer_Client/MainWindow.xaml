@@ -10,8 +10,8 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.Resources>
-            <DataTemplate DataType="{x:Type viewModels:MainViewModel}">
-                <views:MainView/>
+            <DataTemplate DataType="{x:Type viewModels:HomePageViewModel}">
+                <views:HomePageView/>
             </DataTemplate>
         </Grid.Resources>
 

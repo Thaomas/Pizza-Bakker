@@ -8,7 +8,6 @@ namespace Employee_Client.ViewModels
     public class LoginViewModel : BaseViewModel
     {
         private readonly NavigationStore _navigationStore;
-
         public BaseViewModel CurrentViewModel => _navigationStore.CurrentViewModel;
 
         private string _username;
