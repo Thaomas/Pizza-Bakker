@@ -16,6 +16,12 @@
                 <Setter Property="HorizontalContentAlignment"
                         Value="Center" />
             </Style>
+            <Style TargetType="{x:Type ListBox}">
+                <Setter Property="Margin"
+                        Value="2 0 2 5" />
+                <Setter Property="HorizontalContentAlignment"
+                        Value="Center" />
+            </Style>
             <Style TargetType="{x:Type Button}">
                 <Setter Property="Margin"
                         Value="10" />
@@ -60,11 +66,26 @@
                 Content="Logout" />
 
             <!--Left ListView-->
-            <ListView 
-                Grid.Row="1"
-                Grid.RowSpan="2"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"/>
+            <!--https://stackoverflow.com/questions/20530010/custom-listviewitem-in-listview-->
+            <ListBox Grid.Row="1"
+                     Grid.RowSpan="2"
+                     Grid.Column="0"
+                     Grid.ColumnSpan="2"
+                     ItemsSource="{Binding}"
+                     >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Label 
+                                Content="{Binding Name}"/>
+                            <ListView 
+                                ItemsSource="{Binding Ingredients}"/>
+                            <Button 
+                                Content="Add" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
             <StackPanel
                 Grid.Row="0"
