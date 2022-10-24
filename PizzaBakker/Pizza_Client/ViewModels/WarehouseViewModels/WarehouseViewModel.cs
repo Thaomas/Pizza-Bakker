@@ -134,7 +134,7 @@ namespace Employee_Client.ViewModels
                 while (true)
                 {
                     ReloadListCommand.Execute(null);
-                    Thread.Sleep(3000);
+                    Thread.Sleep(2000);
                 }
             });
 

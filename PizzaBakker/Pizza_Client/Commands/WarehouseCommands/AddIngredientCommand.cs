@@ -35,13 +35,7 @@ namespace Employee_Client.Commands.WarehouseCommands
                         }
                     }
                 }
-            }, AddIngredientCallback);
-        }
-
-        private void AddIngredientCallback(DataPacket obj)
-        {
-            AddIngredientResponsePacket data = obj.GetData<AddIngredientResponsePacket>();
-            _addIngredientViewModel.AllIngredients = data.warehouseList;
+            });
         }
     }
 }

@@ -27,17 +27,12 @@ namespace Employee_Client.Commands.WarehouseCommands
                 type = PacketType.UPDATE_INGREDIENT,
                 data = new UpdateIngredientRequestPacket()
                 {
-                    count = Convert.ToInt32(_warehouseViewModel.IngredientAmount),
+                    ingredientID = _warehouseViewModel.SelectedIngredient.Ingredient.Id,
+                    count = Convert.ToUInt32(_warehouseViewModel.IngredientAmount),
                     name = _warehouseViewModel.IngredientName,
-                    price = Convert.ToInt32(_warehouseViewModel.IngredientPrice)
+                    price = Convert.ToDecimal(_warehouseViewModel.IngredientPrice)
                 }
-            }, DeleteIngredientCallback);
-        }
-
-        private void DeleteIngredientCallback(DataPacket obj)
-        {
-            DeleteIngredientResponsePacket data = obj.GetData<DeleteIngredientResponsePacket>();
-            _warehouseViewModel.AllIngredients = data.warehouseList;
+            });
         }
     }
 }

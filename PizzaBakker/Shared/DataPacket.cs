@@ -72,16 +72,15 @@ namespace Shared.Packet
             public WarehouseItem ingredient;
         }
 
-        public class AddIngredientResponsePacket : DAbstract
+        public class GetIngredientListRequestPacket : DAbstract
         {
-            public List<WarehouseItem> warehouseList;
-            public StatusCode statusCode;
+            public DateTime newest;
         }
-
-        public class GetListRequestPacket : DAbstract { }
 
         public class GetIngredientListResponsePacket : DAbstract
         {
+            public StatusCode statusCode;
+            public DateTime newest;
             public List<WarehouseItem> allItems;
         }
 
@@ -93,27 +92,15 @@ namespace Shared.Packet
                 get => singleIngredient.Ingredient.Id;
             }
         }
-
-        public class DeleteIngredientResponsePacket : DAbstract
-        {
-            public List<WarehouseItem> warehouseList;
-            public StatusCode statusCode;
-        }
         
         public class UpdateIngredientRequestPacket : DAbstract
         {
-            public Ingredient ingredientID;
-            public int count;
-            public int price;
+            public uint ingredientID;
+            public uint count;
+            public decimal price;
             public string name;
-          
         }
 
-        public class UpdateIngredientResponsePacket : DAbstract
-        {
-            public List<WarehouseItem> warehouseList;
-            public StatusCode statusCode;
-        }
     }
 
     namespace Kitchen
@@ -125,7 +112,6 @@ namespace Shared.Packet
 
         public class PlaceOrderResponsePacket : DAbstract
         {
-            public List<PizzaOrder> orderList;
             public StatusCode statusCode;
         }
 

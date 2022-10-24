@@ -23,39 +23,33 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.Children>
-            <!-- DEBUG LABEL TODO: REMOVE -->
-            <Label Grid.Column="1"
-                   Grid.Row="0"
-                   Content="{Binding Debug, Mode=TwoWay }"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Top"
-                   MinHeight="50" />
-            
-            <Button
+            <StackPanel
                 Grid.Column="0"
                 Grid.Row="0"
+                Orientation="Vertical"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+            <Button
                 Width="auto"
                 Height="auto"
                 Content="Delete The Ingredient"
                 Command="{Binding DeleteIngredientCommand}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
                 Margin="10"
                 Padding="10,0,10,0"
                 MinHeight="40"/>
 
             <Button
-                Grid.Column="0"
-                Grid.Row="0"
                 Width="auto"
                 Height="auto"
                 Content="Update The Ingredient"
                 Command="{Binding UpdateIngredientCommand}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Margin="0 100 0 0"
+                Margin="10"
                 Padding="10,0,10,0"
                 MinHeight="40"/>
+                
+            </StackPanel>
 
             <!-- Ingredient Info Grid -->
             <Grid Grid.Column="1"
@@ -158,10 +152,12 @@
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <Grid.Children>
@@ -236,16 +232,6 @@
                      SelectedItem="{Binding SelectedIngredient}"
                      VerticalContentAlignment="Stretch"
                      MinWidth="200" />
-
-            <Button Grid.Column="2"
-                    Grid.Row="2"
-                    Content="Reload List"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
-                    Padding="10,0,10,0"
-                    Margin="10"
-                    Command="{Binding ReloadListCommand}"
-                    MinHeight="40" />
         </Grid.Children>
     </Grid>
 </UserControl>

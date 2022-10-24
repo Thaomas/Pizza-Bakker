@@ -56,7 +56,7 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
                 Console.WriteLine("pizza: " + pizza);
             }
 
-            Kitchen.Instance.AllOrders.Add(_pizzaOrder);
+            Kitchen.Instance.AddOrder(_pizzaOrder);
             Client client = _server.IdToClient[packet.senderID];
             client.SendData(new DataPacket<PlaceOrderResponsePacket>
             {
@@ -64,7 +64,6 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
                 data = new PlaceOrderResponsePacket()
                 {
                     statusCode = StatusCode.OK,
-                    orderList = Kitchen.Instance.AllOrders.ToList()
                 }
             });
         }

@@ -156,7 +156,7 @@ namespace Employee_Client.ViewModels
                 while (true)
                 {
                     CheckOrderListCommand.Execute(null);
-                    Thread.Sleep(5000);
+                    Thread.Sleep(2000);
                 }
             });
         }

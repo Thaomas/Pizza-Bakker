@@ -32,34 +32,26 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
         public void GetList(DataPacket packet)
         {
             CheckOrderChangesPacket data = packet.GetData<CheckOrderChangesPacket>();
-            Client client = _server.IdToClient[packet.senderID];
+            List<PizzaOrder> allOrders = null;
+            StatusCode code = StatusCode.BAD_REQUEST;
 
             if (data.newest < kitchen.NewestOrderDateTime)
             {
-                client.SendData(new DataPacket<CheckOrderChangesResponsePacket>
-                {
-                    type = packet.type,
-                    data = new CheckOrderChangesResponsePacket()
-                    {
-                        statusCode = StatusCode.OK,
-                        newest = kitchen.NewestOrderDateTime,
-                        orders = kitchen.AllOrders.ToList()
-                    }
-                });
+                kitchen.GetPizzaOrders(out allOrders);
+                code = StatusCode.OK;
             }
-            else
-            {
-                client.SendData(new DataPacket<CheckOrderChangesResponsePacket>
-                {
-                    type = packet.type,
-                    data = new CheckOrderChangesResponsePacket()
-                    {
-                        newest = kitchen.NewestOrderDateTime,
-                        statusCode = StatusCode.BAD_REQUEST
-                    }
-                });
 
-            }
+            Client client = _server.IdToClient[packet.senderID];
+            client.SendData(new DataPacket<CheckOrderChangesResponsePacket>
+            {
+                type = packet.type,
+                data = new CheckOrderChangesResponsePacket()
+                {
+                    statusCode = code,
+                    newest = kitchen.NewestOrderDateTime,
+                    orders = allOrders
+                }
+            });
         }
     }
 }

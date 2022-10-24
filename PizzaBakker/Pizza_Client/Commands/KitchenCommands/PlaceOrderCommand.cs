@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Employee_Client.Commands;
 using Shared.Packet;
 using Shared.Packet.Kitchen;
+using System;
 
 namespace Employee_Client.Commands.KitchenCommands
 {
@@ -48,14 +49,12 @@ namespace Employee_Client.Commands.KitchenCommands
                 {
                     pizzaOrder = list
                 }
-            }, PlaceOrderCallback);
+            });
         }
 
         private void PlaceOrderCallback(DataPacket obj)
         {
-            PlaceOrderResponsePacket data = obj.GetData<PlaceOrderResponsePacket>();
-
-            _placeOrderViewModel.AllOrders = data.orderList;
+            throw new NotImplementedException();
         }
     }
 }

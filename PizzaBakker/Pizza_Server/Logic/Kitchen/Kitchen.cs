@@ -14,7 +14,7 @@ namespace Pizza_Server.Logic
     {
         private static Kitchen _singleton;
         public DateTime NewestOrderDateTime;
-        public List<PizzaOrder> AllOrders;
+        private List<PizzaOrder> AllOrders;
 
         private Kitchen()
         {
@@ -35,6 +35,11 @@ namespace Pizza_Server.Logic
 
         private Dictionary<uint, WarehouseItem> copyWarehouseItems;
         List<string> _outOfStockIngredients = new();
+
+        public void GetPizzaOrders(out List<PizzaOrder> orders)
+        {
+            orders = AllOrders;
+        }
 
         public void orderPizza(Dictionary<int, List<string>> orderPizza)
         {
@@ -68,11 +73,11 @@ namespace Pizza_Server.Logic
                 {
                     uint ingredientcount = (uint)ingredientCounter.FirstOrDefault(x => x.Key == saved).Value;
 
-                    WarehouseItem retrievedIngredientt = Warehouse.GetInstance()._ingredients.Values.First(name => name.Ingredient.Name.Equals(saved));
+                    WarehouseItem retrievedIngredientt = Warehouse.Instance.Ingredients.Values.First(name => name.Ingredient.Name.Equals(saved));
 
                     retrievedIngredientt.Count -= ingredientcount;
 
-                    Warehouse.GetInstance()._ingredients[retrievedIngredientt.Ingredient.Id] = retrievedIngredientt;
+                    Warehouse.Instance.Ingredients[retrievedIngredientt.Ingredient.Id] = retrievedIngredientt;
                 }
             }
         }
@@ -96,13 +101,13 @@ namespace Pizza_Server.Logic
             {
                 int _pizzaInputCount = singleIngredient[saved];
 
-                retrievedIngredient = Warehouse.GetInstance()._ingredients.Values.First(name => name.Ingredient.Name.Equals(saved));
+                retrievedIngredient = Warehouse.Instance.Ingredients.Values.First(name => name.Ingredient.Name.Equals(saved));
 
                 if (_pizzaInputCount > retrievedIngredient.Count)
                 {
                     _orderRight = false;
                     retrievedIngredient.Count = 0;
-                    Warehouse.GetInstance()._ingredients[retrievedIngredient.Ingredient.Id] = retrievedIngredient;
+                    Warehouse.Instance.Ingredients[retrievedIngredient.Ingredient.Id] = retrievedIngredient;
 
                     if (!_outOfStockIngredients.Contains(saved))
                     {
@@ -134,6 +139,11 @@ namespace Pizza_Server.Logic
         {
             string serializeData = JsonConvert.SerializeObject(AllOrders, Formatting.Indented);
             IO.WriteFile("SaveData\\PizzaOrders.json", serializeData);
+        }
+
+        internal void AddOrder(PizzaOrder pizzaOrder)
+        {
+            throw new NotImplementedException();
         }
     }
 }

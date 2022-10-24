@@ -33,8 +33,7 @@ namespace Pizza_Server.Main
             Console.WriteLine("Starting Server...");
             IdToClient = new();
             IdToEmployee = LoadEmployees();
-
-            Warehouse.GetInstance();
+            Warehouse wh = Warehouse.Instance;
             ConnectionHandler connectionHandler = new ConnectionHandler(this, 6000);
             new Thread(connectionHandler.Run).Start();
 
@@ -72,7 +71,7 @@ namespace Pizza_Server.Main
             while (true)
             {
                 SaveEmployees(IdToEmployee);
-                Warehouse.GetInstance().SaveIngredients();
+                Warehouse.Instance.SaveIngredients();
                 Kitchen.Instance.SaveOrders();
                 Thread.Sleep(10000);
             }
