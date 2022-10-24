@@ -6,20 +6,38 @@ using Shared.Packet.Kitchen;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Shared.Packet.Customer_Client;
 
 namespace Pizza_Server.Logic.Connections.OperationHandlers
 {
     public class CustomerHandler : OpHndlrAbstract
     {
         private Kitchen _kitchen;
+        private Customer _customer;
         public CustomerHandler(Server server)
         {
             _server = server;
             _kitchen = Kitchen.Instance;
-            this.OperationHandler = new Dictionary<PacketType, Action<DataPacket>>()
+            _customer = Customer.Instance;
+            OperationHandler = new Dictionary<PacketType, Action<DataPacket>>()
             {
-                { PacketType.PLACE_ORDER, PlaceOrder}
+                { PacketType.PLACE_ORDER, PlaceOrder},
+                { PacketType.GET_PIZZA_LIST, GetPizzas}
             };
+        }
+
+        private void GetPizzas(DataPacket obj)
+        {
+            Client client = _server.IdToClient[obj.senderID];
+            client.SendData(new DataPacket<GetListResponsePacket>
+            {
+                type = PacketType.GET_ORDER_LIST,
+                data = new GetListResponsePacket()
+                {
+                    statusCode = StatusCode.OK,
+                    pizzas = _customer.pizzas
+                }
+            });
         }
 
         public void PlaceOrder(DataPacket packet)

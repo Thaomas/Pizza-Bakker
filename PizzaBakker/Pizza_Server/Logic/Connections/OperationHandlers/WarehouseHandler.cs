@@ -23,6 +23,7 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
                 { PacketType.UPDATE_INGREDIENT, UpdateIngredient}
             };
         }
+        
         public void GetIngredientList(DataPacket packet)
         {
             GetIngredientListRequestPacket req = packet.GetData<GetIngredientListRequestPacket>();

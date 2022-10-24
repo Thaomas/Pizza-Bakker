@@ -128,8 +128,7 @@ namespace Pizza_Server.Logic
                 Console.WriteLine("Geen orders beschikbaar!");
             }
         }
-
-
+        
         private void ListChanged()
         {
             NewestOrderDateTime = DateTime.Now;

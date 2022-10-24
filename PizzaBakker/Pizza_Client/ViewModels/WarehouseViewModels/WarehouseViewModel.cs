@@ -137,8 +137,6 @@ namespace Employee_Client.ViewModels
                     Thread.Sleep(2000);
                 }
             });
-
-
         }
     }
 }

@@ -62,7 +62,7 @@ namespace Customer_Client.Util
                 data = new AuthenticationResponsePacket
                 {
                     autenticationID = ID,
-                    clientType = ClientType.EMPLOYEE
+                    clientType = ClientType.CUSTOMER
                 }
             });
         }
@@ -110,8 +110,13 @@ namespace Customer_Client.Util
 
         public void SendData<T>(DataPacket<T> packet, Action<DataPacket> callback) where T : DAbstract
         {
-            this.callbacks.Add(packet.type, callback);
-            this.SendData(packet);
+            /*this.callbacks.Add(packet.type, callback);
+            this.SendData(packet);*/
+            if (!this.callbacks.ContainsKey(packet.type))
+            {
+                this.callbacks.Add(packet.type, callback);
+                this.SendData(packet);
+            }
         }
     }
 }

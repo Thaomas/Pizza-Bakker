@@ -132,4 +132,15 @@ namespace Shared.Packet
             public List<PizzaOrder> orders;
         }
     }
+
+    namespace Customer_Client
+    {
+        public class GetListRequestPacket : DAbstract { }
+        
+        public class GetListResponsePacket : DAbstract
+        {
+            public StatusCode statusCode;
+            public List<Pizza> pizzas;
+        }
+    }
 }

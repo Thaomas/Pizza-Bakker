@@ -1,0 +1,38 @@
+[
+  {
+    "Name": "Pizza Margharita",
+    "Ingredients": [
+      1, 2, 3
+    ]
+  },
+  {
+    "Name": "Pizza Quattr Fourmagi",
+    "Ingredients": [
+      4, 5, 6
+    ]
+  },
+  {
+    "Name": "Pizza Salami",
+    "Ingredients": [
+      1, 6, 8, 9, 21
+    ]
+  },
+  {
+    "Name": "Pizza Pollo",
+    "Ingredients": [
+      1, 4, 8, 11
+    ]
+  },
+  {
+    "Name": "Pizza Pepperoni",
+    "Ingredients": [
+      1, 4, 8, 12
+    ]
+  },
+  {
+    "Name": "Pizza Stagioni",
+    "Ingredients": [
+      1, 2, 3
+    ]
+  }
+]

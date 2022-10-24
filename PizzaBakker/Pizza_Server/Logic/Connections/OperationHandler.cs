@@ -17,7 +17,7 @@ namespace Pizza_Server.Logic.Connections
         {
             _server = viewModel;
         }
-
+    
     
         public void HandleDataCallback(DataPacket packet, Client client)
         {
