@@ -23,6 +23,7 @@ public class InitCommand : CommandBase
         public override void Execute(object parameter)
         {
             ConnectionHandler connectionHandler = ConnectionHandler.GetInstance();
+            while (!connectionHandler.IsConnected) ;
             connectionHandler.SendData(new DataPacket<GetListRequestPacket>()
             {
                 type = PacketType.GET_PIZZA_LIST,

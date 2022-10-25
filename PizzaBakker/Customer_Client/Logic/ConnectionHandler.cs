@@ -16,11 +16,9 @@ namespace Customer_Client.Util
         private TcpClient tcpClient;
         private NetworkStream stream;
         public Dictionary<PacketType, Action<DataPacket>> callbacks;
-
         private byte[] dataBuffer;
         private readonly byte[] lengthBytes = new byte[4];
-
-        public bool IsConnected { get => tcpClient.Connected; }
+        public bool IsConnected { get; set; }  = false;
 
         public Guid ID { get; set; } = Guid.Empty;
 
@@ -63,6 +61,7 @@ namespace Customer_Client.Util
                     clientType = ClientType.CUSTOMER
                 }
             });
+            this.IsConnected = true;
         }
 
         private void OnConnectionMade(IAsyncResult ar)
