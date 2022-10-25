@@ -26,6 +26,7 @@ namespace Customer_Client.Util
 
         private ConnectionHandler()
         {
+            callbacks = new Dictionary<PacketType, Action<DataPacket>>();
         }
 
         public static ConnectionHandler GetInstance()
@@ -42,9 +43,6 @@ namespace Customer_Client.Util
         /// </summary>
         public void ConnectToServer()
         {
-
-            callbacks = new Dictionary<PacketType, Action<DataPacket>>();
-
             callbacks.Add(PacketType.AUTHENTICATION, OnServerConnectionMade);
 
             tcpClient = new TcpClient();
@@ -99,6 +97,8 @@ namespace Customer_Client.Util
 
         public void SendData<T>(DataPacket<T> packet) where T : DAbstract
         {
+            while (stream == null || !stream.CanWrite) ;
+
             if (packet.senderID == Guid.Empty)
                 packet.senderID = ID;
 

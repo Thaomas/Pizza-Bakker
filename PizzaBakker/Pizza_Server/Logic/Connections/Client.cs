@@ -2,6 +2,7 @@
 using Shared;
 using Shared.Packet;
 using System;
+using System.IO;
 using System.Net.Sockets;
 using System.Text;
 
@@ -32,9 +33,16 @@ namespace Pizza_Server.Logic.Connections.Types
 
         private void OnLengthBytesReceived(IAsyncResult ar)
         {
-            int numOfBytes = stream.EndRead(ar);
-            dataBuffer = new byte[BitConverter.ToInt32(lengthBytes)];
-            stream.BeginRead(dataBuffer, 0, dataBuffer.Length, OnDataReceived, null);
+            try
+            {
+                int numOfBytes = stream.EndRead(ar);
+                dataBuffer = new byte[BitConverter.ToInt32(lengthBytes)];
+                stream.BeginRead(dataBuffer, 0, dataBuffer.Length, OnDataReceived, null);
+            }
+            catch(IOException e)
+            {
+                Dispose();
+            }
         }
 
         private void OnDataReceived(IAsyncResult ar)
