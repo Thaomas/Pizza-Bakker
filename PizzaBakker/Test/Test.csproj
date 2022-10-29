@@ -18,6 +18,10 @@
     <ProjectReference Include="..\Pizza_Server\Pizza_Server.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TestData" />
+  </ItemGroup>
+
   <Import Project="..\Shared\Shared.projitems" Label="Shared" />
 
 </Project>

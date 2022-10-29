@@ -86,7 +86,6 @@ public class HomePageViewModel : BaseViewModel
         PizzasInBasket = new List<string>();
         Naam = UserInfo.Instance.UserName;
         InitCommand.Execute(null);
-
     }
 
     private void OnCurrentViewModelChanged()

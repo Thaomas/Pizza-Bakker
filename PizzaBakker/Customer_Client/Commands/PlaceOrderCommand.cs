@@ -22,7 +22,6 @@ namespace Customer_Client.Commands
 
         public override void Execute(object parameter)
         {
-            
             ConnectionHandler connectionHandler = ConnectionHandler.GetInstance();
             connectionHandler.SendData(new DataPacket<PlaceOrderRequestPacket>()
             {

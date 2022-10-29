@@ -1,6 +1,6 @@
 namespace Test
 {
-    public class TestIO
+    public class TestCustomer
     {
         
     }

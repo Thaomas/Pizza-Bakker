@@ -22,7 +22,6 @@ namespace Shared
         {
             OrderHistory.Add(order);
             
-
             return true;
         }
     }
