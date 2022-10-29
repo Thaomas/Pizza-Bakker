@@ -135,7 +135,6 @@ namespace Employee_Client.ViewModels
             }
         }
 
-        public ICommand PlaceOrderCommand { get; }
         public ICommand ChangeStatusOrderCommand { get; }
         public ICommand CheckOrderListCommand { get; }
 
@@ -146,8 +145,7 @@ namespace Employee_Client.ViewModels
             SelectedOrderStatus = OrderStatus.ORDERED;
             SelectedOrderTitle = "No Order Selected";
             AllOrders = new List<PizzaOrder>();
-
-            PlaceOrderCommand = new PlaceOrderCommand(_navigationStore);
+       
             ChangeStatusOrderCommand = new ChangeStatusOrderCommand(_navigationStore);
             CheckOrderListCommand = new CheckOrderListCommand(navigationStore);
 

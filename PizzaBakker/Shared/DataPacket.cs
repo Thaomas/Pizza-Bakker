@@ -107,7 +107,7 @@ namespace Shared.Packet
     {
         public class PlaceOrderRequestPacket : DAbstract
         {
-            public Dictionary<int, List<string>> pizzaOrder;
+            public List<string> pizzaOrder;
         }
 
         public class PlaceOrderResponsePacket : DAbstract

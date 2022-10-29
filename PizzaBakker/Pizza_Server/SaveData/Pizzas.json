@@ -14,19 +14,19 @@
   {
     "Name": "Pizza Salami",
     "Ingredients": [
-      1, 6, 8, 9, 21
+      2, 6
     ]
   },
   {
     "Name": "Pizza Pollo",
     "Ingredients": [
-      1, 4, 8, 11
+      1, 3, 4
     ]
   },
   {
     "Name": "Pizza Pepperoni",
     "Ingredients": [
-      1, 4, 8, 12
+      2, 3, 6
     ]
   },
   {

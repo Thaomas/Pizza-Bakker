@@ -1,6 +1,5 @@
 [
   {
-    "Pizzas": null,
     "AllPizzas": [
       "pizza spinazio",
       "pizza Hawai"
@@ -12,7 +11,6 @@
     "Title": "Order 552"
   },
   {
-    "Pizzas": null,
     "AllPizzas": [
       "pizza fruiti di mar",
       "pizza quattro fourmagi"
@@ -24,7 +22,6 @@
     "Title": "Order 794"
   },
   {
-    "Pizzas": null,
     "AllPizzas": [
       "pizza sucuk",
       "pizza fungi"
@@ -36,7 +33,6 @@
     "Title": "Order 659"
   },
   {
-    "Pizzas": null,
     "AllPizzas": [
       "pizza pollo",
       "pizza margarttia"
@@ -48,7 +44,6 @@
     "Title": "Order 255"
   },
   {
-    "Pizzas": null,
     "AllPizzas": [
       "pizza pollo",
       "pizza margarttia"
@@ -60,7 +55,6 @@
     "Title": "Order 96"
   },
   {
-    "Pizzas": null,
     "AllPizzas": [
       "pizza pollo",
       "pizza margarttia"
@@ -72,7 +66,6 @@
     "Title": "Order 37"
   },
   {
-    "Pizzas": null,
     "AllPizzas": [
       "pizza pollo",
       "pizza margarttia"
@@ -84,7 +77,6 @@
     "Title": "Order 926"
   },
   {
-    "Pizzas": null,
     "AllPizzas": [
       "pizza pollo",
       "pizza margarttia"
@@ -96,7 +88,6 @@
     "Title": "Order 455"
   },
   {
-    "Pizzas": null,
     "AllPizzas": [
       "pizza pollo",
       "pizza margarttia"
@@ -108,7 +99,6 @@
     "Title": "Order 129"
   },
   {
-    "Pizzas": null,
     "AllPizzas": [
       "pizza pollo",
       "pizza margarttia"
@@ -120,7 +110,6 @@
     "Title": "Order 59"
   },
   {
-    "Pizzas": null,
     "AllPizzas": [
       "pizza pollo",
       "pizza margarttia"
@@ -132,7 +121,6 @@
     "Title": "Order 909"
   },
   {
-    "Pizzas": null,
     "AllPizzas": [
       "pizza pollo",
       "pizza margarttia"
@@ -144,7 +132,6 @@
     "Title": "Order 297"
   },
   {
-    "Pizzas": null,
     "AllPizzas": [
       "pizza pollo",
       "pizza margarttia"
@@ -156,7 +143,6 @@
     "Title": "Order 569"
   },
   {
-    "Pizzas": null,
     "AllPizzas": [
       "pizza pollo",
       "pizza margarttia"
@@ -168,7 +154,6 @@
     "Title": "Order 747"
   },
   {
-    "Pizzas": null,
     "AllPizzas": [
       "pizza pollo",
       "pizza margarttia"
@@ -180,7 +165,6 @@
     "Title": "Order 681"
   },
   {
-    "Pizzas": null,
     "AllPizzas": [
       "pizza pollo",
       "pizza margarttia"
@@ -192,7 +176,6 @@
     "Title": "Order 95"
   },
   {
-    "Pizzas": null,
     "AllPizzas": [
       "pizza pollo",
       "pizza margarttia"
@@ -204,7 +187,6 @@
     "Title": "Order 928"
   },
   {
-    "Pizzas": null,
     "AllPizzas": [
       "pizza pollo",
       "pizza margarttia"
@@ -216,7 +198,6 @@
     "Title": "Order 312"
   },
   {
-    "Pizzas": null,
     "AllPizzas": [
       "pizza pollo",
       "pizza margarttia"
@@ -228,7 +209,6 @@
     "Title": "Order 630"
   },
   {
-    "Pizzas": null,
     "AllPizzas": [
       "pizza pollo",
       "pizza margarttia"
@@ -240,7 +220,6 @@
     "Title": "Order 713"
   },
   {
-    "Pizzas": null,
     "AllPizzas": [
       "pizza pollo",
       "pizza margarttia"
@@ -250,5 +229,41 @@
     "CustomerID": "00000000-0000-0000-0000-000000000000",
     "Status": 0,
     "Title": "Order 326"
+  },
+  {
+    "AllPizzas": [
+      "Pizza Pollo",
+      "Pizza Pollo",
+      "Pizza Pollo",
+      "Pizza Pepperoni",
+      "Pizza Salami"
+    ],
+    "OrderId": "c8716310-4dfd-4bb9-9567-ec2d29baff95",
+    "OrderNumber": 418,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
+    "Status": 0,
+    "Title": "Order 418"
+  },
+  {
+    "AllPizzas": [],
+    "OrderId": "862b9b97-16b8-46f8-a2ca-b751bbc7e4b7",
+    "OrderNumber": 988,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
+    "Status": 0,
+    "Title": "Order 988"
+  },
+  {
+    "AllPizzas": [
+      "Pizza Pollo",
+      "Pizza Pollo",
+      "Pizza Pollo",
+      "Pizza Pepperoni",
+      "Pizza Salami"
+    ],
+    "OrderId": "181574c7-2717-4728-aff8-f0dbb1959dc3",
+    "OrderNumber": 0,
+    "CustomerID": "00000000-0000-0000-0000-000000000000",
+    "Status": 0,
+    "Title": "Order 0"
   }
 ]

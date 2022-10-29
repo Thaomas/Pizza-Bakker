@@ -61,6 +61,7 @@
             <Button 
                 Grid.Row="0"
                 Grid.Column="0"
+                Command="{Binding PlaceOrderCommand}"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Content="Logout" />

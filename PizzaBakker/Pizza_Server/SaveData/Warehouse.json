@@ -5,7 +5,7 @@
       "Id": 1,
       "Price": 0.5
     },
-    "Count": 100
+    "Count": 97
   },
   {
     "Ingredient": {
@@ -13,15 +13,15 @@
       "Id": 2,
       "Price": 2.0
     },
-    "Count": 110
+    "Count": 78
   },
   {
     "Ingredient": {
       "Name": "deeg",
-      "Id": 5,
+      "Id": 3,
       "Price": 1.0
     },
-    "Count": 110
+    "Count": 56
   },
   {
     "Ingredient": {
@@ -29,22 +29,22 @@
       "Id": 4,
       "Price": 1616.0
     },
-    "Count": 110
+    "Count": 67
   },
   {
     "Ingredient": {
       "Name": "kip",
-      "Id": 6,
+      "Id": 5,
       "Price": 3.0
     },
-    "Count": 55
+    "Count": 100
   },
   {
     "Ingredient": {
       "Name": "salami",
-      "Id": 7,
+      "Id": 6,
       "Price": 2.0
     },
-    "Count": 55
+    "Count": 78
   }
 ]

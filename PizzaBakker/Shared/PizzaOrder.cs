@@ -6,7 +6,6 @@ namespace Shared
 {   
     public class PizzaOrder
     {   
-        public List<Pizza> Pizzas { get; set; }
         public List<string> AllPizzas { get; set; }
         public Guid OrderId { get; set; }
         public uint OrderNumber { get; set; }
