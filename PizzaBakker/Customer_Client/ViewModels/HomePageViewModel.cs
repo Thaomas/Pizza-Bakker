@@ -35,8 +35,6 @@ public class HomePageViewModel : BaseViewModel
         }
     }
     
-    
-
     private List<Pizza> _orderedPizzas;
     public List<Pizza> OrderedPizzas { get => _orderedPizzas; }
 
@@ -74,7 +72,6 @@ public class HomePageViewModel : BaseViewModel
 
     public ICommand InitCommand { get; }
     public ICommand PlaceOrderCommand { get; }
-    public ICommand AddToBasketCommand { get; }
 
     public HomePageViewModel(NavigationStore navigationStore)
     {
@@ -82,7 +79,6 @@ public class HomePageViewModel : BaseViewModel
         _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
         PlaceOrderCommand = new PlaceOrderCommand(_navigationStore);
         InitCommand = new InitCommand(_navigationStore);
-        AddToBasketCommand = new AddToBasketCommand(_navigationStore);
         AllPizzas = new List<Pizza>();
         Naam = UserInfo.Instance.UserName;
         InitCommand.Execute(null);

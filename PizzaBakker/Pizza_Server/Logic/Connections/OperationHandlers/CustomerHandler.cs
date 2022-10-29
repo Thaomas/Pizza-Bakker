@@ -23,8 +23,8 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
             {
                 { PacketType.PLACE_ORDER, PlaceOrder},
                 { PacketType.GET_PIZZA_LIST, GetPizzas},
-                { PacketType.GET_CUSTOMER_ID, GetID }
-                { PacketType.ADD_TO_BASKET, AddToBasket},
+                { PacketType.GET_CUSTOMER_ID, GetID },
+                { PacketType.ADD_TO_BASKET, AddToBasket}
             };
         }
 

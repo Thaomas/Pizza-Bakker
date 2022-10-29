@@ -1,6 +1,5 @@
 ﻿using Customer_Client.Logic;
 using Customer_Client.Stores;
-using Customer_Client.Util;
 using Customer_Client.ViewModels;
 using Shared;
 using Shared.Packet;

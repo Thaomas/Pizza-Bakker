@@ -14,7 +14,7 @@
         GET_ORDER_LIST,
         PLACE_ORDER,
         GET_PIZZA_LIST,
-        GET_CUSTOMER_ID
+        GET_CUSTOMER_ID,
         ADD_TO_BASKET
     }
 

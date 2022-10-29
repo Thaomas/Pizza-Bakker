@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 
-namespace Customer_Client.Util
+namespace Customer_Client.Logic
 {
     public class ConnectionHandler
     {

@@ -1,6 +1,6 @@
 using Customer_Client.Stores;
 using Customer_Client.UI_Element;
-using Customer_Client.Util;
+using Customer_Client.Logic;
 using Customer_Client.ViewModels;
 using Shared;
 using Shared.Packet;
@@ -33,7 +33,7 @@ public class InitCommand : CommandBase
         GetListResponsePacket data = packet.GetData<GetListResponsePacket>();
         List<PizzaListItem> list = new List<PizzaListItem>();
         foreach (var item in data.pizzas)
-            list.Add(new PizzaListItem(item.Key, item.Value));
+            list.Add(new PizzaListItem(item.Key, item.Value, _mainViewModel));
         _mainViewModel.PizzaListItems = list;
     }
 }

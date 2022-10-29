@@ -85,13 +85,6 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button 
-                Grid.Row="2"
-                Grid.Column="1"
-                Command="{Binding AddToBasketCommand}"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                Content="Add To Basket" />
  
             <StackPanel
                 Grid.Row="0"
