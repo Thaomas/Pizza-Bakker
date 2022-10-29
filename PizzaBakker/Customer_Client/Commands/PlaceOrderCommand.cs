@@ -1,19 +1,19 @@
-using Employee_Client.Util;
-using Employee_Client.Stores;
-using Employee_Client.ViewModels;
+
 using Shared;
 using System.Collections.Generic;
-using Employee_Client.Commands;
 using Shared.Packet;
 using Shared.Packet.Kitchen;
 using System;
+using Customer_Client.Stores;
+using Customer_Client.Util;
+using Customer_Client.ViewModels;
 
-namespace Employee_Client.Commands.KitchenCommands
+namespace Customer_Client.Commands
 {
     public class PlaceOrderCommand : CommandBase
     {
         private readonly NavigationStore _navigationStore;
-        private KitchenViewModel _placeOrderViewModel => (KitchenViewModel)_navigationStore.CurrentViewModel;
+        private HomePageViewModel _homePageViewModel => (HomePageViewModel)_navigationStore.CurrentViewModel;
 
         public PlaceOrderCommand(NavigationStore navigationStore)
         {
@@ -22,24 +22,15 @@ namespace Employee_Client.Commands.KitchenCommands
 
         public override void Execute(object parameter)
         {
-            Dictionary<int, List<string>> list = new();
+            List<string> list = new();
 
-            List<string> pizzaPollo = new();
-            pizzaPollo.Add("pizza pollo");
-            pizzaPollo.Add("kaas");
-            pizzaPollo.Add("deeg");
-            pizzaPollo.Add("uien");
-            pizzaPollo.Add("kip");
-
-            List<string> pizzamargarita = new();
-            pizzamargarita.Add("pizza margarttia");
-            pizzamargarita.Add("kaas");
-            pizzamargarita.Add("uien");
-            pizzamargarita.Add("deeg");
-            pizzamargarita.Add("salami");
-
-            list.Add(1, pizzaPollo);
-            list.Add(2, pizzamargarita);
+                           
+            list.Add("Pizza Pollo");
+            list.Add("Pizza Pollo");
+            list.Add("Pizza Pollo");
+            list.Add("Pizza Pepperoni");
+            list.Add("Pizza Salami");
+           // list.Add("pizza Margharita");
 
             ConnectionHandler connectionHandler = ConnectionHandler.GetInstance();
             connectionHandler.SendData(new DataPacket<PlaceOrderRequestPacket>()

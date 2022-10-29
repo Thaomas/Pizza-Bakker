@@ -1,4 +1,7 @@
-﻿using System.Windows.Controls;
+﻿using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using Shared;
 
 namespace Customer_Client.Views
 {
@@ -7,6 +10,8 @@ namespace Customer_Client.Views
         public HomePageView()
         {
             InitializeComponent();
+          
+          //  MessageBox.Show(SelectedPizza.Name);
         }
     }
 }

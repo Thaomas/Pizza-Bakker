@@ -40,18 +40,19 @@ public class HomePageViewModel : BaseViewModel
         set
         {
             _selectedPizza = value;
-            
             OnPropertyChanged(nameof(SelectedPizza));
         }
     }
     
     public ICommand InitCommand { get; }
-    
+    public ICommand PlaceOrderCommand { get; }
+
     public HomePageViewModel(NavigationStore navigationStore)
     {
         _navigationStore = navigationStore;
         _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
         
+        PlaceOrderCommand = new PlaceOrderCommand(_navigationStore);
         InitCommand = new InitCommand(_navigationStore);
 
         AllPizzas = new List<Pizza>();

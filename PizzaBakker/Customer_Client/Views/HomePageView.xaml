@@ -61,6 +61,7 @@
             <Button 
                 Grid.Row="0"
                 Grid.Column="0"
+                Command="{Binding PlaceOrderCommand}"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Content="Logout" />
@@ -71,20 +72,23 @@
                      Grid.RowSpan="2"
                      Grid.Column="0"
                      Grid.ColumnSpan="2"
+                     
                      ItemsSource="{Binding AllPizzas}"
+                     SelectedItem="{Binding SelectedPizza}"
                      >
-                <!--ListBox.ItemTemplate>
+                     
+                <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
+                        <StackPanel Orientation="Horizontal">
                             <Label 
-                                Content="{Binding Name}"/>
+                                Content="{Binding naam}"/>
                             <ListView 
                                 ItemsSource="{Binding Ingredients}"/>
                             <Button 
                                 Content="Add" />
                         </StackPanel>
                     </DataTemplate>
-                </ListBox.ItemTemplate>-->
+                </ListBox.ItemTemplate>
             </ListBox>
  
             <StackPanel

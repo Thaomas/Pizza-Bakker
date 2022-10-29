@@ -36,6 +36,5 @@ public class InitCommand : CommandBase
             GetListResponsePacket data = packet.GetData<GetListResponsePacket>();
 
             _mainViewModel.AllPizzas = data.pizzas;
-
         }
     }
