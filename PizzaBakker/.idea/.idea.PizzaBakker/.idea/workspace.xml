@@ -7,6 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="30b1c637-7b05-45ee-9a78-fa50a634a910" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Customer_Client/Commands/AddToBasketCommand.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Customer_Client/Commands/CommandBase.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Customer_Client/Commands/InitCommand.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Customer_Client/ViewModels/HomePageViewModel.cs" afterDir="false" />

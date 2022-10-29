@@ -153,6 +153,17 @@ namespace Shared.Packet
             public Guid customerID;
         }
 
+
+        public class AddToBasketRequestPacket : DAbstract
+        {
+            public string pizzaName;
+        }
+        
+        public class AddToBasketResponsePacket : DAbstract
+        {
+            public StatusCode statusCode;
+            public List<string> pizzas;
+        }
     }
 
 }

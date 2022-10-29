@@ -15,6 +15,7 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
     {
         private Kitchen _kitchen;
         private Customer _customer;
+        private List<string> pizzasInBasket = new();
         public CustomerHandler(Server server, Client client) : base(server, client)
         {
             _customer = Customer.Instance;
@@ -23,6 +24,7 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
                 { PacketType.PLACE_ORDER, PlaceOrder},
                 { PacketType.GET_PIZZA_LIST, GetPizzas},
                 { PacketType.GET_CUSTOMER_ID, GetID }
+                { PacketType.ADD_TO_BASKET, AddToBasket},
             };
         }
 
@@ -36,6 +38,25 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
                     customerID = Guid.NewGuid()
                 }
             });
+        }
+
+        private void AddToBasket(DataPacket obj)
+        {
+            string selectedPizza = obj.GetData<AddToBasketRequestPacket>().pizzaName;
+            
+            pizzasInBasket.Add(selectedPizza);
+            
+            Client client = _server.IdToClient[obj.senderID];
+            client.SendData(new DataPacket<AddToBasketResponsePacket>
+            {
+                type = PacketType.GET_PIZZA_LIST,
+                data = new AddToBasketResponsePacket()
+                {
+                    statusCode = StatusCode.OK,
+                    pizzas = pizzasInBasket
+                }
+            });
+            
         }
 
         private void GetPizzas(DataPacket obj)
