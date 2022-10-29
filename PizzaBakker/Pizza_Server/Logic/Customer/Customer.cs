@@ -8,7 +8,7 @@ namespace Pizza_Server.Logic
     public class Customer
     {
         public static Customer _singleton;
-        private List<Pizza> _pizzas = new();
+        public List<Pizza> _pizzas = new();
 
 
         private Customer()

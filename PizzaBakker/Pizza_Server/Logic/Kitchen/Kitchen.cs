@@ -65,7 +65,7 @@ namespace Pizza_Server.Logic
                 foreach (var saved in pizzaCounter.Keys)
                 {
         
-                    Pizza foundPizza = _customer.pizzas.Find(c => c.Name == saved);
+                    Pizza foundPizza = _customer._pizzas.Find(c => c.Name == saved);
 
                     foreach (uint ingredient in foundPizza.Ingredients)
                     {
@@ -98,7 +98,7 @@ namespace Pizza_Server.Logic
 
             foreach (var singlePizza in pizzaOrder.Keys)
             {
-                Pizza foundPizza = _customer.pizzas.Find(c => c.Name == singlePizza);
+                Pizza foundPizza = _customer._pizzas.Find(c => c.Name == singlePizza);
 
                 foreach (uint ingredient in foundPizza.Ingredients)
                 {

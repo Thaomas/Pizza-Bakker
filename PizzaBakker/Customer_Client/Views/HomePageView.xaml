@@ -79,7 +79,8 @@
                         <StackPanel Orientation="Horizontal">
                             <Label Content="{Binding Name}" />
                             <ListView ItemsSource="{Binding Ingredients}" />
-                            <Button Content="Add" />
+                            <Button Content="Add"
+                                    Command="{Binding BuyPizza}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

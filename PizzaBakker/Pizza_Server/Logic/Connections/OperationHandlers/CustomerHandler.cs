@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Shared.Packet.Customer_Client;
-using Client = Pizza_Server.Logic.Connections.Types.Client;
 
 namespace Pizza_Server.Logic.Connections.OperationHandlers
 {
@@ -88,8 +87,7 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
                 Console.WriteLine("order gefaald");
             }
             
-            Client client = _server.IdToClient[packet.senderID];
-            client.SendData(new DataPacket<PlaceOrderResponsePacket>
+            _client.SendData(new DataPacket<PlaceOrderResponsePacket>
             {
                 type = PacketType.PLACE_ORDER,
                 data = new PlaceOrderResponsePacket()
