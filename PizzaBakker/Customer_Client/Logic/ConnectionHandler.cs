@@ -18,9 +18,10 @@ namespace Customer_Client.Util
         public Dictionary<PacketType, Action<DataPacket>> callbacks;
         private byte[] dataBuffer;
         private readonly byte[] lengthBytes = new byte[4];
-        public bool IsConnected { get; set; }  = false;
+        public bool IsConnected { get; set; } = false;
 
         public Guid ID { get; set; } = Guid.Empty;
+        public Guid CustomerID { get; set; } = Guid.Empty;
 
         private ConnectionHandler()
         {
@@ -69,6 +70,7 @@ namespace Customer_Client.Util
             if (!tcpClient.Connected) { return; }
             stream = tcpClient.GetStream();
             stream.BeginRead(lengthBytes, 0, lengthBytes.Length, OnLengthBytesReceived, null);
+
         }
 
         private void OnLengthBytesReceived(IAsyncResult ar)
@@ -96,10 +98,8 @@ namespace Customer_Client.Util
 
         public void SendData<T>(DataPacket<T> packet) where T : DAbstract
         {
-            while (stream == null || !stream.CanWrite) ;
-
             if (packet.senderID == Guid.Empty)
-                packet.senderID = ID;
+                packet.senderID = this.ID;
 
             byte[] dataBytes = Encoding.ASCII.GetBytes(packet.ToJson());
             stream.Write(BitConverter.GetBytes(dataBytes.Length));

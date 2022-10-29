@@ -8,7 +8,6 @@ namespace Shared
     {
         public string Name;
         public List<uint> Ingredients;
-        
         public override string ToString()
         {
             return Name;

@@ -5,16 +5,14 @@ using Shared.Packet;
 using Shared.Packet.Kitchen;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Pizza_Server.Logic.Connections.OperationHandlers
 {
     public class BakerHandler : OpHndlrAbstract
     {
         Kitchen kitchen = Kitchen.Instance;
-        public BakerHandler(Server server)
+        public BakerHandler(Server server, Client client) : base(server, client)
         {
-            _server = server;
             this.OperationHandler = new Dictionary<PacketType, Action<DataPacket>>()
             {
                 {PacketType.CHANGE_STATUS, ChangeOrderStatus},
@@ -41,8 +39,7 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
                 code = StatusCode.OK;
             }
 
-            Client client = _server.IdToClient[packet.senderID];
-            client.SendData(new DataPacket<CheckOrderChangesResponsePacket>
+            _client.SendData(new DataPacket<CheckOrderChangesResponsePacket>
             {
                 type = packet.type,
                 data = new CheckOrderChangesResponsePacket()

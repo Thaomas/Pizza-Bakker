@@ -2,7 +2,7 @@
   {
     "Name": "Pizza Margharita",
     "Ingredients": [
-      1, 2, 3
+      1, 2
     ]
   },
   {
@@ -32,7 +32,7 @@
   {
     "Name": "Pizza Stagioni",
     "Ingredients": [
-      1, 2, 3
+      1, 2
     ]
   }
 ]

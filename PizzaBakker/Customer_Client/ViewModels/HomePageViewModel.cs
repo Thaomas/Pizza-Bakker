@@ -1,8 +1,10 @@
+using Customer_Client.Commands;
+using Customer_Client.Logic;
+using Customer_Client.Stores;
+using Customer_Client.UI_Element;
+using Shared;
 using System.Collections.Generic;
 using System.Windows.Input;
-using Customer_Client.Commands;
-using Customer_Client.Stores;
-using Shared;
 
 namespace Customer_Client.ViewModels;
 
@@ -12,16 +14,19 @@ public class HomePageViewModel : BaseViewModel
     public BaseViewModel CurrentViewModel => _navigationStore.CurrentViewModel;
 
     private string _naam;
-    public string naam
+    public string Naam
     {
         get => _naam;
         set
         {
             _naam = value;
-            OnPropertyChanged(nameof(naam));
+            OnPropertyChanged(nameof(Naam));
         }
     }
-    
+
+    private List<Pizza> _orderedPizzas;
+    public List<Pizza> OrderedPizzas { get => _orderedPizzas; }
+
     private List<Pizza> _allPizzas;
     public List<Pizza> AllPizzas
     {
@@ -33,6 +38,16 @@ public class HomePageViewModel : BaseViewModel
         }
     }
 
+    private List<PizzaListItem> _pizzaList;
+    public List<PizzaListItem> PizzaListItems
+    {
+        get => _pizzaList; set
+        {
+            _pizzaList = value;
+            OnPropertyChanged(nameof(PizzaListItems));
+        }
+    }
+
     private Pizza _selectedPizza;
     public Pizza SelectedPizza
     {
@@ -40,24 +55,23 @@ public class HomePageViewModel : BaseViewModel
         set
         {
             _selectedPizza = value;
-            
+
             OnPropertyChanged(nameof(SelectedPizza));
         }
     }
-    
+
     public ICommand InitCommand { get; }
-    
+
     public HomePageViewModel(NavigationStore navigationStore)
     {
         _navigationStore = navigationStore;
         _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
-        
-        InitCommand = new InitCommand(_navigationStore);
 
+        InitCommand = new InitCommand(_navigationStore);
         AllPizzas = new List<Pizza>();
-        naam = "sadas";
-        
+        Naam = UserInfo.Instance.UserName;
         InitCommand.Execute(null);
+
     }
 
     private void OnCurrentViewModelChanged()

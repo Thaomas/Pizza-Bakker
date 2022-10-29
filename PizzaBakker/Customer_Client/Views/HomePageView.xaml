@@ -55,7 +55,7 @@
                 Grid.Column="0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Content="{Binding naam}"/>
+                Content="{Binding Naam}"/>
             
             <!--uitloggen-->
             <Button 
@@ -71,20 +71,17 @@
                      Grid.RowSpan="2"
                      Grid.Column="0"
                      Grid.ColumnSpan="2"
-                     ItemsSource="{Binding AllPizzas}"
+                     ItemsSource="{Binding PizzaListItems}"
                      >
-                <!--ListBox.ItemTemplate>
+                <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <Label 
-                                Content="{Binding Name}"/>
-                            <ListView 
-                                ItemsSource="{Binding Ingredients}"/>
-                            <Button 
-                                Content="Add" />
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding Name}" />
+                            <ListView ItemsSource="{Binding Ingredients}" />
+                            <Button Content="Add" />
                         </StackPanel>
                     </DataTemplate>
-                </ListBox.ItemTemplate>-->
+                </ListBox.ItemTemplate>
             </ListBox>
  
             <StackPanel
@@ -106,7 +103,7 @@
                 Grid.Column="2"
                 Grid.Row="1"
                 Name="DeliveredOrders"
-                ItemsSource="{Binding DeliveredOrders}"
+                ItemsSource="{Binding OrderedPizzas}"
                 SelectedItem="{Binding SelectedDeliveredOrders}"
                 VerticalContentAlignment="Center" 
             />

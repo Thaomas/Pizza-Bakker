@@ -4,8 +4,6 @@ using Pizza_Server.Logic.WarehouseNS;
 using Shared;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Linq;
 
 namespace Pizza_Server.Logic
@@ -128,7 +126,7 @@ namespace Pizza_Server.Logic
                 Console.WriteLine("Geen orders beschikbaar!");
             }
         }
-        
+
         private void ListChanged()
         {
             NewestOrderDateTime = DateTime.Now;

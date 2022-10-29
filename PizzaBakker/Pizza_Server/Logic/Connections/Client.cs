@@ -16,7 +16,7 @@ namespace Pizza_Server.Logic.Connections.Types
         private readonly byte[] lengthBytes = new byte[4];
         public ClientType ClientType { get; set; }
         public uint? EmployeeID { get; set; }
-        private readonly Guid _guid;
+        public readonly Guid _guid;
 
         public Client(TcpClient client, Action<DataPacket, Client> callback, Guid id)
         {
@@ -39,7 +39,7 @@ namespace Pizza_Server.Logic.Connections.Types
                 dataBuffer = new byte[BitConverter.ToInt32(lengthBytes)];
                 stream.BeginRead(dataBuffer, 0, dataBuffer.Length, OnDataReceived, null);
             }
-            catch(IOException e)
+            catch (IOException e)
             {
                 Dispose();
             }

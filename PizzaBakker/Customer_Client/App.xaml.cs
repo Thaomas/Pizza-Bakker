@@ -1,8 +1,8 @@
-﻿using System.Threading;
-using System.Windows;
-using Customer_Client.Stores;
+﻿using Customer_Client.Stores;
 using Customer_Client.Util;
 using Customer_Client.ViewModels;
+using System.Threading;
+using System.Windows;
 
 namespace Customer_Client
 {
@@ -16,14 +16,15 @@ namespace Customer_Client
         public App()
         {
             _navigationStore = new NavigationStore();
+            new Thread(ConnectionHandler.GetInstance().ConnectToServer).Start();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            new Thread(ConnectionHandler.GetInstance().ConnectToServer).Start();
 
-            _navigationStore.CurrentViewModel = new HomePageViewModel(_navigationStore);
-            
+
+            _navigationStore.CurrentViewModel = new LoginViewModel(_navigationStore);
+
             MainWindow = new MainWindow()
             {
                 DataContext = new MainViewModel(_navigationStore)

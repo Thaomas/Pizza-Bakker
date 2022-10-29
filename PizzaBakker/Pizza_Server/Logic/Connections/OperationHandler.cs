@@ -17,8 +17,8 @@ namespace Pizza_Server.Logic.Connections
         {
             _server = viewModel;
         }
-    
-    
+
+
         public void HandleDataCallback(DataPacket packet, Client client)
         {
             if (packet.type == PacketType.AUTHENTICATION)
@@ -28,7 +28,7 @@ namespace Pizza_Server.Logic.Connections
                 switch (authResponsePacket.clientType)
                 {
                     case ClientType.CUSTOMER:
-                        callback = new CustomerHandler(_server).Execute;
+                        callback = new CustomerHandler(_server, client).Execute;
                         break;
                     case ClientType.EMPLOYEE:
                         callback = Authenticate;
@@ -78,7 +78,7 @@ namespace Pizza_Server.Logic.Connections
 
             Employee employee = _server.IdToEmployee[id];
             client.ClientType = loginPacket.clientType;
-            client.Callback = (client.ClientType == ClientType.BAKER) ? new BakerHandler(_server).Execute : new WarehouseHandler(_server).Execute;
+            client.Callback = (client.ClientType == ClientType.BAKER) ? new BakerHandler(_server, client).Execute : new WarehouseHandler(_server, client).Execute;
             // Let the client know that it can log in. 
             client.SendData(new DataPacket<LoginResponsePacket>
             {

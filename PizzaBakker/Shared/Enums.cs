@@ -13,7 +13,8 @@
         UPDATE_INGREDIENT,
         GET_ORDER_LIST,
         PLACE_ORDER,
-        GET_PIZZA_LIST
+        GET_PIZZA_LIST,
+        GET_CUSTOMER_ID
     }
 
     public enum StatusCode

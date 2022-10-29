@@ -2,11 +2,10 @@
 using Pizza_Server.Main;
 using Shared;
 using Shared.Packet;
+using Shared.Packet.Customer_Client;
 using Shared.Packet.Kitchen;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Shared.Packet.Customer_Client;
 
 namespace Pizza_Server.Logic.Connections.OperationHandlers
 {
@@ -14,28 +13,41 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
     {
         private Kitchen _kitchen;
         private Customer _customer;
-        public CustomerHandler(Server server)
+        public CustomerHandler(Server server, Client client) : base(server, client)
         {
-            _server = server;
-            _kitchen = Kitchen.Instance;
             _customer = Customer.Instance;
             OperationHandler = new Dictionary<PacketType, Action<DataPacket>>()
             {
                 { PacketType.PLACE_ORDER, PlaceOrder},
-                { PacketType.GET_PIZZA_LIST, GetPizzas}
+                { PacketType.GET_PIZZA_LIST, GetPizzas},
+                { PacketType.GET_CUSTOMER_ID, GetID }
             };
+        }
+
+        private void GetID(DataPacket obj)
+        {
+            _client.SendData(new DataPacket<GetCustomerIDResponsePacket>
+            {
+                type = PacketType.GET_CUSTOMER_ID,
+                data = new GetCustomerIDResponsePacket()
+                {
+                    customerID = Guid.NewGuid()
+                }
+            });
         }
 
         private void GetPizzas(DataPacket obj)
         {
-            Client client = _server.IdToClient[obj.senderID];
-            client.SendData(new DataPacket<GetListResponsePacket>
+            Console.WriteLine(_client._guid);
+            Dictionary<string, List<string>> pizzas = new Dictionary<string, List<string>>();
+
+            _client.SendData(new DataPacket<GetListResponsePacket>
             {
                 type = PacketType.GET_ORDER_LIST,
                 data = new GetListResponsePacket()
                 {
                     statusCode = StatusCode.OK,
-                    pizzas = _customer.pizzas
+                    pizzas = Customer.Instance.getPizzas()
                 }
             });
         }
@@ -85,5 +97,7 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
                 }
             });
         }
+
+
     }
 }

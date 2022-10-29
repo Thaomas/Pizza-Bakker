@@ -6,15 +6,14 @@ using Shared.Packet;
 using Shared.Packet.Warehouse;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Pizza_Server.Logic.Connections.OperationHandlers
 {
     public class WarehouseHandler : OpHndlrAbstract
     {
-        public WarehouseHandler(Server server)
+        private Warehouse _warehouse = Warehouse.Instance;
+        public WarehouseHandler(Server server, Client client) : base(server, client)
         {
-            _server = server;
             this.OperationHandler = new Dictionary<PacketType, Action<DataPacket>>()
             {
                 { PacketType.ADD_INGREDIENT, AddIngredient},
@@ -23,27 +22,26 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
                 { PacketType.UPDATE_INGREDIENT, UpdateIngredient}
             };
         }
-        
+
         public void GetIngredientList(DataPacket packet)
         {
             GetIngredientListRequestPacket req = packet.GetData<GetIngredientListRequestPacket>();
             List<WarehouseItem> AllItems = null;
             StatusCode code = StatusCode.BAD_REQUEST;
 
-            if (req.newest < Warehouse.Instance.NewestChange)
+            if (req.newest < _warehouse.NewestChange)
             {
                 code = StatusCode.OK;
-                Warehouse.Instance.GetList(out AllItems);
+                _warehouse.GetList(out AllItems);
             }
 
-            Client client = _server.IdToClient[packet.senderID];
-            client.SendData(new DataPacket<GetIngredientListResponsePacket>
+            _client.SendData(new DataPacket<GetIngredientListResponsePacket>
             {
                 type = PacketType.GET_INGREDIENT_LIST,
                 data = new GetIngredientListResponsePacket()
                 {
                     statusCode = code,
-                    newest = Warehouse.Instance.NewestChange,
+                    newest = _warehouse.NewestChange,
                     allItems = AllItems
                 }
             });
@@ -51,19 +49,17 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
         public void AddIngredient(DataPacket packet)
         {
             AddIngredientRequestPacket addPacket = packet.GetData<AddIngredientRequestPacket>();
-            Warehouse.Instance.addIngredient(addPacket);
+            _warehouse.addIngredient(addPacket);
         }
         public void UpdateIngredient(DataPacket obj)
         {
             UpdateIngredientRequestPacket updatePacket = obj.GetData<UpdateIngredientRequestPacket>();
-            Warehouse.Instance.UpdateIngredient(updatePacket.ingredientID, updatePacket.name, updatePacket.price, updatePacket.count);
+            _warehouse.UpdateIngredient(updatePacket.ingredientID, updatePacket.name, updatePacket.price, updatePacket.count);
         }
         public void DeleteIngredient(DataPacket packet)
         {
             DeleteIngredientRequestPacket deletePacket = packet.GetData<DeleteIngredientRequestPacket>();
-
-            Warehouse.Instance.DeleteIngredient(deletePacket.ID);
-
+            _warehouse.DeleteIngredient(deletePacket.ID);
         }
     }
 }

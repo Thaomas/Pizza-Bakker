@@ -92,7 +92,7 @@ namespace Shared.Packet
                 get => singleIngredient.Ingredient.Id;
             }
         }
-        
+
         public class UpdateIngredientRequestPacket : DAbstract
         {
             public uint ingredientID;
@@ -136,11 +136,23 @@ namespace Shared.Packet
     namespace Customer_Client
     {
         public class GetListRequestPacket : DAbstract { }
-        
+
         public class GetListResponsePacket : DAbstract
         {
             public StatusCode statusCode;
-            public List<Pizza> pizzas;
+            public Dictionary<string, List<String>> pizzas;
         }
+
+        public class GetCustomerIDPacket : DAbstract
+        {
+
+        }
+
+        public class GetCustomerIDResponsePacket : DAbstract
+        {
+            public Guid customerID;
+        }
+
     }
+
 }

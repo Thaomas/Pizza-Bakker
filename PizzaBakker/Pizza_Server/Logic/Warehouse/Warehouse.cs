@@ -47,7 +47,7 @@ namespace Pizza_Server.Logic.WarehouseNS
                     {
                         uint total = id + 1;
                         addPacket.ingredient.Ingredient.Id = total;
-                       _ingredients.Add(total, addPacket.ingredient);
+                        _ingredients.Add(total, addPacket.ingredient);
                     }
                     else
                     {
@@ -62,7 +62,8 @@ namespace Pizza_Server.Logic.WarehouseNS
             }
         }
 
-        public void UpdateIngredient(uint id, string name, decimal price, uint count) { 
+        public void UpdateIngredient(uint id, string name, decimal price, uint count)
+        {
             WarehouseItem updateIngredient = _ingredients.Values.First(x => x.Ingredient.Id == id);
             if (updateIngredient == null)
                 return;

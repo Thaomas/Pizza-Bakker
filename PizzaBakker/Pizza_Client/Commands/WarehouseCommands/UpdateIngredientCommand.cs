@@ -1,10 +1,10 @@
-using System;
 using Employee_Client.Stores;
 using Employee_Client.Util;
 using Employee_Client.ViewModels;
 using Shared;
 using Shared.Packet;
 using Shared.Packet.Warehouse;
+using System;
 
 namespace Employee_Client.Commands.WarehouseCommands
 {

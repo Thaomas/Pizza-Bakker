@@ -11,10 +11,12 @@
     <Grid>
         <Grid.Resources>
             <DataTemplate DataType="{x:Type viewModels:HomePageViewModel}">
-                <views:HomePageView/>
+                <views:HomePageView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:LoginViewModel}">
+                <views:LoginView />
             </DataTemplate>
         </Grid.Resources>
-
         <ContentControl Content="{Binding Path=CurrentViewModel}" />
     </Grid>
 </Window>
