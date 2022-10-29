@@ -20,7 +20,7 @@ namespace Employee_Client
             new Thread(ConnectionHandler.GetInstance().ConnectToServer).Start();
 
             _navigationStore.CurrentViewModel = new LoginViewModel(_navigationStore);
-            
+
             MainWindow = new MainWindow()
             {
                 DataContext = new MainViewModel(_navigationStore)

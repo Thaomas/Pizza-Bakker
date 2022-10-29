@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Input;
 using Customer_Client.ViewModels;
+using Customer_Client.Stores;
 
 namespace Customer_Client.UI_Element
 {
@@ -13,28 +14,29 @@ namespace Customer_Client.UI_Element
         public List<string> Ingredients { get; }
         public ICommand BuyPizza { get; }
     
-        public PizzaListItem(string name, List<string> ingredients, HomePageViewModel homePageViewModel)
+        public PizzaListItem(string name, List<string> ingredients, NavigationStore navStore)
         {
             Name = name;
             Ingredients = ingredients;
-            BuyPizza = new AddToBasketCommand(Name, homePageViewModel);
+            BuyPizza = new AddToBasketCommand(Name, navStore);
         }
     }
     
     public class AddToBasketCommand : CommandBase
     {
         private string pizza;
-        private HomePageViewModel homepgaeViewModel;
-        public AddToBasketCommand(string pizza, HomePageViewModel hpvm)
+        private readonly NavigationStore _navigationStore;
+        private HomePageViewModel _mainViewModel => (HomePageViewModel)_navigationStore.CurrentViewModel;
+        public AddToBasketCommand(string pizza, NavigationStore navStore)
         {
             this.pizza = pizza;
-            homepgaeViewModel = hpvm;
+            _navigationStore = navStore;
         }
 
         public override void Execute(object parameter)
         {
-            //Uncomment this, CRASH 
-            //homepgaeViewModel.PizzasInBasket.Add(pizza);
+
+            _mainViewModel.AddPizzaToBasket(pizza);
         }
     }
 }

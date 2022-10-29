@@ -33,7 +33,7 @@ public class InitCommand : CommandBase
         GetListResponsePacket data = packet.GetData<GetListResponsePacket>();
         List<PizzaListItem> list = new List<PizzaListItem>();
         foreach (var item in data.pizzas)
-            list.Add(new PizzaListItem(item.Key, item.Value, _mainViewModel));
+            list.Add(new PizzaListItem(item.Key, item.Value, _navigationStore));
         _mainViewModel.PizzaListItems = list;
     }
 }

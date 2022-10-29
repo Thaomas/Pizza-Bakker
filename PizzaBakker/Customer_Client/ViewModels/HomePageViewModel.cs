@@ -3,7 +3,10 @@ using Customer_Client.Logic;
 using Customer_Client.Stores;
 using Customer_Client.UI_Element;
 using Shared;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows.Input;
 
 namespace Customer_Client.ViewModels;
@@ -80,6 +83,7 @@ public class HomePageViewModel : BaseViewModel
         PlaceOrderCommand = new PlaceOrderCommand(_navigationStore);
         InitCommand = new InitCommand(_navigationStore);
         AllPizzas = new List<Pizza>();
+        PizzasInBasket = new List<string>();
         Naam = UserInfo.Instance.UserName;
         InitCommand.Execute(null);
 
@@ -88,5 +92,12 @@ public class HomePageViewModel : BaseViewModel
     private void OnCurrentViewModelChanged()
     {
         OnPropertyChanged(nameof(_navigationStore.CurrentViewModel));
+    }
+
+    public void AddPizzaToBasket(string pizza)
+    {
+        this.PizzasInBasket.Add(pizza);
+        Trace.WriteLine(this.PizzasInBasket.Count);
+        OnPropertyChanged(nameof(PizzasInBasket));
     }
 }

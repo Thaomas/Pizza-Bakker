@@ -7,7 +7,6 @@ namespace Shared.Packet
 {
     public abstract class DAbstract
     {
-
         public string ToJson()
         {
             return JsonConvert.SerializeObject(this);

@@ -73,15 +73,35 @@
                      Grid.Column="0"
                      Grid.ColumnSpan="2"
                      ItemsSource="{Binding PizzaListItems}"
-                     >
+                     HorizontalContentAlignment="Stretch">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="{Binding Name}" />
-                            <ListView ItemsSource="{Binding Ingredients}" />
-                            <Button Content="Add"
-                                    Command="{Binding BuyPizza}"/>
-                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            
+                            <Label 
+                                Grid.Column="0"
+                                HorizontalContentAlignment="Left"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Content="{Binding Name}" />
+
+                            <ListView Grid.Column="1"
+                                      HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                ItemsSource="{Binding Ingredients}" />
+
+                            <Button Grid.Column="2"
+                                    HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Content="Add"
+                                Command="{Binding BuyPizza}"/>
+                            
+                        </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
@@ -105,7 +125,7 @@
                 Grid.Column="2"
                 Grid.Row="1"
                 Name="DeliveredOrders"
-                ItemsSource="{Binding OrderedPizzas}"
+                ItemsSource="{Binding PizzasInBasket}"
                 SelectedItem="{Binding SelectedDeliveredOrders}"
                 VerticalContentAlignment="Center" 
             />
