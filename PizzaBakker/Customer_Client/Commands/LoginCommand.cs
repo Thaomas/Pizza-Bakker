@@ -21,7 +21,6 @@ namespace Customer_Client.Commands
 
         public override void Execute(object parameter)
         {
-            Trace.WriteLine("AAAAAA " + _loginViewModel.Name);
             if (_loginViewModel.Name.Equals(""))
             {
                 new Task(async () =>

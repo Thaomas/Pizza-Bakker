@@ -6,9 +6,6 @@ using System.Windows;
 
 namespace Customer_Client
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
         private readonly NavigationStore _navigationStore;
@@ -21,8 +18,6 @@ namespace Customer_Client
 
         protected override void OnStartup(StartupEventArgs e)
         {
-
-
             _navigationStore.CurrentViewModel = new LoginViewModel(_navigationStore);
 
             MainWindow = new MainWindow()

@@ -11,9 +11,7 @@ namespace Customer_Client.ViewModels
     {
         private readonly NavigationStore _navigationStore;
         public BaseViewModel CurrentViewModel => _navigationStore.CurrentViewModel;
-        private UserInfo info;
 
-        private string _userName = "";
         public string Name
         {
             get => _userName; set
@@ -22,8 +20,8 @@ namespace Customer_Client.ViewModels
                 OnPropertyChanged(nameof(Name));
             }
         }
+        private string _userName = "";
 
-        private string _label;
         public string Label
         {
             get => _label;
@@ -33,8 +31,8 @@ namespace Customer_Client.ViewModels
                 OnPropertyChanged(Label);
             }
         }
+        private string _label;
 
-        private bool _buttonEnabled;
         public bool ButtonEnabled
         {
             get => _buttonEnabled;
@@ -44,6 +42,8 @@ namespace Customer_Client.ViewModels
                 OnPropertyChanged(nameof(ButtonEnabled));
             }
         }
+        private bool _buttonEnabled;
+
         public ICommand LoginCommand { get; }
 
         public LoginViewModel(NavigationStore navigationStore)

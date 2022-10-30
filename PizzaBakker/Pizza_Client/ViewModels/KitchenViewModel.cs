@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Pizza_Client.ViewModels
+namespace Employee_Client.ViewModels
 {
     class KitchenViewModel : BaseViewModel
     {
@@ -145,7 +145,7 @@ namespace Pizza_Client.ViewModels
             SelectedOrderTitle = "No Order Selected";
             AllOrders = new List<PizzaOrder>();
 
-            ChangeStatusOrderCommand = new ChangeStatusOrderCommand(_navigationStore);
+            ChangeStatusOrderCommand = new ChangeStatusOrderCommand();
             CheckOrderListCommand = new CheckOrderListCommand(navigationStore);
 
             Task.Run(() =>

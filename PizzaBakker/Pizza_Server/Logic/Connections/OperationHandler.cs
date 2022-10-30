@@ -24,7 +24,7 @@ namespace Pizza_Server.Logic.Connections
             if (packet.type == PacketType.AUTHENTICATION)
             {
                 AuthenticationResponsePacket authResponsePacket = packet.GetData<AuthenticationResponsePacket>();
-                Action<DataPacket, Client> callback;
+                Action<DataPacket, Client> callback = null;
                 switch (authResponsePacket.clientType)
                 {
                     case ClientType.CUSTOMER:
@@ -32,9 +32,6 @@ namespace Pizza_Server.Logic.Connections
                         break;
                     case ClientType.EMPLOYEE:
                         callback = Authenticate;
-                        break;
-                    default:
-                        callback = (DataPacket p, Client c) => { };
                         break;
                 }
                 client.Callback = callback;
@@ -55,6 +52,7 @@ namespace Pizza_Server.Logic.Connections
                         statusCode = (client.ClientType == ClientType.CUSTOMER) ? StatusCode.FORBIDDEN : StatusCode.BAD_REQUEST
                     }
                 });
+                return;
             }
 
             LoginPacket loginPacket = packet.GetData<LoginPacket>();
@@ -65,7 +63,7 @@ namespace Pizza_Server.Logic.Connections
             if (!_server.IdToEmployee.ContainsKey(id) ||
                 _server.IdToEmployee[id].Password != loginPacket.password)
             {
-                _server.IdToClient[authId].SendData(new DataPacket<LoginResponsePacket>
+                client.SendData(new DataPacket<LoginResponsePacket>
                 {
                     type = PacketType.LOGIN,
                     data = new LoginResponsePacket()

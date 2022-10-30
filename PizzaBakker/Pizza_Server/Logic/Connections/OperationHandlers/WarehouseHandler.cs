@@ -1,5 +1,4 @@
 ﻿using Pizza_Server.Logic.Connections.Types;
-using Pizza_Server.Logic.WarehouseNS;
 using Pizza_Server.Main;
 using Shared;
 using Shared.Packet;
@@ -16,10 +15,10 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
         {
             this.OperationHandler = new Dictionary<PacketType, Action<DataPacket>>()
             {
-                { PacketType.ADD_INGREDIENT, AddIngredient},
                 { PacketType.GET_INGREDIENT_LIST, GetIngredientList},
-                { PacketType.DELETE_INGREDIENT, DeleteIngredient},
-                { PacketType.UPDATE_INGREDIENT, UpdateIngredient}
+                { PacketType.ADD_INGREDIENT, AddIngredient},
+                { PacketType.UPDATE_INGREDIENT, UpdateIngredient},
+                { PacketType.DELETE_INGREDIENT, DeleteIngredient}
             };
         }
 

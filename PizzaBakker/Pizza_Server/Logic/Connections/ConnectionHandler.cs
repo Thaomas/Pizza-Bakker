@@ -47,8 +47,6 @@ namespace Pizza_Server.Logic.Connections
                         autenticationID = authenticationID
                     }
                 });
-
-                _server.AddClient(authenticationID, client);
             }
         }
     }

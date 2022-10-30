@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="Views\WarehouseViews\WarehouseView.xaml">
+    <Page Update="Views\WarehouseView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
   </ItemGroup>

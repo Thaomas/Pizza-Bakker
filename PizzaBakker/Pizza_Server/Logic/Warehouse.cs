@@ -6,8 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-//Hij kon de klasse niet vinden omdat de namespace dezelde naam had
-namespace Pizza_Server.Logic.WarehouseNS
+namespace Pizza_Server.Logic
 {
     public class Warehouse
     {
@@ -50,7 +49,7 @@ namespace Pizza_Server.Logic.WarehouseNS
                     else
                     {
                         addPacket.ingredient.Ingredient.Id = 1;
-                        Warehouse.Instance._ingredients.Add(1, addPacket.ingredient);
+                        Instance._ingredients.Add(1, addPacket.ingredient);
                     }
                 }
             }

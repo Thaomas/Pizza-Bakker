@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Pizza_Client.ViewModels
+namespace Employee_Client.ViewModels
 {
     class WarehouseViewModel : BaseViewModel
     {
@@ -128,7 +128,7 @@ namespace Pizza_Client.ViewModels
             DeleteIngredientCommand = new DeleteIngredientCommand(_navigationStore);
             UpdateIngredientCommand = new UpdateIngredientCommand(_navigationStore);
 
-            //Load Ingredients for all the connected clients every 3-Seconds
+            //Check for Ingredient changes every 3-Seconds
             Task.Run(() =>
             {
                 while (true)

@@ -15,7 +15,6 @@ namespace Pizza_Server.Logic.Connections
             File.WriteAllText(path, content);
         }
 
-
         public static T ReadObjectFromFile<T>(string fileName)
         {
             string path = $"{dir}{"\\"}{fileName}";
@@ -26,19 +25,6 @@ namespace Pizza_Server.Logic.Connections
             }
 
             return JsonConvert.DeserializeObject<T>(File.ReadAllText(path));
-        }
-
-        
-        public static string ReadFile(string fileName)
-        {
-            string path = $"{dir}{"\\"}{fileName}";
-
-            if (!File.Exists(path))
-            {
-                return null;
-            }
-
-            return File.ReadAllText(path);
         }
     }
 }

@@ -11,16 +11,15 @@
     <Grid>
         <Grid.Resources>
             <DataTemplate DataType="{x:Type viewModels:LoginViewModel}">
-                <views:LoginView/>
+                <views:LoginView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewModels:WarehouseViewModel}">
-                <views:WarehouseView/>
+                <views:WarehouseView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewModels:KitchenViewModel}">
-                <views:KitchenView/>
+                <views:KitchenView />
             </DataTemplate>
         </Grid.Resources>
-
         <ContentControl Content="{Binding Path=CurrentViewModel}"/>
     </Grid>
 </Window>

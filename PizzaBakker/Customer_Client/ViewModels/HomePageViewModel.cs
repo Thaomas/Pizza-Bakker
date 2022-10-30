@@ -15,7 +15,6 @@ public class HomePageViewModel : BaseViewModel
     private readonly NavigationStore _navigationStore;
     public BaseViewModel CurrentViewModel => _navigationStore.CurrentViewModel;
 
-    private string _naam;
     public string Naam
     {
         get => _naam;
@@ -25,22 +24,20 @@ public class HomePageViewModel : BaseViewModel
             OnPropertyChanged(nameof(Naam));
         }
     }
+    private string _naam;
 
-    private int _basketRowSpan = 1;
+    private bool _selectedList = true;
     public int BasketRowSpan
     {
         get => (_selectedList) ? 1 : 2;
     }
-
-    private Visibility _buyButtonVisibility = Visibility.Visible;
     public Visibility BuyButtonVisibility
     {
         get => (_selectedList) ? Visibility.Visible : Visibility.Hidden;
     }
-    private bool _selectedList = true;
+
     public List<string> RightListViewList { get => _selectedList ? PizzasInBasket : OrderHistoryKeys; }
 
-    private List<string> _pizzasInBasket;
     public List<string> PizzasInBasket
     {
         get => _pizzasInBasket;
@@ -50,8 +47,8 @@ public class HomePageViewModel : BaseViewModel
             OnPropertyChanged(nameof(RightListViewList));
         }
     }
+    private List<string> _pizzasInBasket;
 
-    private Dictionary<string, PizzaOrder> _orderHistory = new Dictionary<string, PizzaOrder>();
     public Dictionary<string, PizzaOrder> OrderHistory
     {
         get => _orderHistory;
@@ -61,12 +58,12 @@ public class HomePageViewModel : BaseViewModel
             OnPropertyChanged(nameof(RightListViewList));
         }
     }
+    private Dictionary<string, PizzaOrder> _orderHistory = new Dictionary<string, PizzaOrder>();
     public List<string> OrderHistoryKeys
     {
         get => _orderHistory.Keys.ToList();
     }
 
-    private string _selectedOrder;
     public string SelectedOrder
     {
         get => _selectedOrder;
@@ -89,13 +86,12 @@ public class HomePageViewModel : BaseViewModel
             OnPropertyChanged(nameof(LeftListViewList));
         }
     }
+    private string _selectedOrder;
 
     public Dictionary<string, List<string>> AllPizzas { get; set; }
 
-    private List<PizzaListItem> _leftListViewList = new List<PizzaListItem>();
     public List<PizzaListItem> LeftListViewList { get => _selectedList ? PizzaListItems : OrderListItems; }
 
-    private List<PizzaListItem> _pizzaList = new List<PizzaListItem>();
     public List<PizzaListItem> PizzaListItems
     {
         get => _pizzaList; set
@@ -104,8 +100,8 @@ public class HomePageViewModel : BaseViewModel
             OnPropertyChanged(nameof(PizzaListItems));
         }
     }
+    private List<PizzaListItem> _pizzaList = new List<PizzaListItem>();
 
-    private List<PizzaListItem> _orderList = new List<PizzaListItem>();
     public List<PizzaListItem> OrderListItems
     {
         get => _pizzaList; set
@@ -114,6 +110,18 @@ public class HomePageViewModel : BaseViewModel
             OnPropertyChanged(nameof(RightListViewList));
         }
     }
+    private List<PizzaListItem> _orderList = new List<PizzaListItem>();
+
+    public string BuyButtonText
+    {
+        get => _buyButtonText; set
+        {
+            _buyButtonText = value;
+            OnPropertyChanged(nameof(BuyButtonText));
+        }
+    }
+    private string _buyButtonText;
+
     public void BasketButton(bool choice)
     {
         _selectedList = choice;
@@ -123,31 +131,17 @@ public class HomePageViewModel : BaseViewModel
         OnPropertyChanged(nameof(RightListViewList));
     }
 
-    private void OnCurrentViewModelChanged()
-    {
-        OnPropertyChanged(nameof(_navigationStore.CurrentViewModel));
-    }
-
     public async void AddPizzaToBasket(string pizza)
     {
         this.PizzasInBasket.Add(pizza);
         OnPropertyChanged(nameof(PizzasInBasket));
     }
-    private string _buyButtonText;
-    public string BuyButtonText
-    {
-        get => _buyButtonText; set
-        {
-            _buyButtonText = value;
-            OnPropertyChanged(nameof(BuyButtonText));
-        }
-    }
-
 
     public ICommand InitCommand { get; }
     public ICommand PlaceOrderCommand { get; }
     public ICommand BasketButtonCommand { get; }
     public ICommand LogoutCommand { get; }
+    
     public HomePageViewModel(NavigationStore navigationStore)
     {
         _navigationStore = navigationStore;
@@ -169,5 +163,9 @@ public class HomePageViewModel : BaseViewModel
     public void OnPropertyChange(object obj)
     {
         OnPropertyChanged(nameof(obj));
+    }
+    private void OnCurrentViewModelChanged()
+    {
+        OnPropertyChanged(nameof(_navigationStore.CurrentViewModel));
     }
 }

@@ -37,10 +37,6 @@ namespace Customer_Client.Logic
             return _instance;
         }
 
-        /// <summary>
-        /// When this method is called, the client will try to connect to the server.
-        /// When a connection is made it will call the method <see cref="OnConnectionMade(IAsyncResult)"/>.
-        /// </summary>
         public void ConnectToServer()
         {
             callbacks.Add(PacketType.AUTHENTICATION, OnServerConnectionMade);

@@ -25,9 +25,6 @@ public class InitCommand : CommandBase
         {
             type = PacketType.GET_PIZZA_LIST,
             data = new GetListRequestPacket()
-            {
-
-            }
         }, InitCallback);
     }
 

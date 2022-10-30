@@ -1,6 +1,7 @@
 ﻿using Employee_Client.Stores;
 using Employee_Client.Util;
 using Employee_Client.ViewModels;
+using Employee_Client.ViewModels;
 using Shared;
 using Shared.Packet;
 using Shared.Packet.Login;
@@ -35,7 +36,8 @@ namespace Employee_Client.Commands
                 Trace.WriteLine("No password or username entered.");
                 return;
             }
-            if (!uint.TryParse(_loginViewModel.Username, out _))
+            uint username;
+            if (!uint.TryParse(_loginViewModel.Username, out username))
             {
                 return;
             }
@@ -45,9 +47,9 @@ namespace Employee_Client.Commands
                 type = PacketType.LOGIN,
                 data = new LoginPacket()
                 {
-                    username = uint.Parse(_loginViewModel.Username),
+                    username = username,
                     password = _loginViewModel.Password,
-                    clientType = (type.Equals("Baker")) ? ClientType.BAKER : ClientType.WAREHOUSE
+                    clientType = type.Equals("Baker") ? ClientType.BAKER : ClientType.WAREHOUSE
                 }
             }, LoginCallback); ;
         }
@@ -60,7 +62,7 @@ namespace Employee_Client.Commands
                 Trace.WriteLine(data.clientType);
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    BaseViewModel viewModel = (data.clientType.Equals(ClientType.BAKER)) ? new KitchenViewModel(_navigationStore) : new WarehouseViewModel(_navigationStore);
+                    BaseViewModel viewModel = data.clientType.Equals(ClientType.BAKER) ? new KitchenViewModel(_navigationStore) : new WarehouseViewModel(_navigationStore);
                     _navigationStore.CurrentViewModel = viewModel;
                 });
                 return;

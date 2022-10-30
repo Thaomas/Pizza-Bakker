@@ -23,8 +23,5 @@ namespace Shared
         {
             return $"Order {OrderNumber.ToString()} | Pizza's: {AllPizzas.Count}";
         }
-
-        //TODO DEBUG CODE
-        public PizzaOrder Clone() => JsonConvert.DeserializeObject<PizzaOrder>(JsonConvert.SerializeObject(this));
     }
 }

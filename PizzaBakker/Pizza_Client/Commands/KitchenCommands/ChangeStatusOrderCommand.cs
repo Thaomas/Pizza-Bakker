@@ -9,11 +9,6 @@ namespace Employee_Client.Commands.KitchenCommands
 {
     public class ChangeStatusOrderCommand : CommandBase
     {
-        public ChangeStatusOrderCommand(NavigationStore navigationStore)
-        {
-            _navigationStore = navigationStore;
-        }
-
         public override void Execute(object parameter)
         {
             PizzaOrder order = parameter as PizzaOrder;

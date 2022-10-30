@@ -15,15 +15,15 @@ namespace Pizza_Server.Logic.Connections.Types
         public Action<DataPacket, Client> Callback { get; set; }
         private byte[] dataBuffer;
         private readonly byte[] lengthBytes = new byte[4];
+
         public ClientType ClientType { get; set; }
-        public uint? EmployeeID { get; set; }
+        private static PacketType[] packetBan = { PacketType.GET_ORDER_LIST, PacketType.GET_INGREDIENT_LIST };
         public readonly Guid _guid;
 
         public Client(TcpClient client, Action<DataPacket, Client> callback, Guid id)
         {
             stream = client.GetStream();
             this.Callback = callback;
-            this.EmployeeID = null;
             this._guid = id;
         }
 
@@ -45,7 +45,6 @@ namespace Pizza_Server.Logic.Connections.Types
                 Dispose();
             }
         }
-        private static PacketType[] packetBan = { PacketType.GET_ORDER_LIST, PacketType.GET_INGREDIENT_LIST };
         private void OnDataReceived(IAsyncResult ar)
         {
             stream.EndRead(ar);
@@ -76,11 +75,6 @@ namespace Pizza_Server.Logic.Connections.Types
         public void Dispose()
         {
             stream.Dispose();
-        }
-
-        public override string ToString()
-        {
-            return stream.Socket.RemoteEndPoint.ToString();
         }
     }
 }
