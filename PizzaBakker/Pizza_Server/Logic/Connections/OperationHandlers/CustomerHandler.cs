@@ -6,8 +6,6 @@ using Shared.Packet.Customer_Client;
 using Shared.Packet.Kitchen;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Shared.Packet.Customer_Client;
 
 namespace Pizza_Server.Logic.Connections.OperationHandlers
 {
@@ -24,8 +22,22 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
                 { PacketType.PLACE_ORDER, PlaceOrder},
                 { PacketType.GET_PIZZA_LIST, GetPizzas},
                 { PacketType.GET_CUSTOMER_ID, GetID },
-                { PacketType.ADD_TO_BASKET, AddToBasket}
+                { PacketType.ADD_TO_BASKET, AddToBasket},
+                { PacketType.GET_ORDER_HISTORY, GetOrderHistory }
             };
+        }
+
+        private void GetOrderHistory(DataPacket obj)
+        {
+            GetOrderHistoryPacket data = obj.GetData<GetOrderHistoryPacket>();
+            _client.SendData(new DataPacket<GetOrderHistoryResponsePacket>
+            {
+                type = PacketType.GET_ORDER_HISTORY,
+                data = new GetOrderHistoryResponsePacket()
+                {
+                    orderHistory = Kitchen.Instance.GetSpecificOrders(data.customerID)
+                }
+            });
         }
 
         private void GetID(DataPacket obj)
@@ -43,9 +55,9 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
         private void AddToBasket(DataPacket obj)
         {
             string selectedPizza = obj.GetData<AddToBasketRequestPacket>().pizzaName;
-            
+
             pizzasInBasket.Add(selectedPizza);
-            
+
             Client client = _server.IdToClient[obj.senderID];
             client.SendData(new DataPacket<AddToBasketResponsePacket>
             {
@@ -56,7 +68,7 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
                     pizzas = pizzasInBasket
                 }
             });
-            
+
         }
 
         private void GetPizzas(DataPacket obj)
@@ -81,7 +93,7 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
             List<string> pizzaOrder = packet.GetData<PlaceOrderRequestPacket>().pizzaOrder;
             PizzaOrder _pizzaOrder = new();
             StatusCode _statusCode;
-            
+
             _pizzaOrder.OrderId = Guid.NewGuid();
             _pizzaOrder.Status = OrderStatus.ORDERED;
             _kitchen.orderPizza(pizzaOrder);
@@ -89,25 +101,29 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
             if (_kitchen._orderComplete)
             {
                 _statusCode = StatusCode.OK;
-                
+
                 List<string> pizzas = new();
-                foreach (var singlePizzaa in pizzaOrder) {
+                foreach (var singlePizzaa in pizzaOrder)
+                {
                     pizzas.Add(singlePizzaa);
                 }
 
                 _pizzaOrder.AllPizzas = pizzas;
-                
-                foreach (string pizza in _pizzaOrder.AllPizzas) {
+
+                foreach (string pizza in _pizzaOrder.AllPizzas)
+                {
                     Console.WriteLine("pizza: " + pizza);
                 }
 
                 _kitchen.AddOrder(_pizzaOrder);
-              
-            } else {
+
+            }
+            else
+            {
                 _statusCode = StatusCode.BAD_REQUEST;
                 Console.WriteLine("order gefaald");
             }
-            
+
             _client.SendData(new DataPacket<PlaceOrderResponsePacket>
             {
                 type = PacketType.PLACE_ORDER,

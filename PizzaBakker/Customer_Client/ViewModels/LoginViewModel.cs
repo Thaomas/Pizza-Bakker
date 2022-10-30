@@ -1,8 +1,8 @@
 ﻿using Customer_Client.Commands;
 using Customer_Client.Logic;
 using Customer_Client.Stores;
-using Customer_Client.Logic;
 using Shared;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -35,6 +35,17 @@ namespace Customer_Client.ViewModels
                 OnPropertyChanged(Label);
             }
         }
+
+        private bool _buttonEnabled;
+        public bool ButtonEnabled
+        {
+            get => _buttonEnabled;
+            set
+            {
+                _buttonEnabled = value;
+                OnPropertyChanged(nameof(ButtonEnabled));
+            }
+        }
         public ICommand LoginCommand { get; }
 
         public LoginViewModel(NavigationStore navigationStore)
@@ -42,6 +53,7 @@ namespace Customer_Client.ViewModels
             _navigationStore = navigationStore;
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
             LoginCommand = new LoginCommand(_navigationStore);
+            ButtonEnabled = true;
             Label = "Login";
 
             if (UserInfo.LoadUserInfo())
@@ -52,13 +64,15 @@ namespace Customer_Client.ViewModels
 
         public void ChangeViewModel()
         {
-            Application.Current.Dispatcher.Invoke(async () =>
+            new Thread(() =>
             {
+                ButtonEnabled = false;
+                Name = UserInfo.Instance.UserName;
                 while (!ConnectionHandler.GetInstance().IsConnected) ;
-                await Task.Delay(500);
                 BaseViewModel viewModel = new HomePageViewModel(_navigationStore);
                 _navigationStore.CurrentViewModel = viewModel;
-            });
+            }).Start();
+            
         }
 
         private void OnCurrentViewModelChanged()

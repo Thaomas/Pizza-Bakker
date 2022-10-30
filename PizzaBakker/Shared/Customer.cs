@@ -21,7 +21,7 @@ namespace Shared
         public bool NewOrder(PizzaOrder order)
         {
             OrderHistory.Add(order);
-            
+
 
             return true;
         }

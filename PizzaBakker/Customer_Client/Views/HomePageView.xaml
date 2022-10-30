@@ -5,9 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:Customer_Client.Views"
              xmlns:viewModels="clr-namespace:Customer_Client.ViewModels"
-             mc:Ignorable="d"
-             Height="450"
-             Width="800">
+             mc:Ignorable="d">
   <Grid>
         <Grid.Resources>
             <Style TargetType="{x:Type ListView}">
@@ -72,8 +70,7 @@
                      Grid.RowSpan="2"
                      Grid.Column="0"
                      Grid.ColumnSpan="2"
-                     ItemsSource="{Binding PizzaListItems}"
-                     HorizontalContentAlignment="Stretch">
+                     ItemsSource="{Binding LeftListViewList}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -99,45 +96,45 @@
                                     HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
                                 Content="Add"
-                                Command="{Binding BuyPizza}"/>
+                                Command="{Binding BuyPizza}"
+                                Visibility="{Binding ButtonVisibility}"/>
                             
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
- 
-            <StackPanel
-                Grid.Row="0"
-                Grid.Column="2"
-                Orientation="Horizontal"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center">
+
+            <StackPanel Grid.Row="0"
+                        Grid.Column="2"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
                 <!--Button Basket-->
-                <Button 
-                    Content="Basket"/>
+                <Button Content="Basket"
+                        Command="{Binding BasketButtonCommand}"
+                        CommandParameter="Basket" />
                 <!--Button History-->
-                <Button 
-                    Content="History"/>
+                <Button Content="History"
+                        Command="{Binding BasketButtonCommand}"
+                        CommandParameter="History" />
             </StackPanel>
 
             <!--Basket ListView-->
-            <ListView 
-                Grid.Column="2"
-                Grid.Row="1"
-                Name="DeliveredOrders"
-                ItemsSource="{Binding PizzasInBasket}"
-                SelectedItem="{Binding SelectedDeliveredOrders}"
-                VerticalContentAlignment="Center" 
-            />
-            
+            <ListView Grid.Column="2"
+                      Grid.Row="1"
+                      Grid.RowSpan="{Binding BasketRowSpan}"
+                      Name="DeliveredOrders"
+                      ItemsSource="{Binding RightListViewList}"
+                      SelectedItem="{Binding SelectedOrder}"
+                      VerticalContentAlignment="Center" />
+
             <!--Koop Button-->
-            <Button 
-                Grid.Row="2"
-                Grid.Column="2"
-                HorizontalAlignment="Center"
-                Content="Buy"/>
-            
-            
+            <Button Grid.Row="2"
+                    Grid.Column="2"
+                    HorizontalAlignment="Center"
+                    Content="Buy"
+                    Visibility="{Binding BuyButtonVisibility}" />
+
         </Grid.Children>
     </Grid>
 </UserControl>

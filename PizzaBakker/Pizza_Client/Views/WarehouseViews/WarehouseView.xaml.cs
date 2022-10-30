@@ -22,10 +22,5 @@ namespace Employee_Client.Views
         {
             e.Handled = !uint.TryParse(e.Text, out _);
         }
-
-        private void UserControl_SizeChanged(object sender, System.Windows.SizeChangedEventArgs e)
-        {
-            Trace.WriteLine(e.NewSize.ToString());
-        }
     }
 }

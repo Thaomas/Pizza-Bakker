@@ -1,5 +1,4 @@
 using Employee_Client.Commands.KitchenCommands;
-using Employee_Client.Commands.WarehouseCommands;
 using Employee_Client.Stores;
 using Shared;
 using System;
@@ -145,7 +144,7 @@ namespace Employee_Client.ViewModels
             SelectedOrderStatus = OrderStatus.ORDERED;
             SelectedOrderTitle = "No Order Selected";
             AllOrders = new List<PizzaOrder>();
-       
+
             ChangeStatusOrderCommand = new ChangeStatusOrderCommand(_navigationStore);
             CheckOrderListCommand = new CheckOrderListCommand(navigationStore);
 

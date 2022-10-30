@@ -1,10 +1,9 @@
-﻿using System;
-using Customer_Client.Commands;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows.Input;
-using Customer_Client.ViewModels;
+﻿using Customer_Client.Commands;
 using Customer_Client.Stores;
+using Customer_Client.ViewModels;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Customer_Client.UI_Element
 {
@@ -13,15 +12,17 @@ namespace Customer_Client.UI_Element
         public string Name { get; }
         public List<string> Ingredients { get; }
         public ICommand BuyPizza { get; }
-    
-        public PizzaListItem(string name, List<string> ingredients, NavigationStore navStore)
+
+        public Visibility ButtonVisibility { get; }
+        public PizzaListItem(string name, List<string> ingredients, NavigationStore navStore, bool visibility)
         {
             Name = name;
             Ingredients = ingredients;
+            ButtonVisibility = visibility ? Visibility.Visible : Visibility.Collapsed;
             BuyPizza = new AddToBasketCommand(Name, navStore);
         }
     }
-    
+
     public class AddToBasketCommand : CommandBase
     {
         private string pizza;

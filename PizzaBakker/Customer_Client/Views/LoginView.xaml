@@ -10,13 +10,27 @@
     <Grid
         VerticalAlignment="Center">
         <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center">
-            <Label Content="Login"/>
-            <TextBox  Text="{Binding Name}"/>
+                    HorizontalAlignment="Center"
+                    Margin="10">
+            <Label Content="Login"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"
+                   FontSize="25"/>
+            <TextBox  
+                Text="{Binding Name}"
+                IsEnabled="{Binding ButtonEnabled}"
+                     MinWidth="80"
+                     FontSize="20"
+                     Margin="10 5"/>
             
             <Button 
                 Content="Login"
-                Command="{Binding LoginCommand}"/>
+                    Command="{Binding LoginCommand}"
+                    FontSize="20"
+                    IsEnabled="{Binding ButtonEnabled}"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Padding="10 0"/>
 
         </StackPanel>
     </Grid>

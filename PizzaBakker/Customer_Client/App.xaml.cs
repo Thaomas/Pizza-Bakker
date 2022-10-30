@@ -1,5 +1,5 @@
-﻿using Customer_Client.Stores;
-using Customer_Client.Logic;
+﻿using Customer_Client.Logic;
+using Customer_Client.Stores;
 using Customer_Client.ViewModels;
 using System.Threading;
 using System.Windows;
