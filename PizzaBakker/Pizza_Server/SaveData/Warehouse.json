@@ -1,9 +1,9 @@
 [
   {
     "Ingredient": {
-      "Name": "tomatensaus",
+      "Name": "deeg",
       "Id": 1,
-      "Price": 0.5
+      "Price": 1
     },
     "Count": 86
   },
@@ -17,7 +17,23 @@
   },
   {
     "Ingredient": {
-      "Name": "deeg",
+      "Name": "tomatensaus",
+      "Id": 3,
+      "Price": 1.0
+    },
+    "Count": 80
+  },
+  {
+    "Ingredient": {
+      "Name": "mozzarela",
+      "Id": 4,
+      "Price": 2.0
+    },
+    "Count": 36
+  },
+  {
+    "Ingredient": {
+      "Name": "pepperoni",
       "Id": 5,
       "Price": 1.0
     },
@@ -26,15 +42,15 @@
   {
     "Ingredient": {
       "Name": "uien",
-      "Id": 4,
-      "Price": 1616.0
+      "Id": 6,
+      "Price": 1.0
     },
-    "Count": 108
+    "Count": 22
   },
   {
     "Ingredient": {
       "Name": "kip",
-      "Id": 6,
+      "Id": 7,
       "Price": 3.0
     },
     "Count": 40
@@ -42,9 +58,25 @@
   {
     "Ingredient": {
       "Name": "salami",
-      "Id": 7,
-      "Price": 2.0
+      "Id": 8,
+      "Price": 3.0
     },
-    "Count": 55
+    "Count": 34
+  },
+  {
+    "Ingredient": {
+      "Name": "paprika",
+      "Id": 9,
+      "Price": 1.0
+    },
+    "Count": 25
+  },
+  {
+    "Ingredient": {
+      "Name": "tonijn",
+      "Id": 10,
+      "Price": 4.0
+    },
+    "Count": 30
   }
 ]
