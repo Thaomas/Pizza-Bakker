@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Employee_Client.Views
+namespace Pizza_Client.Views
 {
     /// <summary>
     /// Interaction logic for HomepageView.xaml

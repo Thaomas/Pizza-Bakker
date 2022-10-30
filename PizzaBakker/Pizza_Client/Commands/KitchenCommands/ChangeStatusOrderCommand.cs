@@ -9,9 +9,6 @@ namespace Employee_Client.Commands.KitchenCommands
 {
     public class ChangeStatusOrderCommand : CommandBase
     {
-        private readonly NavigationStore _navigationStore;
-        private KitchenViewModel _placeOrderViewModel => (KitchenViewModel)_navigationStore.CurrentViewModel;
-
         public ChangeStatusOrderCommand(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
@@ -19,14 +16,15 @@ namespace Employee_Client.Commands.KitchenCommands
 
         public override void Execute(object parameter)
         {
+            PizzaOrder order = parameter as PizzaOrder;
             ConnectionHandler connectionHandler = ConnectionHandler.GetInstance();
             connectionHandler.SendData(new DataPacket<ChangeStatusOrderRequestPacket>()
             {
                 type = PacketType.CHANGE_STATUS,
                 data = new ChangeStatusOrderRequestPacket()
                 {
-                    pizzaOrderId = ((PizzaOrder)parameter).OrderId,
-                    pizzaOrderStatus = ((PizzaOrder)parameter).Status
+                    pizzaOrderId = order.OrderId,
+                    pizzaOrderStatus = order.Status
                 }
             });
         }

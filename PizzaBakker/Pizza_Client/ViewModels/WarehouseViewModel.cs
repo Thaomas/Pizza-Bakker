@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Employee_Client.ViewModels
+namespace Pizza_Client.ViewModels
 {
     class WarehouseViewModel : BaseViewModel
     {

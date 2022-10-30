@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Employee_Client.ViewModels
+namespace Pizza_Client.ViewModels
 {
     class KitchenViewModel : BaseViewModel
     {
@@ -42,25 +42,25 @@ namespace Employee_Client.ViewModels
             }
         }
 
-        public List<PizzaOrder> IncomingOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.ORDERED)).ToList<PizzaOrder>();
+        public List<PizzaOrder> IncomingOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.ORDERED)).ToList();
         public PizzaOrder SelectedIncomingOrders
         {
             get => SelectedOrder;
             set => SelectedOrder = value;
         }
-        public List<PizzaOrder> InProgressOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.PREPARING)).ToList<PizzaOrder>();
+        public List<PizzaOrder> InProgressOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.PREPARING)).ToList();
         public PizzaOrder SelectedInProgressOrders
         {
             get => SelectedOrder;
             set => SelectedOrder = value;
         }
-        public List<PizzaOrder> DeliveryOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.DELIVERING)).ToList<PizzaOrder>();
+        public List<PizzaOrder> DeliveryOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.DELIVERING)).ToList();
         public PizzaOrder SelectedDeliveryOrders
         {
             get => SelectedOrder;
             set => SelectedOrder = value;
         }
-        public List<PizzaOrder> DeliveredOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.DELIVERED)).ToList<PizzaOrder>();
+        public List<PizzaOrder> DeliveredOrders => _allOrders.Where(p => p.Status.Equals(OrderStatus.DELIVERED)).ToList();
         public PizzaOrder SelectedDeliveredOrders
         {
             get => SelectedOrder;

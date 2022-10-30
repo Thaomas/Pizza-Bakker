@@ -7,7 +7,7 @@
         xmlns:views="clr-namespace:Employee_Client.Views"
         xmlns:viewModels="clr-namespace:Employee_Client.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Employee Client" Height="450" Width="800">
     <Grid>
         <Grid.Resources>
             <DataTemplate DataType="{x:Type viewModels:LoginViewModel}">

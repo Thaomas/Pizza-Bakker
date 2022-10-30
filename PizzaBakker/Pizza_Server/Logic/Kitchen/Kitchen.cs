@@ -11,6 +11,7 @@ namespace Pizza_Server.Logic
     public class Kitchen
     {
         private static Kitchen _singleton;
+        private static readonly string _saveLocation = @"SaveData\PizzaOrders.json";
         public DateTime NewestOrderDateTime;
         private List<PizzaOrder> AllOrders;
         private Customer _customer;
@@ -33,7 +34,7 @@ namespace Pizza_Server.Logic
             }
         }
 
-        public List<PizzaOrder> GetSpecificOrders(Guid id)
+        public List<PizzaOrder> GetOrderHistory(Guid id)
         {
             return AllOrders.Where(o => o.CustomerID == id).ToList();
         }
@@ -94,6 +95,12 @@ namespace Pizza_Server.Logic
             return true;
         }
 
+        public void AddOrder(PizzaOrder pizzaOrder)
+        {
+            AllOrders.Add(pizzaOrder);
+            ListChanged();
+        }
+
         public void ChangeOrderStatus(Guid orderId, OrderStatus status)
         {
             try
@@ -103,10 +110,10 @@ namespace Pizza_Server.Logic
             }
             catch (InvalidOperationException ex) { };
         }
-
+        
         public void LoadFromFile()
         {
-            AllOrders = IO.ReadObjectFromFile<List<PizzaOrder>>("SaveData\\PizzaOrders.json");
+            AllOrders = IO.ReadObjectFromFile<List<PizzaOrder>>(_saveLocation);
             NewestOrderDateTime = DateTime.Now;
 
             if (AllOrders == null)
@@ -123,13 +130,7 @@ namespace Pizza_Server.Logic
         public void SaveOrders()
         {
             string serializeData = JsonConvert.SerializeObject(AllOrders, Formatting.Indented);
-            IO.WriteFile("SaveData\\PizzaOrders.json", serializeData);
-        }
-
-        public void AddOrder(PizzaOrder pizzaOrder)
-        {
-            AllOrders.Add(pizzaOrder);
-            ListChanged();
+            IO.WriteFile(_saveLocation, serializeData);
         }
     }
 }

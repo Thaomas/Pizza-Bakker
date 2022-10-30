@@ -56,14 +56,14 @@ namespace Pizza_Server.Main
 
         public static Dictionary<uint, Employee> LoadEmployees()
         {
-            string jsonString = IO.ReadFile("SaveData\\Employees.json");
+            Dictionary<uint, Employee> employees = IO.ReadObjectFromFile<Dictionary<uint, Employee>>("SaveData\\Employees.json");
 
-            if (jsonString == null)
+            if (employees == null)
             {
                 return new Dictionary<uint, Employee>();
             }
 
-            return JsonConvert.DeserializeObject<Dictionary<uint, Employee>>(jsonString);
+            return JsonConvert.DeserializeObject<Dictionary<uint, Employee>>(employees);
         }
 
         private void SavingLoop()

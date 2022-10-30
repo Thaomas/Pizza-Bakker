@@ -20,26 +20,12 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
             _kitchen = Kitchen.Instance;
             OperationHandler = new Dictionary<PacketType, Action<DataPacket>>()
             {
-                { PacketType.PLACE_ORDER, PlaceOrder},
-                { PacketType.GET_PIZZA_LIST, GetPizzas},
                 { PacketType.GET_CUSTOMER_ID, GetID },
-                { PacketType.GET_ORDER_HISTORY, GetOrderHistory }
+                { PacketType.GET_PIZZA_LIST, GetPizzas},
+                { PacketType.GET_ORDER_HISTORY, GetOrderHistory },
+                { PacketType.PLACE_ORDER, PlaceOrder}
             };
         }
-
-        private void GetOrderHistory(DataPacket obj)
-        {
-            GetOrderHistoryPacket data = obj.GetData<GetOrderHistoryPacket>();
-            _client.SendData(new DataPacket<GetOrderHistoryResponsePacket>
-            {
-                type = PacketType.GET_ORDER_HISTORY,
-                data = new GetOrderHistoryResponsePacket()
-                {
-                    orderHistory = Kitchen.Instance.GetSpecificOrders(data.customerID)
-                }
-            });
-        }
-
         private void GetID(DataPacket obj)
         {
             _client.SendData(new DataPacket<GetCustomerIDResponsePacket>
@@ -68,6 +54,19 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
             });
         }
 
+        private void GetOrderHistory(DataPacket obj)
+        {
+            GetOrderHistoryPacket data = obj.GetData<GetOrderHistoryPacket>();
+            _client.SendData(new DataPacket<GetOrderHistoryResponsePacket>
+            {
+                type = PacketType.GET_ORDER_HISTORY,
+                data = new GetOrderHistoryResponsePacket()
+                {
+                    orderHistory = Kitchen.Instance.GetOrderHistory(data.customerID)
+                }
+            });
+        }
+
         public void PlaceOrder(DataPacket packet)
         {
             PlaceOrderRequestPacket data = packet.GetData<PlaceOrderRequestPacket>();
@@ -85,7 +84,5 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
                 }
             });
         }
-
-
     }
 }
