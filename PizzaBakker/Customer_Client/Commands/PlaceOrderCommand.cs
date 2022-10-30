@@ -1,12 +1,11 @@
 
-using Shared;
-using System.Collections.Generic;
-using Shared.Packet;
-using Shared.Packet.Kitchen;
-using System;
 using Customer_Client.Logic;
 using Customer_Client.Stores;
 using Customer_Client.ViewModels;
+using Shared;
+using Shared.Packet;
+using Shared.Packet.Kitchen;
+using System;
 
 namespace Customer_Client.Commands
 {

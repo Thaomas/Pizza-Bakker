@@ -28,7 +28,7 @@
     ],
     "OrderId": "f63b60e7-1044-4f5e-a9b3-47eb46444622",
     "OrderNumber": 659,
-    "CustomerID": "00000000-0000-0000-0000-000000000000",
+    "CustomerID": "60b790dc-17ce-42c0-9c3e-26da2d3ac65b",
     "Status": 3,
     "Title": "Order 659"
   },
@@ -39,7 +39,7 @@
     ],
     "OrderId": "d1a530d6-98fd-461e-8508-d92ddcc7add1",
     "OrderNumber": 255,
-    "CustomerID": "00000000-0000-0000-0000-000000000000",
+    "CustomerID": "60b790dc-17ce-42c0-9c3e-26da2d3ac65b",
     "Status": 4,
     "Title": "Order 255"
   },

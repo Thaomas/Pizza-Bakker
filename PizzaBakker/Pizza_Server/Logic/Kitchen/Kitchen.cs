@@ -33,8 +33,10 @@ namespace Pizza_Server.Logic
             }
         }
 
-
-        private Dictionary<uint, WarehouseItem> copyWarehouseItems;
+        public List<PizzaOrder> GetSpecificOrders(Guid id)
+        {
+            return AllOrders.Where(o => o.CustomerID == id).ToList();
+        }
 
         public void GetPizzaOrders(out List<PizzaOrder> orders)
         {
@@ -48,23 +50,27 @@ namespace Pizza_Server.Logic
 
             foreach (var pizza in orderPizzas)
             {
-                if (pizzaCounter.ContainsKey(pizza)) {
+                if (pizzaCounter.ContainsKey(pizza))
+                {
                     pizzaCounter[pizza] += 1;
-                } else {
+                }
+                else
+                {
                     pizzaCounter.Add(pizza, 1);
                 }
             }
 
-            if (!checkIngredient(pizzaCounter)){
+            if (!checkIngredient(pizzaCounter))
+            {
                 _orderComplete = false;
             }
-            
-          
+
+
             if (_orderComplete)
             {
                 foreach (var saved in pizzaCounter.Keys)
                 {
-        
+
                     Pizza foundPizza = _customer._pizzas.Find(c => c.Name == saved);
 
                     foreach (uint ingredient in foundPizza.Ingredients)
@@ -105,13 +111,13 @@ namespace Pizza_Server.Logic
                     int _pizzaInputCount = pizzaOrder[singlePizza];
 
                     retrievedIngredient = Warehouse.Instance.Ingredients.Values.First(name => name.Ingredient.Id.Equals(ingredient));
-                 
+
                     if (_pizzaInputCount > retrievedIngredient.Count)
                     {
                         _orderRight = false;
                         retrievedIngredient.Count = 0;
-                        Warehouse.Instance.Ingredients[retrievedIngredient.Ingredient.Id] = retrievedIngredient; 
-                    } 
+                        Warehouse.Instance.Ingredients[retrievedIngredient.Ingredient.Id] = retrievedIngredient;
+                    }
                 }
             }
             return _orderRight;
@@ -143,7 +149,7 @@ namespace Pizza_Server.Logic
         {
             AllOrders.Add(pizzaOrder);
             ListChanged();
-            
+
         }
     }
 }

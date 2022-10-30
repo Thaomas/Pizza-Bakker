@@ -15,7 +15,8 @@
         PLACE_ORDER,
         GET_PIZZA_LIST,
         GET_CUSTOMER_ID,
-        ADD_TO_BASKET
+        ADD_TO_BASKET,
+        GET_ORDER_HISTORY
     }
 
     public enum StatusCode

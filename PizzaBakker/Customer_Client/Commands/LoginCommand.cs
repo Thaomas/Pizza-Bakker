@@ -21,7 +21,7 @@ namespace Customer_Client.Commands
 
         public override void Execute(object parameter)
         {
-            Trace.WriteLine("AAAAAA "+_loginViewModel.Name);
+            Trace.WriteLine("AAAAAA " + _loginViewModel.Name);
             if (_loginViewModel.Name.Equals(""))
             {
                 new Task(async () =>
@@ -36,7 +36,7 @@ namespace Customer_Client.Commands
 
             ConnectionHandler connectionHandler = ConnectionHandler.GetInstance();
             while (!connectionHandler.IsConnected) ;
-            connectionHandler.SendData(new DataPacket<GetCustomerIDPacket>() 
+            connectionHandler.SendData(new DataPacket<GetCustomerIDPacket>()
             { type = PacketType.GET_CUSTOMER_ID }, LoginCallback);
         }
 

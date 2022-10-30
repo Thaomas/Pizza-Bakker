@@ -157,11 +157,20 @@ namespace Shared.Packet
         {
             public string pizzaName;
         }
-        
+
         public class AddToBasketResponsePacket : DAbstract
         {
             public StatusCode statusCode;
             public List<string> pizzas;
+        }
+
+        public class GetOrderHistoryPacket : DAbstract
+        {
+            public Guid customerID;
+        }
+        public class GetOrderHistoryResponsePacket : DAbstract
+        {
+            public List<PizzaOrder> orderHistory;
         }
     }
 

@@ -8,8 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              MinHeight="255"
-             MinWidth="630"
-             SizeChanged="UserControl_SizeChanged">
+             MinWidth="630">
 
     <Grid>
         <Grid.ColumnDefinitions>
