@@ -29,7 +29,7 @@ namespace Test
                 Ingredient = new Ingredient()
                 {
                     Id = 2,
-                    Name = "kaas",
+                    Name = "Kaas",
                     Price = 3
                 },
                 Count = 15

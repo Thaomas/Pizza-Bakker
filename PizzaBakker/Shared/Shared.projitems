@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Customer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DataPacket.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Employee.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Ingredient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pizza.cs" />

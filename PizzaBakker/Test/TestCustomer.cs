@@ -5,10 +5,9 @@ using Shared;
 
 namespace Test
 {
-    public class TestConnectionHandler
+    public class TestCustomer
     {
         private Customer setUpCustomer1;
-
         private Customer setUpCustomer2;
         
         [SetUp]
@@ -25,7 +24,7 @@ namespace Test
         [Test]
         public void Test_Customer_1_Name()
         {
-            Assert.AreEqual(setUpCustomer1.Name,"kees");
+            Assert.AreEqual(setUpCustomer1.Name, "kees");
         }
         
         [Test]
