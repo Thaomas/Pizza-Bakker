@@ -15,6 +15,8 @@
       <change afterPath="$PROJECT_DIR$/Pizza_Server/Logic/Customer/Customer.cs" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Pizza_Server/SaveData/PizzaOrders.json" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Pizza_Server/SaveData/Pizzas.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Test/TestCustomer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Test/TestWarehouseItem.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +26,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$USER_HOME$/.nuget/packages/microsoft.net.test.sdk/16.9.4/build/netcoreapp2.1/Microsoft.NET.Test.Sdk.Program.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/19353604504e40bcab35b5a5cf64b039163a8/bc/4e526f17/ICommand.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/9155dc0b53b8e3cb56faaa451cc190e5a413bfea96c35c2e4fa73350e2605d/Assert.Comparisons.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Customer_Client/Commands/PlaceOrderCommand.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Customer_Client/Views/HomePageView.xaml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Customer_Client/Views/HomePageView.xaml.cs" root0="FORCE_HIGHLIGHTING" />
@@ -36,6 +39,7 @@
     <setting file="file://$PROJECT_DIR$/Pizza_Server/SaveData/Warehouse.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Shared/DataPacket.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Shared/PizzaOrder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Test/TestWarehouseItem.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
