@@ -59,7 +59,7 @@
             <Button 
                 Grid.Row="0"
                 Grid.Column="0"
-                Command="{Binding PlaceOrderCommand}"
+                Command="{Binding LogoutCommand}"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 Content="Logout" />
@@ -132,7 +132,8 @@
             <Button Grid.Row="2"
                     Grid.Column="2"
                     HorizontalAlignment="Center"
-                    Content="Buy"
+                    Content="{Binding BuyButtonText}"
+                    Command="{Binding PlaceOrderCommand}"
                     Visibility="{Binding BuyButtonVisibility}" />
 
         </Grid.Children>

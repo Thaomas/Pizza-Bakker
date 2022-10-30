@@ -4,11 +4,7 @@ using Customer_Client.ViewModels;
 using Shared;
 using Shared.Packet;
 using Shared.Packet.Customer_Client;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Customer_Client.Commands
 {
@@ -48,7 +44,7 @@ namespace Customer_Client.Commands
             Dictionary<string, PizzaOrder> orders = new Dictionary<string, PizzaOrder>();
             data.orderHistory.ForEach(o => orders.Add(o.ToString(), o));
             _mainViewModel.OrderHistory = orders;
-            
+
         }
     }
 }

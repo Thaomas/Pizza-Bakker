@@ -5,7 +5,7 @@ using Customer_Client.ViewModels;
 using Shared;
 using Shared.Packet;
 using Shared.Packet.Kitchen;
-using System;
+using System.Threading.Tasks;
 
 namespace Customer_Client.Commands
 {
@@ -28,14 +28,22 @@ namespace Customer_Client.Commands
                 type = PacketType.PLACE_ORDER,
                 data = new PlaceOrderRequestPacket()
                 {
-                    pizzaOrder = _homePageViewModel.PizzasInBasket
+                    pizzaOrder = _homePageViewModel.PizzasInBasket,
+                    customerID = UserInfo.Instance.customerID
                 }
-            });
+            }, PlaceOrderCallback);
+            _homePageViewModel.PizzasInBasket.Clear();
+            _homePageViewModel.OnPropertyChange(_homePageViewModel.PizzasInBasket);
         }
 
-        private void PlaceOrderCallback(DataPacket obj)
+        private async void PlaceOrderCallback(DataPacket obj)
         {
-            throw new NotImplementedException();
+            PlaceOrderResponsePacket data = obj.GetData<PlaceOrderResponsePacket>();
+
+            string old = _homePageViewModel.BuyButtonText;
+            _homePageViewModel.BuyButtonText = data.statusCode.Equals(StatusCode.OK) ? "Ordered!" : "Order failed";
+            await Task.Delay(1000);
+            _homePageViewModel.BuyButtonText = old;
         }
     }
 }

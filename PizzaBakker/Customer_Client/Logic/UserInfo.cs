@@ -9,6 +9,7 @@ namespace Customer_Client.Logic
         public Guid customerID { get; set; }
         public string UserName { get; set; }
 
+        private static string _saveLocation = @"SaveData\CustomerData.json";
         private static UserInfo _instance;
         public static UserInfo Instance { get => _instance; }
 
@@ -24,7 +25,7 @@ namespace Customer_Client.Logic
             _instance = null;
             try
             {
-                _instance = IO.ReadObjectFromFile<UserInfo>(@"SaveData\CustomerData.json");
+                _instance = IO.ReadObjectFromFile<UserInfo>(_saveLocation);
             }
             catch (Exception e)
             {
@@ -36,7 +37,11 @@ namespace Customer_Client.Logic
 
         public static void Save()
         {
-            IO.WriteFile(@"SaveData\CustomerData.json", JsonConvert.SerializeObject(_instance));
+            IO.WriteFile(_saveLocation, JsonConvert.SerializeObject(_instance));
+        }
+        public static void Delete()
+        {
+            IO.DeleteFile(_saveLocation);
         }
     }
 }

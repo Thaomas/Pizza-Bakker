@@ -3,8 +3,6 @@ using Customer_Client.Logic;
 using Customer_Client.Stores;
 using Shared;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace Customer_Client.ViewModels
@@ -72,7 +70,7 @@ namespace Customer_Client.ViewModels
                 BaseViewModel viewModel = new HomePageViewModel(_navigationStore);
                 _navigationStore.CurrentViewModel = viewModel;
             }).Start();
-            
+
         }
 
         private void OnCurrentViewModelChanged()

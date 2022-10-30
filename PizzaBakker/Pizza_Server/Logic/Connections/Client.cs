@@ -3,6 +3,7 @@ using Shared;
 using Shared.Packet;
 using System;
 using System.IO;
+using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 
@@ -44,14 +45,15 @@ namespace Pizza_Server.Logic.Connections.Types
                 Dispose();
             }
         }
-
+        private static PacketType[] packetBan = { PacketType.GET_ORDER_LIST, PacketType.GET_INGREDIENT_LIST };
         private void OnDataReceived(IAsyncResult ar)
         {
             stream.EndRead(ar);
             string data = Encoding.UTF8.GetString(dataBuffer);
             DataPacket packet = JsonConvert.DeserializeObject<DataPacket>(data);
 
-            Console.WriteLine($"In:{packet.ToJson()}");
+            if (!packetBan.Contains(packet.type))
+                Console.WriteLine($"In:{packet.ToJson()}");
 
             Callback(packet, this);
             stream.BeginRead(lengthBytes, 0, lengthBytes.Length, OnLengthBytesReceived, null);
@@ -61,9 +63,12 @@ namespace Pizza_Server.Logic.Connections.Types
         {
             if (packet.senderID == Guid.Empty)
                 packet.senderID = _guid;
+
             byte[] dataBytes = Encoding.ASCII.GetBytes(packet.ToJson());
 
-            Console.WriteLine($"Out: {packet.ToJson()}");
+            if (!packetBan.Contains(packet.type))
+                Console.WriteLine($"Out: {packet.ToJson()}");
+
             stream.Write(BitConverter.GetBytes(dataBytes.Length));
             stream.Write(dataBytes);
         }

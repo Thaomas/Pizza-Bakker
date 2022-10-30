@@ -4,13 +4,9 @@ using Customer_Client.Stores;
 using Customer_Client.UI_Element;
 using Shared;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Markup;
 
 namespace Customer_Client.ViewModels;
 
@@ -43,7 +39,7 @@ public class HomePageViewModel : BaseViewModel
     }
     private bool _selectedList = true;
     public List<string> RightListViewList { get => _selectedList ? PizzasInBasket : OrderHistoryKeys; }
-    
+
     private List<string> _pizzasInBasket;
     public List<string> PizzasInBasket
     {
@@ -84,20 +80,20 @@ public class HomePageViewModel : BaseViewModel
             OrderHistory[_selectedOrder].AllPizzas.ForEach(p =>
             {
                 List<string> ingredients;
-                if(AllPizzas.TryGetValue(p, out ingredients))
+                if (AllPizzas.TryGetValue(p, out ingredients))
                     _orderList.Add(new PizzaListItem(p, ingredients, _navigationStore, false));
                 else
-                    _orderList.Add(new PizzaListItem(p, new List<string>() { "Error, I dont exist"}, _navigationStore, false));
+                    _orderList.Add(new PizzaListItem(p, new List<string>() { "Error, I dont exist" }, _navigationStore, false));
             });
-            
+
             OnPropertyChanged(nameof(LeftListViewList));
         }
     }
 
-    public Dictionary<string ,List<string>> AllPizzas { get; set; }
+    public Dictionary<string, List<string>> AllPizzas { get; set; }
 
     private List<PizzaListItem> _leftListViewList = new List<PizzaListItem>();
-    public List<PizzaListItem> LeftListViewList { get => _selectedList ? PizzaListItems : OrderListItems ;}
+    public List<PizzaListItem> LeftListViewList { get => _selectedList ? PizzaListItems : OrderListItems; }
 
     private List<PizzaListItem> _pizzaList = new List<PizzaListItem>();
     public List<PizzaListItem> PizzaListItems
@@ -108,7 +104,7 @@ public class HomePageViewModel : BaseViewModel
             OnPropertyChanged(nameof(PizzaListItems));
         }
     }
-    
+
     private List<PizzaListItem> _orderList = new List<PizzaListItem>();
     public List<PizzaListItem> OrderListItems
     {
@@ -137,23 +133,41 @@ public class HomePageViewModel : BaseViewModel
         this.PizzasInBasket.Add(pizza);
         OnPropertyChanged(nameof(PizzasInBasket));
     }
+    private string _buyButtonText;
+    public string BuyButtonText
+    {
+        get => _buyButtonText; set
+        {
+            _buyButtonText = value;
+            OnPropertyChanged(nameof(BuyButtonText));
+        }
+    }
 
 
     public ICommand InitCommand { get; }
     public ICommand PlaceOrderCommand { get; }
     public ICommand BasketButtonCommand { get; }
+    public ICommand LogoutCommand { get; }
     public HomePageViewModel(NavigationStore navigationStore)
     {
         _navigationStore = navigationStore;
         _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
-        
+
         PlaceOrderCommand = new PlaceOrderCommand(_navigationStore);
         InitCommand = new InitCommand(_navigationStore);
         BasketButtonCommand = new BasketButtonCommand(_navigationStore);
-
+        LogoutCommand = new LogoutCommand(_navigationStore);
         AllPizzas = new Dictionary<string, List<string>>();
         PizzasInBasket = new List<string>();
+
         Naam = UserInfo.Instance.UserName;
+        BuyButtonText = "Order";
+
         InitCommand.Execute(null);
+    }
+
+    public void OnPropertyChange(object obj)
+    {
+        OnPropertyChanged(nameof(obj));
     }
 }

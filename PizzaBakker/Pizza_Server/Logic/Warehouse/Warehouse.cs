@@ -15,8 +15,6 @@ namespace Pizza_Server.Logic.WarehouseNS
         public DateTime NewestChange { get => _newestChange; }
         private Dictionary<uint, WarehouseItem> _ingredients = new();
         public Dictionary<uint, WarehouseItem> Ingredients { get => _ingredients; }
-
-
         private static Warehouse _singleton;
 
         private Warehouse()
@@ -85,7 +83,7 @@ namespace Pizza_Server.Logic.WarehouseNS
             ingredients = _ingredients.Values.ToList();
         }
 
-        private void listChanged()
+        public void listChanged()
         {
             _newestChange = DateTime.Now;
         }

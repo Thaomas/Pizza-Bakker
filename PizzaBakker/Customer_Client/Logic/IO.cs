@@ -8,6 +8,13 @@ namespace Customer_Client.Logic
     {
 
         private static readonly string dir = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
+
+        public static void DeleteFile(string fileName)
+        {
+            string path = $"{dir}{"\\"}{fileName}";
+
+            File.Delete(path);
+        }
         public static void WriteFile(string fileName, string fileExtension, string content, bool append = false)
         {
             string path = $"{dir}{"\\"}{fileName}{fileExtension}";

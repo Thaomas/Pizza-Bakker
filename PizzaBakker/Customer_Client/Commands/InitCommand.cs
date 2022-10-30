@@ -24,9 +24,9 @@ public class InitCommand : CommandBase
         connectionHandler.SendData(new DataPacket<GetListRequestPacket>()
         {
             type = PacketType.GET_PIZZA_LIST,
-            data = new GetListRequestPacket() 
-            { 
-            
+            data = new GetListRequestPacket()
+            {
+
             }
         }, InitCallback);
     }

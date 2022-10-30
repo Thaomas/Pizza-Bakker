@@ -17,6 +17,7 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
         public CustomerHandler(Server server, Client client) : base(server, client)
         {
             _customer = Customer.Instance;
+            _kitchen = Kitchen.Instance;
             OperationHandler = new Dictionary<PacketType, Action<DataPacket>>()
             {
                 { PacketType.PLACE_ORDER, PlaceOrder},
@@ -89,40 +90,11 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
 
         public void PlaceOrder(DataPacket packet)
         {
+            PlaceOrderRequestPacket data = packet.GetData<PlaceOrderRequestPacket>();
+            List<string> newOrder = data.pizzaOrder;
+            bool complete = _kitchen.orderPizzas(newOrder, data.customerID);
 
-            List<string> pizzaOrder = packet.GetData<PlaceOrderRequestPacket>().pizzaOrder;
-            PizzaOrder _pizzaOrder = new();
-            StatusCode _statusCode;
-
-            _pizzaOrder.OrderId = Guid.NewGuid();
-            _pizzaOrder.Status = OrderStatus.ORDERED;
-            _kitchen.orderPizza(pizzaOrder);
-
-            if (_kitchen._orderComplete)
-            {
-                _statusCode = StatusCode.OK;
-
-                List<string> pizzas = new();
-                foreach (var singlePizzaa in pizzaOrder)
-                {
-                    pizzas.Add(singlePizzaa);
-                }
-
-                _pizzaOrder.AllPizzas = pizzas;
-
-                foreach (string pizza in _pizzaOrder.AllPizzas)
-                {
-                    Console.WriteLine("pizza: " + pizza);
-                }
-
-                _kitchen.AddOrder(_pizzaOrder);
-
-            }
-            else
-            {
-                _statusCode = StatusCode.BAD_REQUEST;
-                Console.WriteLine("order gefaald");
-            }
+            StatusCode _statusCode = complete ? StatusCode.OK : StatusCode.BAD_REQUEST;
 
             _client.SendData(new DataPacket<PlaceOrderResponsePacket>
             {

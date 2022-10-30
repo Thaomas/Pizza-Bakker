@@ -4,6 +4,7 @@ using Shared.Packet;
 using Shared.Packet.Login;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Sockets;
 using System.Text;
 
@@ -75,9 +76,17 @@ namespace Customer_Client.Logic
 
         private void OnLengthBytesReceived(IAsyncResult ar)
         {
-            int numOfBytes = stream.EndRead(ar);
-            dataBuffer = new byte[BitConverter.ToInt32(lengthBytes)];
-            stream.BeginRead(dataBuffer, 0, dataBuffer.Length, OnDataReceived, null);
+            try
+            {
+                int numOfBytes = stream.EndRead(ar);
+                dataBuffer = new byte[BitConverter.ToInt32(lengthBytes)];
+                stream.BeginRead(dataBuffer, 0, dataBuffer.Length, OnDataReceived, null);
+            }
+            catch (IOException e)
+            {
+                //Hoort niet zo, maar geen tijd
+                Environment.Exit(0);
+            }
         }
 
         private void OnDataReceived(IAsyncResult ar)
