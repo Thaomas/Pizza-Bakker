@@ -13,7 +13,7 @@ namespace Pizza_Server.Logic.Connections.OperationHandlers
     {
         private Kitchen _kitchen;
         private Customer _customer;
-        private List<string> pizzasInBasket = new();
+
         public CustomerHandler(Server server, Client client) : base(server, client)
         {
             _customer = Customer.Instance;
