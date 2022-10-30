@@ -4,7 +4,6 @@ using Customer_Client.ViewModels;
 using Shared;
 using Shared.Packet;
 using Shared.Packet.Customer_Client;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Customer_Client.Commands

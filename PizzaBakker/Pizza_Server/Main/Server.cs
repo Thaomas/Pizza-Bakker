@@ -1,7 +1,5 @@
-﻿using Newtonsoft.Json;
-using Pizza_Server.Logic;
+﻿using Pizza_Server.Logic;
 using Pizza_Server.Logic.Connections;
-using Pizza_Server.Logic.Connections.Types;
 using Shared;
 using System;
 using System.Collections.Generic;
@@ -30,7 +28,7 @@ namespace Pizza_Server.Main
         {
             Console.WriteLine("Starting Server...");
             IdToEmployee = LoadEmployees();
-            
+
             Warehouse wh = Warehouse.Instance;
             ConnectionHandler connectionHandler = new ConnectionHandler(this, 6000);
 

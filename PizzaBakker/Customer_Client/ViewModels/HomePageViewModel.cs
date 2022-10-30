@@ -141,7 +141,7 @@ public class HomePageViewModel : BaseViewModel
     public ICommand PlaceOrderCommand { get; }
     public ICommand BasketButtonCommand { get; }
     public ICommand LogoutCommand { get; }
-    
+
     public HomePageViewModel(NavigationStore navigationStore)
     {
         _navigationStore = navigationStore;

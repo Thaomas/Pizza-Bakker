@@ -40,17 +40,11 @@ namespace Pizza_Server.Logic
             {
                 if (_ingredients.Values.All(v => v.Ingredient.Name != name))
                 {
-                    if (_ingredients.TryGetValue(id, out WarehouseItem dd))
-                    {
-                        uint total = id + 1;
-                        addPacket.ingredient.Ingredient.Id = total;
-                        _ingredients.Add(total, addPacket.ingredient);
-                    }
-                    else
-                    {
-                        addPacket.ingredient.Ingredient.Id = 1;
-                        Instance._ingredients.Add(1, addPacket.ingredient);
-                    }
+                    uint total = _ingredients.ContainsKey(id) ? id + 1 : 1;
+
+                    addPacket.ingredient.Ingredient.Id = total;
+                    Instance._ingredients.Add(total, addPacket.ingredient);
+                    listChanged();
                 }
             }
             catch (Exception e)

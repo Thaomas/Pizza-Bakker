@@ -109,7 +109,7 @@ namespace Pizza_Server.Logic
             }
             catch (InvalidOperationException ex) { };
         }
-        
+
         public void LoadFromFile()
         {
             AllOrders = IO.ReadObjectFromFile<List<PizzaOrder>>(_saveLocation);

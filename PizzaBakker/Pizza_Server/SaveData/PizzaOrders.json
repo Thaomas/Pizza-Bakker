@@ -1,3 +1,13 @@
 [
-  
+  {
+    "AllPizzas": [
+      "Pizza Margharita",
+      "Pizza Quattr Fourmagi"
+    ],
+    "OrderId": "e753e32e-aec9-4220-b39c-548fa0c7748a",
+    "OrderNumber": 390,
+    "CustomerID": "60b790dc-17ce-42c0-9c3e-26da2d3ac65b",
+    "Status": 3,
+    "Title": "Order 390"
+  }
 ]
