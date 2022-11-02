@@ -4,10 +4,10 @@ using Shared.Packet;
 using Shared.Packet.Login;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Employee_Client.Util
 {
@@ -28,6 +28,7 @@ namespace Employee_Client.Util
 
         private ConnectionHandler()
         {
+            callbacks = new Dictionary<PacketType, Action<DataPacket>>();
         }
 
         public static ConnectionHandler GetInstance()
@@ -44,15 +45,40 @@ namespace Employee_Client.Util
         /// </summary>
         public void ConnectToServer()
         {
-
-            callbacks = new Dictionary<PacketType, Action<DataPacket>>();
-
             callbacks.Add(PacketType.AUTHENTICATION, OnServerConnectionMade);
 
-            tcpClient = new TcpClient();
-            tcpClient.BeginConnect("localhost", 6000, OnConnectionMade, null);
-        }
+            Task.Run(async () =>
+            {
+                tcpClient = new TcpClient();
+                await tcpClient.ConnectAsync("localhost", 6000);
 
+                while (tcpClient.Connected)
+                {
+                    string data = await ReadPacket();
+                    DataPacket dataPacket = JsonConvert.DeserializeObject<DataPacket>(data);
+
+                    if (callbacks.ContainsKey(dataPacket.type))
+                    {
+                        callbacks[dataPacket.type](dataPacket);
+                        callbacks.Remove(dataPacket.type);
+                    }
+                }
+                tcpClient.Dispose();
+            });
+        }
+        private async Task<string> ReadPacket()
+        {
+            stream = tcpClient.GetStream();
+
+            await stream.ReadAsync(lengthBytes, 0, lengthBytes.Length);
+
+            int length = BitConverter.ToInt32(lengthBytes, 0);
+
+            dataBuffer = new byte[length];
+            await stream.ReadAsync(dataBuffer, 0, length);
+
+            return Encoding.UTF8.GetString(dataBuffer);
+        }
         private void OnServerConnectionMade(DataPacket packet)
         {
             AutenticationPacket authPacket = packet.GetData<AutenticationPacket>();
@@ -69,53 +95,21 @@ namespace Employee_Client.Util
             });
         }
 
-        private void OnConnectionMade(IAsyncResult ar)
-        {
-            if (!tcpClient.Connected) { return; }
-            stream = tcpClient.GetStream();
-            stream.BeginRead(lengthBytes, 0, lengthBytes.Length, OnLengthBytesReceived, null);
-        }
-
-        private void OnLengthBytesReceived(IAsyncResult ar)
-        {
-            try
-            {
-                int numOfBytes = stream.EndRead(ar);
-                dataBuffer = new byte[BitConverter.ToInt32(lengthBytes)];
-                stream.BeginRead(dataBuffer, 0, dataBuffer.Length, OnDataReceived, null);
-            }
-            catch (IOException e)
-            {
-                //Hoort niet zo, maar geen tijd
-                Environment.Exit(0);
-            }
-        }
-
-        private void OnDataReceived(IAsyncResult ar)
-        {
-            stream.EndRead(ar);
-
-            string data = Encoding.UTF8.GetString(dataBuffer);
-            Trace.WriteLine(data);
-            DataPacket dataPacket = JsonConvert.DeserializeObject<DataPacket>(data);
-            if (callbacks.ContainsKey(dataPacket.type))
-            {
-                callbacks[dataPacket.type](dataPacket);
-                callbacks.Remove(dataPacket.type);
-            }
-
-            stream.BeginRead(lengthBytes, 0, lengthBytes.Length, OnLengthBytesReceived, null);
-        }
-
         public void SendData<T>(DataPacket<T> packet) where T : DAbstract
         {
             if (packet.senderID == Guid.Empty)
                 packet.senderID = ID;
-
-            byte[] dataBytes = Encoding.ASCII.GetBytes(packet.ToJson());
-            stream.Write(BitConverter.GetBytes(dataBytes.Length));
-            stream.Write(dataBytes);
-            stream.Flush();
+            try
+            {
+                byte[] dataBytes = Encoding.ASCII.GetBytes(packet.ToJson());
+                stream.Write(BitConverter.GetBytes(dataBytes.Length));
+                stream.Write(dataBytes);
+                stream.Flush();
+            }
+            catch (IOException e)
+            {
+                stream.Dispose();
+            }
         }
 
         public void SendData<T>(DataPacket<T> packet, Action<DataPacket> callback) where T : DAbstract

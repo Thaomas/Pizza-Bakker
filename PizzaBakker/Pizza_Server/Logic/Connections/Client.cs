@@ -2,10 +2,10 @@
 using Shared;
 using Shared.Packet;
 using System;
-using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Pizza_Server.Logic.Connections.Types
 {
@@ -19,9 +19,11 @@ namespace Pizza_Server.Logic.Connections.Types
         public ClientType ClientType { get; set; }
         private static PacketType[] packetBan = { PacketType.GET_ORDER_LIST, PacketType.GET_INGREDIENT_LIST };
         public readonly Guid _guid;
+        private TcpClient _tcpClient;
 
         public Client(TcpClient client, Action<DataPacket, Client> callback, Guid id)
         {
+            _tcpClient = client;
             stream = client.GetStream();
             this.Callback = callback;
             this._guid = id;
@@ -29,33 +31,31 @@ namespace Pizza_Server.Logic.Connections.Types
 
         public void BeginRead()
         {
-            stream.BeginRead(lengthBytes, 0, lengthBytes.Length, OnLengthBytesReceived, null);
-        }
+            Task.Run(async () =>
+            {
+                while (_tcpClient.Connected)
+                {
+                    string data = await ReadPacket();
+                    DataPacket dataPacket = JsonConvert.DeserializeObject<DataPacket>(data);
 
-        private void OnLengthBytesReceived(IAsyncResult ar)
-        {
-            try
-            {
-                int numOfBytes = stream.EndRead(ar);
-                dataBuffer = new byte[BitConverter.ToInt32(lengthBytes)];
-                stream.BeginRead(dataBuffer, 0, dataBuffer.Length, OnDataReceived, null);
-            }
-            catch (IOException e)
-            {
+                    if (!packetBan.Contains(dataPacket.type))
+                        Console.WriteLine($"In:{dataPacket.ToJson()}");
+
+                    Callback(dataPacket, this);
+                }
                 Dispose();
-            }
+            });
         }
-        private void OnDataReceived(IAsyncResult ar)
+        private async Task<string> ReadPacket()
         {
-            stream.EndRead(ar);
-            string data = Encoding.UTF8.GetString(dataBuffer);
-            DataPacket packet = JsonConvert.DeserializeObject<DataPacket>(data);
+            await stream.ReadAsync(lengthBytes, 0, lengthBytes.Length);
 
-            if (!packetBan.Contains(packet.type))
-                Console.WriteLine($"In:{packet.ToJson()}");
+            int length = BitConverter.ToInt32(lengthBytes, 0);
 
-            Callback(packet, this);
-            stream.BeginRead(lengthBytes, 0, lengthBytes.Length, OnLengthBytesReceived, null);
+            dataBuffer = new byte[length];
+            await stream.ReadAsync(dataBuffer, 0, length);
+
+            return Encoding.UTF8.GetString(dataBuffer);
         }
 
         public void SendData<T>(DataPacket<T> packet) where T : DAbstract

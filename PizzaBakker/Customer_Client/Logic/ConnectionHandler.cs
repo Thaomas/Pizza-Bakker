@@ -4,11 +4,9 @@ using Shared.Packet;
 using Shared.Packet.Login;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Markup;
 
 namespace Customer_Client.Logic
 {
@@ -91,40 +89,6 @@ namespace Customer_Client.Logic
                 }
             });
             this.IsConnected = true;
-        }
-
-        
-
-        private async void OnLengthBytesReceived(IAsyncResult ar)
-        {
-            try
-            {
-                int numOfBytes = stream.EndRead(ar);
-                dataBuffer = new byte[BitConverter.ToInt32(lengthBytes)];
-                var read = await stream.ReadAsync(dataBuffer, 0, dataBuffer.Length);
-
-            }
-            catch (IOException e)
-            {
-                //Hoort niet zo, maar geen tijd
-                Environment.Exit(0);
-            }
-        }
-
-        private void OnDataReceived(IAsyncResult ar)
-        {
-            stream.EndRead(ar);
-
-            string data = Encoding.UTF8.GetString(dataBuffer);
-            DataPacket dataPacket = JsonConvert.DeserializeObject<DataPacket>(data);
-
-            if (callbacks.ContainsKey(dataPacket.type))
-            {
-                callbacks[dataPacket.type](dataPacket);
-                callbacks.Remove(dataPacket.type);
-            }
-
-            stream.BeginRead(lengthBytes, 0, lengthBytes.Length, OnLengthBytesReceived, null);
         }
 
         public void SendData<T>(DataPacket<T> packet) where T : DAbstract

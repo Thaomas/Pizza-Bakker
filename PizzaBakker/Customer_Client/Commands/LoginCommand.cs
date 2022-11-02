@@ -4,6 +4,7 @@ using Customer_Client.ViewModels;
 using Shared;
 using Shared.Packet;
 using Shared.Packet.Customer_Client;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Customer_Client.Commands
@@ -33,7 +34,7 @@ namespace Customer_Client.Commands
             }
 
             ConnectionHandler connectionHandler = ConnectionHandler.GetInstance();
-            while (!connectionHandler.IsConnected) ;
+            while (!connectionHandler.IsConnected) Thread.Sleep(10);
             connectionHandler.SendData(new DataPacket<GetCustomerIDPacket>()
             { type = PacketType.GET_CUSTOMER_ID }, LoginCallback);
         }

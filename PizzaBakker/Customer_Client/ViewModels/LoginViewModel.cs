@@ -66,7 +66,7 @@ namespace Customer_Client.ViewModels
             {
                 ButtonEnabled = false;
                 Name = UserInfo.Instance.UserName;
-                while (!ConnectionHandler.GetInstance().IsConnected) ;
+                while (!ConnectionHandler.GetInstance().IsConnected) Thread.Sleep(10);
                 BaseViewModel viewModel = new HomePageViewModel(_navigationStore);
                 _navigationStore.CurrentViewModel = viewModel;
             }).Start();

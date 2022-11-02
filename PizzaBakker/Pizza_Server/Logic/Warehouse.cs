@@ -10,11 +10,13 @@ namespace Pizza_Server.Logic
 {
     public class Warehouse
     {
+        private static Warehouse _singleton;
+        private static readonly string _fileLocation = @"SaveData\Warehouse.json";
+
         private DateTime _newestChange;
         public DateTime NewestChange { get => _newestChange; }
         private Dictionary<uint, WarehouseItem> _ingredients = new();
         public Dictionary<uint, WarehouseItem> Ingredients { get => _ingredients; }
-        private static Warehouse _singleton;
 
         private Warehouse()
         {
@@ -84,14 +86,14 @@ namespace Pizza_Server.Logic
         public void SaveIngredients()
         {
             string serializeData = JsonConvert.SerializeObject(_ingredients.Values.ToList(), Formatting.Indented);
-            IO.WriteFile("SaveData\\Warehouse.json", serializeData);
+            IO.WriteFile(_fileLocation, serializeData);
         }
 
         public void LoadFromFile()
         {
             _ingredients = new Dictionary<uint, WarehouseItem>();
 
-            IO.ReadObjectFromFile<List<WarehouseItem>>("SaveData\\Warehouse.json")
+            IO.ReadObjectFromFile<List<WarehouseItem>>(_fileLocation)
                 .ForEach(i => _ingredients.Add(i.Ingredient.Id, i));
             _newestChange = DateTime.Now;
 
