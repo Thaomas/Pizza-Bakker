@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Markup;
 
 namespace Customer_Client.Logic
 {
@@ -41,8 +43,37 @@ namespace Customer_Client.Logic
         {
             callbacks.Add(PacketType.AUTHENTICATION, OnServerConnectionMade);
 
-            tcpClient = new TcpClient();
-            tcpClient.BeginConnect("localhost", 6000, OnConnectionMade, null);
+            Task.Run(async () =>
+            {
+                tcpClient = new TcpClient();
+                await tcpClient.ConnectAsync("localhost", 6000);
+
+                while (tcpClient.Connected)
+                {
+                    string data = await ReadPacket();
+                    DataPacket dataPacket = JsonConvert.DeserializeObject<DataPacket>(data);
+
+                    if (callbacks.ContainsKey(dataPacket.type))
+                    {
+                        callbacks[dataPacket.type](dataPacket);
+                        callbacks.Remove(dataPacket.type);
+                    }
+                }
+
+
+            });
+        }
+        private async Task<string> ReadPacket()
+        {
+            stream = tcpClient.GetStream();
+            await stream.ReadAsync(lengthBytes, 0, lengthBytes.Length);
+
+            int length = BitConverter.ToInt32(lengthBytes, 0);
+
+            dataBuffer = new byte[length];
+            await stream.ReadAsync(dataBuffer, 0, length);
+
+            return Encoding.UTF8.GetString(dataBuffer);
         }
 
         private void OnServerConnectionMade(DataPacket packet)
@@ -62,21 +93,16 @@ namespace Customer_Client.Logic
             this.IsConnected = true;
         }
 
-        private void OnConnectionMade(IAsyncResult ar)
-        {
-            if (!tcpClient.Connected) { return; }
-            stream = tcpClient.GetStream();
-            stream.BeginRead(lengthBytes, 0, lengthBytes.Length, OnLengthBytesReceived, null);
+        
 
-        }
-
-        private void OnLengthBytesReceived(IAsyncResult ar)
+        private async void OnLengthBytesReceived(IAsyncResult ar)
         {
             try
             {
                 int numOfBytes = stream.EndRead(ar);
                 dataBuffer = new byte[BitConverter.ToInt32(lengthBytes)];
-                stream.BeginRead(dataBuffer, 0, dataBuffer.Length, OnDataReceived, null);
+                var read = await stream.ReadAsync(dataBuffer, 0, dataBuffer.Length);
+
             }
             catch (IOException e)
             {
